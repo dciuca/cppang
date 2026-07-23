@@ -1,10 +1,25 @@
 #include "Player.h"
 #include "raylib.h"
 
-Player::Player(float x, float y) : speed(300.0f), width(20.0f), height(50.0f) {
+Player::Player(
+    float x, 
+    float y, 
+    float width, 
+    float height,
+    Color color,
+    const std::string& texturePath, 
+    float speed
+) : width(width), height(height), color(color), speed(speed), texture({0}), useTexture(false)
+{
     position = { x, y };
     velocity = { 0, 0 };
     isActive = true;
+    
+    // Load texture if a path is provided
+    if (!texturePath.empty()) {
+        texture = LoadTexture(texturePath.c_str());
+        useTexture = true;
+    }
 }
 
 void Player::SetActive(bool active) {
@@ -35,9 +50,12 @@ void Player::Update() {
 void Player::Draw() {
     if (!isActive) return;
 
-    DrawRectangle(position.x, position.y, width, height, BLUE);
+    if (useTexture) {
+        DrawTexture(texture, position.x, position.y, color);
+    } else {
+        DrawRectangle(position.x, position.y, width, height, color);
+    }
 }
-
 
 void Player::HandleInput() {
     // Simple keyboard input handling
@@ -50,6 +68,20 @@ void Player::HandleInput() {
 }
 
 void Player::ClampToScreen(int screenWidth) {
-	if (position.x < 0) position.x = 0;
-	if (position.x + width > screenWidth) position.x = screenWidth - width;
+    if (position.x < 0) position.x = 0;
+    if (position.x + width > screenWidth) position.x = screenWidth - width;
+}
+
+void Player::SetColor(Color newColor) {
+    color = newColor;
+}
+
+void Player::SetTexture(const std::string& texturePath) {
+    // Unload previous texture if it exists
+    if (useTexture) {
+        UnloadTexture(texture);
+    }
+    
+    texture = LoadTexture(texturePath.c_str());
+    useTexture = true;
 }
