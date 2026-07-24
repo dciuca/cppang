@@ -14,8 +14,12 @@ void PlayingState::Enter()
     player->SetActive(true);
 
     // Init ball
-    ball = std::make_unique<Ball>();
-    ball->SetActive(true);
+    AddBall(std::make_unique<Ball>());
+    balls.back()->SetActive(true);
+
+    // add a second ball for testing
+    AddBall(std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 150.0f, 60.0f, GREEN));
+    balls.back()->SetActive(true);
 }
 
 void PlayingState::Update()
@@ -24,9 +28,14 @@ void PlayingState::Update()
     {
         player->Update();
     }
-    if (ball && ball->isActive)
+
+    // Update all active balls
+    for (auto& ball : balls)
     {
-        ball->Update();
+        if (ball && ball->isActive)
+        {
+            ball->Update();
+        }
     }
 }
 
@@ -40,9 +49,13 @@ void PlayingState::Draw()
         player->Draw();
     }
 
-    if (ball)
+    // Draw all active balls
+    for (const auto& ball : balls)
     {
-        ball->Draw();
+        if (ball)
+        {
+            ball->Draw();
+        }
     }
 
     DrawFPS(10, 10);
@@ -53,5 +66,10 @@ void PlayingState::Draw()
 void PlayingState::Exit()
 {
     player.reset();
-    ball.reset();
+    balls.clear();
+}
+
+void PlayingState::AddBall(std::unique_ptr<IEntity> newBall)
+{
+    balls.push_back(std::move(newBall));
 }

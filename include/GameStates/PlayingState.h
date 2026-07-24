@@ -1,6 +1,7 @@
 #include "IGameState.h"
 #include "IEntity.h"
 #include <memory>
+#include <vector>
 
 class PlayingState : public IGameState
 {
@@ -13,7 +14,10 @@ public:
 	void Draw() override;
 	void Exit() override;
 
+	void AddBall(std::unique_ptr<IEntity> newBall);
+
 private:
 	std::unique_ptr<IEntity> player;
-	std::unique_ptr<IEntity> ball;
+	// std::unique_ptr<IEntity> ball;
+	std::vector<std::unique_ptr<IEntity>> balls;
 };
