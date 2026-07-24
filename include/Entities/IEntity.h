@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "raylib.h"
 #include <vector>
 
@@ -23,13 +24,3 @@ protected:
 	Vector2 position = { 0,0 };
 	Vector2 velocity = { 0,0 };
 };
-
-// // Only for entities that can handle input
-// class IInputable {
-//     virtual void HandleInput() = 0;
-// };
-
-// // Only for entities that can be clamped to the screen
-// class IClampable {
-//     virtual void ClampToScreen(int screenWidth) = 0;
-// };

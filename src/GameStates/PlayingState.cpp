@@ -1,4 +1,5 @@
 #include "PlayingState.h"
+#include "Player.h"
 #include "raylib.h"
 
 PlayingState::PlayingState()

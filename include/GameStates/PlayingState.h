@@ -1,5 +1,5 @@
 #include "IGameState.h"
-#include "Player.h"
+#include "IEntity.h"
 #include <memory>
 
 class PlayingState : public IGameState
