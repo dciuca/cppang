@@ -17,6 +17,8 @@ classDiagram
 
     class PlayingState {
         -unique_ptr~IEntity~ player
+        -vector~unique_ptr~IEntity~~ balls
+        +AddBall(newBall: unique_ptr~IEntity~) void
         +Enter() void
         +Update() void
         +Draw() void

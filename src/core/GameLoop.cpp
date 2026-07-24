@@ -1,5 +1,6 @@
 #include "GameLoop.h"
 #include "PlayingState.h"
+#include "GameOverState.h"
 #include "raylib.h"
 
 GameLoop::GameLoop()
