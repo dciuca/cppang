@@ -15,4 +15,5 @@ public:
 
 private:
 	std::unique_ptr<IEntity> player;
+	std::unique_ptr<IEntity> ball;
 };

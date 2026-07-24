@@ -1,0 +1,41 @@
+#pragma once
+
+#include "IEntity.h"
+#include "raylib.h"
+#include <string>
+
+class Ball : public IEntity
+{
+public:
+    Ball(
+        float x = 400.0f,
+        float y = 300.0f,
+        float radius = 60.0f,
+        float speed = 200.0f,
+        float angle = 45.0f,
+        Color color = RED);
+    ~Ball() = default;
+
+    // Implementation of pure virtual methods from IEntity
+    void SetActive(bool active) override;
+    Vector2 GetPosition() override;
+    void SetPosition(Vector2 position) override;
+    void Update() override;
+    void Draw() override;
+    void SetColor(Color newColor) override;
+    void SetTexture(const std::string& texturePath) override;
+
+    // Ball-specific methods
+    void ReverseX();
+    void ReverseY();
+    bool IsBelow(float y) const;
+    float GetRadius() const;
+
+private:
+    float radius;
+    float speed;
+    float angle; // in degrees
+    Color color;
+    Texture2D texture;
+    bool useTexture;
+};
