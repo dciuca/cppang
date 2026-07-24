@@ -1,6 +1,6 @@
 #pragma once
 
-#include "raylib.h"  // Include raylib header for Vector2
+#include "raylib.h"
 #include <vector>
 
 class IEntity
@@ -8,7 +8,6 @@ class IEntity
 public:
 	bool isActive;
 
-	// Virtual destructor for proper cleanup
 	virtual ~IEntity() = default;
 
 	// Pure virtual methods (must be implemented by derived classes)
@@ -17,9 +16,20 @@ public:
 	virtual void SetPosition(Vector2 position) = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void SetColor(Color newColor) = 0;
+    virtual void SetTexture(const std::string &texturePath) = 0;
 
 protected:
-	bool active = false;
 	Vector2 position = { 0,0 };
 	Vector2 velocity = { 0,0 };
 };
+
+// // Only for entities that can handle input
+// class IInputable {
+//     virtual void HandleInput() = 0;
+// };
+
+// // Only for entities that can be clamped to the screen
+// class IClampable {
+//     virtual void ClampToScreen(int screenWidth) = 0;
+// };

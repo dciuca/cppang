@@ -14,5 +14,5 @@ public:
 	void Exit() override;
 
 private:
-	std::unique_ptr<Player> player;
+	std::unique_ptr<IEntity> player;
 };

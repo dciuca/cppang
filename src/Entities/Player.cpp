@@ -43,6 +43,9 @@ void Player::Update() {
     position.x += velocity.x * GetFrameTime();
     position.y += velocity.y * GetFrameTime();
 
+    // Clamp to screen
+    ClampToScreen(GetScreenWidth());
+
     // Reset velocity for next frame
     velocity = { 0, 0 };
 }

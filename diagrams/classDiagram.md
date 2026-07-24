@@ -10,44 +10,48 @@ classDiagram
     class IGameState {
         <<interface>>
         +Enter() void
-        +Update(deltaTime: float) void
+        +Update() void
         +Draw() void
         +Exit() void
     }
 
     class PlayingState {
-        -vector~unique_ptr~IEntity~~ entities
-        -Player* player
-        -int score
+        -unique_ptr~IEntity~ player
         +Enter() void
-        +Update(deltaTime: float) void
+        +Update() void
         +Draw() void
         +Exit() void
-        -HandleCollisions() void
-        -CheckGameOver() void
     }
 
     class IEntity {
         <<interface>>
         #Vector2 position
         #Vector2 velocity
-        #bool active
-        +Update(deltaTime: float) void*
-        +Draw() void
-        +IsActive() bool
+        #bool isActive
         +SetActive(active: bool) void
         +GetPosition() Vector2
         +SetPosition(pos: Vector2) void
+        +Update() void
+        +Draw() void
+        +SetColor(color: Color) void
+        +SetTexture(texturePath: string) void
     }
 
     class Player {
         -float width
         -float height
         -float speed
-        +Player(x, y, width, height, speed)
-        +Update(deltaTime: float) void
+        -Color color
+        -Texture2D texture
+        -bool useTexture
+        +Player(x, y, width, height, color, texturePath, speed)
+        +SetActive(active: bool) void
+        +GetPosition() Vector2
+        +SetPosition(pos: Vector2) void
+        +Update() void
         +Draw() void
-        +GetRect() Rectangle
+        +SetColor(color: Color) void
+        +SetTexture(texturePath: string) void
         +HandleInput() void
         +ClampToScreen(screenWidth: int) void
     }
@@ -56,7 +60,7 @@ classDiagram
         -float radius
         -float speed
         +Ball(x, y, radius, speed, angle)
-        +Update(deltaTime: float) void
+        +Update() void
         +Draw() void
         +GetCircle() Circle
         +ReverseX() void
@@ -69,7 +73,6 @@ classDiagram
         +CheckCircleRect(circle: Circle, rect: Rectangle) bool
         +ResolveCircleRect(ball: Ball&, rect: Rectangle) void
         +BounceOnWalls(ball: Ball&, width: int, height: int) void
-        +ClampToScreen(player: Player&, width: int) void
     }
 
     GameLoop --> IGameState : contains

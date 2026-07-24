@@ -21,14 +21,14 @@ public:
     void SetActive(bool active) override;
     Vector2 GetPosition() override;
     void SetPosition(Vector2 position) override;
+    void SetColor(Color newColor) override;
+    void SetTexture(const std::string &texturePath) override;
     void Update() override;
     void Draw() override;
 
-    // Player-specific methods
+    // Implementation of specific methods for Player
     void HandleInput();
     void ClampToScreen(int screenWidth);
-    void SetColor(Color newColor);
-    void SetTexture(const std::string &texturePath);
 
 private:
     float speed;

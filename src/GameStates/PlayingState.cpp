@@ -7,10 +7,8 @@ PlayingState::PlayingState()
 
 void PlayingState::Enter()
 {
-    // Initialize player at the center and the bottom of the screen
+    // Init player
     player = std::make_unique<Player>();
-    // player->SetTexture("assets/player.png");
-
     player->SetActive(true);
 }
 
@@ -19,7 +17,6 @@ void PlayingState::Update()
     if (player && player->isActive)
     {
         player->Update();
-        player->ClampToScreen(800); // Assuming screen width is 800
     }
 }
 
