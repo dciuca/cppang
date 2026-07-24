@@ -8,14 +8,13 @@ class Player : public IEntity
 {
 public:
     Player(
-        float x, 
-        float y,
-        float width = 20.0f, 
-        float height = 50.0f, 
+        float x = 400.0f,
+        float y = 550.0f,
+        float width = 20.0f,
+        float height = 50.0f,
         Color color = BLUE,
-        const std::string& texturePath = "",
-        float speed = 300.0f
-    );
+        const std::string &texturePath = "",
+        float speed = 300.0f);
     ~Player() = default;
 
     // Implementation of pure virtual methods from IEntity
@@ -29,7 +28,7 @@ public:
     void HandleInput();
     void ClampToScreen(int screenWidth);
     void SetColor(Color newColor);
-    void SetTexture(const std::string& texturePath);
+    void SetTexture(const std::string &texturePath);
 
 private:
     float speed;
