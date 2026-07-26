@@ -1,12 +1,13 @@
 #include "GameLoop.h"
 #include "PlayingState.h"
+#include "MenuState.h"
 #include "GameOverState.h"
 #include "raylib.h"
 
 GameLoop::GameLoop()
 {
 	// Initialize the game with a default state, e.g., PlayingState
-	ChangeState(std::make_unique<PlayingState>());
+	ChangeState(std::make_unique<MenuState>());
 }
 
 void GameLoop::Run() {

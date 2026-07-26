@@ -8,6 +8,7 @@ public:
     GameOverState();
     ~GameOverState() override = default;
 
+    void HandleInput() override;
     void Enter() override;
     void Update() override;
     void Draw() override;

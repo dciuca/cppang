@@ -5,12 +5,7 @@ GameOverState::GameOverState()
 {
 }
 
-void GameOverState::Enter()
-{
-    // Any initialization for game over state
-}
-
-void GameOverState::Update()
+void GameOverState::HandleInput()
 {
     // Check for restart or exit input
     if (IsKeyPressed(KEY_R))
@@ -22,6 +17,16 @@ void GameOverState::Update()
     {
         // TODO: Exit game
     }
+}
+
+void GameOverState::Enter()
+{
+    // Any initialization for game over state
+}
+
+void GameOverState::Update()
+{
+    // Any updates for game over state, if needed   
 }
 
 void GameOverState::Draw()
