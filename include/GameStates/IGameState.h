@@ -1,5 +1,14 @@
 #pragma once
 
+enum class GameStateRequest
+{
+    None,
+    ChangeToPlaying,
+    ChangeToMenu,
+    ChangeToGameOver,
+    Quit
+};
+
 class IGameState
 {
 public:
@@ -10,4 +19,18 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Exit() = 0;
+
+public:
+	GameStateRequest GetGameStateRequest() const
+    {
+        return gameStateRequest;
+    }
+	
+protected:
+	void RequestStateChange(GameStateRequest request)
+    {
+        gameStateRequest = request;
+    }
+
+    GameStateRequest gameStateRequest = GameStateRequest::None;
 };

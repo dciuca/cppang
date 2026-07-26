@@ -7,16 +7,19 @@ MenuState::MenuState()
 
 void MenuState::HandleInput()
 {
-    // Check for restart or exit input
     if (IsKeyPressed(KEY_SPACE))
     {
-        // TODO: start the game, change to PlayingState
+        RequestStateChange(GameStateRequest::ChangeToPlaying);
+    }
+    else if (IsKeyPressed(KEY_ESCAPE))
+    {
+        RequestStateChange(GameStateRequest::Quit);
     }
 }
 
 void MenuState::Enter()
 {
-    // Any initialization for menu state
+    gameStateRequest = GameStateRequest::None;
 }
 
 void MenuState::Update()
