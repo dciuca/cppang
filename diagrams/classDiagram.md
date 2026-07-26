@@ -9,6 +9,7 @@ classDiagram
 
     class IGameState {
         <<interface>>
+        +HandleInput() void
         +Enter() void
         +Update() void
         +Draw() void
@@ -19,6 +20,7 @@ classDiagram
         -unique_ptr~IEntity~ player
         -vector~unique_ptr~IEntity~~ balls
         +AddBall(newBall: unique_ptr~IEntity~) void
+        +HandleInput() void
         +Enter() void
         +Update() void
         +Draw() void
@@ -27,16 +29,15 @@ classDiagram
 
     class IEntity {
         <<interface>>
+        #bool isActive
         #Vector2 position
         #Vector2 velocity
-        #bool isActive
+        #float speed
         +SetActive(active: bool) void
-        +GetPosition() Vector2
-        +SetPosition(pos: Vector2) void
-        +Update() void
-        +Draw() void
         +SetColor(color: Color) void
         +SetTexture(texturePath: string) void
+        +Update() void
+        +Draw() void
     }
 
     class Player {
@@ -46,15 +47,13 @@ classDiagram
         -Color color
         -Texture2D texture
         -bool useTexture
-        +Player(x, y, width, height, color, texturePath, speed)
+        +Player(x, y, width, height, color, texturePath)
         +SetActive(active: bool) void
-        +GetPosition() Vector2
-        +SetPosition(pos: Vector2) void
-        +Update() void
-        +Draw() void
         +SetColor(color: Color) void
         +SetTexture(texturePath: string) void
-        +HandleInput() void
+        +Update() void
+        +Draw() void
+        
         +ClampToScreen(screenWidth: int) void
     }
 
@@ -64,6 +63,7 @@ classDiagram
         +Ball(x, y, radius, speed, angle)
         +Update() void
         +Draw() void
+        
         +GetCircle() Circle
         +ReverseX() void
         +ReverseY() void

@@ -18,12 +18,10 @@ public:
 
     // Implementation of pure virtual methods from IEntity
     void SetActive(bool active) override;
-    Vector2 GetPosition() override;
-    void SetPosition(Vector2 position) override;
+    void SetColor(Color newColor) override;
+    void SetTexture(const std::string &texturePath) override;
     void Update() override;
     void Draw() override;
-    void SetColor(Color newColor) override;
-    void SetTexture(const std::string& texturePath) override;
 
     // Ball-specific methods
     void ReverseX();

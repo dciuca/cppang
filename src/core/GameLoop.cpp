@@ -12,13 +12,10 @@ GameLoop::GameLoop()
 void GameLoop::Run() {
     while (!WindowShouldClose()) {
         if (currentState) {
+            currentState->HandleInput();
             currentState->Update();
             currentState->Draw();
         }
-
-        // Simple frame rate limiting
-        // In a more complex implementation, you might want to add
-        // proper frame timing and fixed timestep updates
     }
 }
 

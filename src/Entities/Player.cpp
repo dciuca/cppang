@@ -7,12 +7,12 @@ Player::Player(
     float width, 
     float height,
     Color color,
-    const std::string& texturePath, 
-    float speed
-) : width(width), height(height), color(color), speed(speed), texture({0}), useTexture(false)
+    const std::string& texturePath
+) : width(width), height(height), color(color), texture({0}), useTexture(false)
 {
     position = { x, y };
     velocity = { 0, 0 };
+    speed = 300.0f;
     isActive = true;
     
     // Load texture if a path is provided
@@ -26,24 +26,13 @@ void Player::SetActive(bool active) {
     isActive = active;
 }
 
-Vector2 Player::GetPosition() {
-    return position;
-}
-
-void Player::SetPosition(Vector2 newPosition) {
-    position = newPosition;
-}
-
 void Player::Update() {
     if (!isActive) return;
-
-    HandleInput();
 
     // Update position based on velocity
     position.x += velocity.x * GetFrameTime();
     position.y += velocity.y * GetFrameTime();
 
-    // Clamp to screen
     ClampToScreen(GetScreenWidth());
 
     // Reset velocity for next frame
@@ -60,16 +49,6 @@ void Player::Draw() {
     }
 }
 
-void Player::HandleInput() {
-    // Simple keyboard input handling
-    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-        velocity.x = -speed;
-    }
-    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-        velocity.x = speed;
-    }
-}
-
 void Player::ClampToScreen(int screenWidth) {
     if (position.x < 0) position.x = 0;
     if (position.x + width > screenWidth) position.x = screenWidth - width;
@@ -80,7 +59,6 @@ void Player::SetColor(Color newColor) {
 }
 
 void Player::SetTexture(const std::string& texturePath) {
-    // Unload previous texture if it exists
     if (useTexture) {
         UnloadTexture(texture);
     }

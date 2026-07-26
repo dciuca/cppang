@@ -7,6 +7,18 @@ PlayingState::PlayingState()
 {
 }
 
+void PlayingState::HandleInput() {
+    // Player input handling
+    if (player && player->isActive) {
+        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
+            player->velocity.x = -player->speed;
+        }
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
+            player->velocity.x = player->speed;
+        }
+    }
+}
+
 void PlayingState::Enter()
 {
     // Init player

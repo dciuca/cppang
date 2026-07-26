@@ -26,16 +26,6 @@ void Ball::SetActive(bool active)
     isActive = active;
 }
 
-Vector2 Ball::GetPosition()
-{
-    return position;
-}
-
-void Ball::SetPosition(Vector2 newPosition)
-{
-    position = newPosition;
-}
-
 void Ball::Update()
 {
     if (!isActive) return;
@@ -72,9 +62,6 @@ void Ball::Update()
         position.y = screenHeight - radius;
         ReverseY();
     }
-
-    // Reset velocity for next frame (optional, depending on your design)
-    // velocity = { 0, 0 };
 }
 
 void Ball::Draw()
