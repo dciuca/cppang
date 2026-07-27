@@ -1,14 +1,33 @@
 ```mermaid
 classDiagram
     class GameLoop {
-        -unique_ptr~IGameState~ currentState
-        +GameLoop()
         +Run()
+        -unique_ptr~IGameState~ currentState
         -ChangeState(newState) void
+    }
+
+    class GameStateRequest {
+        <<Enumeration>>
+        None
+        ChangeToPlaying
+        ChangeToMenu
+        ChangeToGameOver
+        Quit
     }
 
     class IGameState {
         <<interface>>
+        +HandleInput() void
+        +Enter() void
+        +Update() void
+        +Draw() void
+        +Exit() void
+        +GetGameStateRequest() GameStateRequest
+        #RequestStateChange(GameStateRequest: request)
+        #GameStateRequest gameStateRequest
+    }
+
+    class MenuState {
         +HandleInput() void
         +Enter() void
         +Update() void
@@ -19,7 +38,15 @@ classDiagram
     class PlayingState {
         -unique_ptr~IEntity~ player
         -vector~unique_ptr~IEntity~~ balls
+        +HandleInput() void
+        +Enter() void
+        +Update() void
+        +Draw() void
+        +Exit() void
         +AddBall(newBall: unique_ptr~IEntity~) void
+    }
+
+    class GameOverState {
         +HandleInput() void
         +Enter() void
         +Update() void
@@ -78,7 +105,10 @@ classDiagram
     }
 
     GameLoop --> IGameState : contains
+    IGameState <|-- MenuState : implements
     IGameState <|-- PlayingState : implements
+    IGameState <|-- GameOverState : implements
+    IGameState --> GameStateRequest: uses
     
     PlayingState --> IEntity : contains
     IEntity <|-- Player : implements

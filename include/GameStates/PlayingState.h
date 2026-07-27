@@ -15,10 +15,10 @@ public:
 	void Draw() override;
 	void Exit() override;
 
+public:
 	void AddBall(std::unique_ptr<IEntity> newBall);
 
 private:
 	std::unique_ptr<IEntity> player;
-	// std::unique_ptr<IEntity> ball;
 	std::vector<std::unique_ptr<IEntity>> balls;
 };
