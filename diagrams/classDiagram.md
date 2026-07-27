@@ -80,8 +80,6 @@ classDiagram
         +SetTexture(texturePath: string) void
         +Update() void
         +Draw() void
-        
-        +ClampToScreen(screenWidth: int) void
     }
 
     class Ball {
@@ -90,18 +88,12 @@ classDiagram
         +Ball(x, y, radius, speed, angle)
         +Update() void
         +Draw() void
-        
-        +GetCircle() Circle
-        +ReverseX() void
-        +ReverseY() void
-        +IsBelow(y: float) bool
     }
 
     class Physics {
         <<static>>
-        +CheckCircleRect(circle: Circle, rect: Rectangle) bool
-        +ResolveCircleRect(ball: Ball&, rect: Rectangle) void
-        +BounceOnWalls(ball: Ball&, width: int, height: int) void
+        +BounceOnXY(entity: IEntity&, width: float) void
+        +BounceOnX(entity: IEntity&, width: float) void
     }
 
     GameLoop --> IGameState : contains

@@ -23,12 +23,6 @@ public:
     void Update() override;
     void Draw() override;
 
-    // Ball-specific methods
-    void ReverseX();
-    void ReverseY();
-    bool IsBelow(float y) const;
-    float GetRadius() const;
-
 private:
     float radius;
     float speed;

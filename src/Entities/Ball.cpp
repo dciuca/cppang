@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "Physics.h"
 #include "raylib.h"
 #include <cmath>
 
@@ -11,8 +12,8 @@ Ball::Ball(
     Color color)
     : radius(radius), speed(speed), angle(angle), color(color), texture({0}), useTexture(false)
 {
-    position = { x, y };
-    velocity = { 0, 0 };
+    position = {x, y};
+    velocity = {0, 0};
     isActive = true;
 
     // Calculate velocity components based on angle
@@ -28,45 +29,20 @@ void Ball::SetActive(bool active)
 
 void Ball::Update()
 {
-    if (!isActive) return;
+    if (!isActive)
+        return;
 
     // Update position based on velocity
     position.x += velocity.x * GetFrameTime();
     position.y += velocity.y * GetFrameTime();
 
-    // Bounce on screen borders
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-
-    // Left and right walls
-    if (position.x - radius <= 0)
-    {
-        position.x = radius;
-        ReverseX();
-    }
-    else if (position.x + radius >= screenWidth)
-    {
-        position.x = screenWidth - radius;
-        ReverseX();
-    }
-
-    // Top wall
-    if (position.y - radius <= 0)
-    {
-        position.y = radius;
-        ReverseY();
-    }
-    // Bottom wall
-    if (position.y + radius >= screenHeight)
-    {
-        position.y = screenHeight - radius;
-        ReverseY();
-    }
+    Physics::BounceOnXY(*this, radius);
 }
 
 void Ball::Draw()
 {
-    if (!isActive) return;
+    if (!isActive)
+        return;
 
     if (useTexture)
     {
@@ -83,7 +59,7 @@ void Ball::SetColor(Color newColor)
     color = newColor;
 }
 
-void Ball::SetTexture(const std::string& texturePath)
+void Ball::SetTexture(const std::string &texturePath)
 {
     if (useTexture)
     {
@@ -92,24 +68,4 @@ void Ball::SetTexture(const std::string& texturePath)
 
     texture = LoadTexture(texturePath.c_str());
     useTexture = true;
-}
-
-void Ball::ReverseX()
-{
-    velocity.x = -velocity.x;
-}
-
-void Ball::ReverseY()
-{
-    velocity.y = -velocity.y;
-}
-
-bool Ball::IsBelow(float y) const
-{
-    return position.y - radius > y;
-}
-
-float Ball::GetRadius() const
-{
-    return radius;
 }
