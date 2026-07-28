@@ -35,7 +35,7 @@ void PlayingState::Enter()
     m_entities.push_back(std::make_unique<Ball>());
 
     // add a second ball for testing
-    m_entities.push_back(std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 150.0f, 60.0f, GREEN));
+    m_entities.push_back(std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 60.0f, GREEN));
 
     // Set Active all the m_entities
     for (auto &entity : m_entities)

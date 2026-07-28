@@ -7,13 +7,13 @@ Ball::Ball(
     float x,
     float y,
     float radius,
-    float speed,
     float angle,
     Color color)
-    : radius(radius), speed(speed), angle(angle), color(color), texture({0}), useTexture(false)
+    : radius(radius), angle(angle), color(color), texture({0}), useTexture(false)
 {
     position = {x, y};
     velocity = {0, 0};
+    speed = 250.0f;
 
     // Sets initial velocity from angle, that's all angle ever does
     float angleRad = angle * DEG2RAD;

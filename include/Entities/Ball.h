@@ -11,7 +11,6 @@ public:
         float x = 400.0f,
         float y = 300.0f,
         float radius = 60.0f,
-        float speed = 200.0f,
         float angle = 45.0f,
         Color color = RED);
     ~Ball() = default;
@@ -26,7 +25,6 @@ public:
 
 private:
     float radius;
-    float speed;
     float angle; // in degrees
     Color color;
     Texture2D texture;
