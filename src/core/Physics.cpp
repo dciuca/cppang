@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include <cmath>
 
 void Physics::ApplyGravity(IEntity &entity, float gravity)
 {
@@ -19,10 +20,8 @@ void Physics::UpdateCharacter(IEntity &entity)
 void Physics::UpdateBall(IEntity &entity)
 {
     ApplyGravity(entity);
-
     entity.position.x += entity.velocity.x * GetFrameTime();
     entity.position.y += entity.velocity.y * GetFrameTime();
-
     BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y, ShapeType::CIRCLE);
 };
 

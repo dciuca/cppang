@@ -14,28 +14,22 @@ Ball::Ball(
 {
     position = {x, y};
     velocity = {0, 0};
-    isActive = true;
 
-    // Calculate velocity components based on angle
+    // Sets initial velocity from angle, that's all angle ever does
     float angleRad = angle * DEG2RAD;
     velocity.x = speed * cosf(angleRad);
     velocity.y = speed * sinf(angleRad);
 }
 
-void Ball::SetActive(bool active)
-{
-    isActive = active;
-}
-
 void Ball::Update()
 {
-    if (!isActive)
+    if (this->IsActive() == false)
         return;
 }
 
 void Ball::Draw()
 {
-    if (!isActive)
+    if (this->IsActive() == false)
         return;
 
     if (useTexture)

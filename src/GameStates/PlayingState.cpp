@@ -11,7 +11,7 @@ PlayingState::PlayingState()
 void PlayingState::HandleInput()
 {
     // Input Handling for Player 1
-    if (m_players.size() > 0 && m_players[0]->isActive)
+    if (m_players.size() > 0 && m_players[0]->IsActive())
     {
         Player *p1 = m_players[0];
         Vector2 velocity = p1->velocity;
@@ -39,7 +39,10 @@ void PlayingState::Enter()
     m_entities.push_back(std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 150.0f, 60.0f, GREEN));
 
     // Set Active all the m_entities
-    m_entities[0]->SetActive(true);
+    for (auto &entity : m_entities)
+    {
+        entity->SetActive(true);
+    }
 }
 
 void PlayingState::Update()

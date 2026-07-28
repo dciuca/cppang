@@ -13,7 +13,6 @@ Player::Player(
     position = {x, y};
     velocity = {0, 0};
     speed = 300.0f;
-    isActive = true;
 
     // Load texture if a path is provided
     if (!texturePath.empty())
@@ -23,20 +22,15 @@ Player::Player(
     }
 }
 
-void Player::SetActive(bool active)
-{
-    isActive = active;
-}
-
 void Player::Update()
 {
-    if (!isActive)
+    if (this->IsActive() == false)
         return;
 }
 
 void Player::Draw()
 {
-    if (!isActive)
+    if (this->IsActive() == false)
         return;
 
     if (useTexture)
