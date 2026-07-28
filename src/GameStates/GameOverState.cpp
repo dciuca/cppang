@@ -10,7 +10,7 @@ void GameOverState::HandleInput()
     // Check for restart or exit input
     if (IsKeyPressed(KEY_R))
     {
-        // TODO: Change back to PlayingState
+        RequestStateChange(GameStateRequest::ChangeToPlaying);
     }
 
     if (IsKeyPressed(KEY_ESCAPE))

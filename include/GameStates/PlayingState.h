@@ -2,6 +2,7 @@
 #include "IEntity.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Ball.h"
 #include <memory>
 #include <vector>
 
@@ -18,6 +19,7 @@ public:
     void Exit() override;
 
 private:
-    std::vector<std::unique_ptr<IEntity>> m_entities;
-    std::vector<Player *> m_players;
+    std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
+    std::vector<Player *> m_players;                  // Observer
+    std::vector<Ball *> m_balls;                      // Observer
 };

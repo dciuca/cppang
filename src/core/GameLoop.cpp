@@ -6,33 +6,41 @@
 
 GameLoop::GameLoop()
 {
-	// Initialize the game with a default state
-	ChangeState(std::make_unique<MenuState>());
+    // Initialize the game with a default state
+    ChangeState(std::make_unique<MenuState>());
 }
 
-void GameLoop::Run() {
-    while (!WindowShouldClose()) {
+void GameLoop::Run()
+{
+    while (!WindowShouldClose())
+    {
 
-        if (currentState) {
+        if (currentState)
+        {
 
             currentState->HandleInput();
             currentState->Update();
 
-            switch(currentState->GetGameStateRequest())
+            switch (currentState->GetGameStateRequest())
             {
-                case GameStateRequest::ChangeToPlaying:
-                    ChangeState(std::make_unique<PlayingState>());
-                    break;
+            case GameStateRequest::ChangeToPlaying:
+                ChangeState(std::make_unique<PlayingState>());
+                break;
+
+            case GameStateRequest::ChangeToGameOver:
+                ChangeState(std::make_unique<GameOverState>());
             }
-        
+
             currentState->Draw();
         }
     }
 }
 
-void GameLoop::ChangeState(std::unique_ptr<IGameState> newState) {
+void GameLoop::ChangeState(std::unique_ptr<IGameState> newState)
+{
     // Exit current state if it exists
-    if (currentState) {
+    if (currentState)
+    {
         currentState->Exit();
     }
 
@@ -40,7 +48,8 @@ void GameLoop::ChangeState(std::unique_ptr<IGameState> newState) {
     currentState = std::move(newState);
 
     // Enter new state if it exists
-    if (currentState) {
+    if (currentState)
+    {
         currentState->Enter();
     }
 }

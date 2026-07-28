@@ -15,6 +15,12 @@ classDiagram
         Quit
     }
 
+    class ShapeType {
+        <<Enumeration>>
+        CIRCLE
+        RECTANGLE
+    }
+
     class IGameState {
         <<interface>>
         +HandleInput() void
@@ -55,7 +61,7 @@ classDiagram
 
     class IEntity {
         <<interface>>
-        +bool isActive
+        -bool isActive
         +Vector2 position
         +Vector2 velocity
         +float speed
@@ -71,7 +77,6 @@ classDiagram
     class Player {
         -float width
         -float height
-        -float speed
         -Color color
         -Texture2D texture
         -bool useTexture
@@ -86,7 +91,6 @@ classDiagram
 
     class Ball {
         -float radius
-        -float speed
         -float angle
         -Color color
         -Texture2D texture
@@ -107,6 +111,7 @@ classDiagram
         -UpdatePosition(entity: IEntity&) void
         +UpdateCharacter(entity: IEntity&) void
         +UpdateBall(entity: IEntity&) void
+        +CheckBallPlayerCollision(ball: IEntity&, player: IEntity&) bool
     }
 
     GameLoop --> IGameState : contains
@@ -114,6 +119,8 @@ classDiagram
     IGameState <|-- PlayingState : implements
     IGameState <|-- GameOverState : implements
     IGameState --> GameStateRequest: uses
+    Physics --> ShapeType: uses
+    IEntity --> ShapeType: uses
     
     PlayingState --> IEntity : contains
     IEntity <|-- Player : implements
