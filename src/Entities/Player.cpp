@@ -26,7 +26,7 @@ Player::Player(
 // {
 // }
 
-void Player::Draw()
+void Player::Draw() const
 {
     if (this->IsActive() == false)
         return;

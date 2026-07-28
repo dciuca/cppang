@@ -22,7 +22,7 @@ public:
     Vector2 GetDimensions() const override;
     ShapeType GetShapeType() const { return ShapeType::RECTANGLE; };
     // void Update() override;
-    void Draw() override;
+    void Draw() const override;
 
 private:
     float width;

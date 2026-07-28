@@ -24,37 +24,37 @@ void MenuState::Enter()
 
 void MenuState::Update()
 {
-    // Any updates for menu state, if needed   
+    // Any updates for menu state, if needed
 }
 
-void MenuState::Draw()
+void MenuState::Draw() const
 {
     BeginDrawing();
     ClearBackground(GREEN);
 
     // Draw MENU text centered
-    const char* text = "MENU";
+    const char *text = "MENU";
     int fontSize = 60;
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
-    
+
     int textWidth = MeasureText(text, fontSize);
     int textX = (screenWidth - textWidth) / 2;
     int textY = screenHeight / 2 - 50;
-    
+
     DrawText(text, textX, textY, fontSize, WHITE);
-    
+
     // Draw instructions
-    const char* instructions = "Press SPACE to start the game";
+    const char *instructions = "Press SPACE to start the game";
     int instrSize = 30;
     int instrWidth = MeasureText(instructions, instrSize);
     int instrX = (screenWidth - instrWidth) / 2;
     int instrY = textY + 80;
-    
+
     DrawText(instructions, instrX, instrY, instrSize, GRAY);
 
     DrawFPS(10, 10);
-    
+
     EndDrawing();
 }
 

@@ -14,7 +14,7 @@ public:
     void HandleInput() override;
     void Enter() override;
     void Update() override;
-    void Draw() override;
+    void Draw() const override;
     void Exit() override;
 
 private:

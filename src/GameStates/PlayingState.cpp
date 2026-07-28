@@ -60,7 +60,7 @@ void PlayingState::Update()
     }
 }
 
-void PlayingState::Draw()
+void PlayingState::Draw() const
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);

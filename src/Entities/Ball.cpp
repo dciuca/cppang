@@ -25,7 +25,7 @@ Ball::Ball(
 // {
 // }
 
-void Ball::Draw()
+void Ball::Draw() const
 {
     if (this->IsActive() == false)
         return;

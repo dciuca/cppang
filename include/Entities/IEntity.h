@@ -24,8 +24,8 @@ public:
     virtual void SetTexture(const std::string &texturePath) = 0;
     virtual ShapeType GetShapeType() const = 0;
     // virtual void Update() = 0;
-    virtual void Draw() = 0;
+    virtual void Draw() const = 0;
 
 private:
-    bool isActive;
+    bool isActive = false;
 };

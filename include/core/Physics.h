@@ -1,3 +1,5 @@
+#pragma once
+
 #include "raylib.h"
 #include "IEntity.h"
 #include "GameTypes.h"
