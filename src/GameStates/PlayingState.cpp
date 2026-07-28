@@ -1,4 +1,5 @@
 #include "PlayingState.h"
+// #include "Physics.h"
 #include "Player.h"
 #include "Ball.h"
 #include "raylib.h"
@@ -7,47 +8,45 @@ PlayingState::PlayingState()
 {
 }
 
-void PlayingState::HandleInput() {
-    // Player input handling
-    if (player && player->isActive) {
-        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-            player->velocity.x = -player->speed;
-        }
-        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-            player->velocity.x = player->speed;
-        }
+void PlayingState::HandleInput()
+{
+    // Input Handling for Player 1
+    if (m_players.size() > 0 && m_players[0]->isActive)
+    {
+        Player *p1 = m_players[0];
+        Vector2 velocity = p1->velocity;
+
+        if (IsKeyDown(KEY_LEFT))
+            velocity.x = -p1->speed;
+        else if (IsKeyDown(KEY_RIGHT))
+            velocity.x = p1->speed;
+
+        p1->velocity = velocity;
     }
 }
 
 void PlayingState::Enter()
 {
-    // Init player
-    player = std::make_unique<Player>();
-    player->SetActive(true);
+    // Init player1
+    auto p1 = std::make_unique<Player>();
+    m_players.push_back(p1.get());
+    m_entities.push_back(std::move(p1));
 
     // Init ball
-    AddBall(std::make_unique<Ball>());
-    balls.back()->SetActive(true);
+    m_entities.push_back(std::make_unique<Ball>());
 
     // add a second ball for testing
-    AddBall(std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 150.0f, 60.0f, GREEN));
-    balls.back()->SetActive(true);
+    m_entities.push_back(std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 150.0f, 60.0f, GREEN));
+
+    // Set Active all the m_entities
+    m_entities[0]->SetActive(true);
 }
 
 void PlayingState::Update()
 {
-    if (player && player->isActive)
+    for (auto &entity : m_entities)
     {
-        player->Update();
-    }
-
-    // Update all active balls
-    for (auto& ball : balls)
-    {
-        if (ball && ball->isActive)
-        {
-            ball->Update();
-        }
+        entity->Update();
     }
 }
 
@@ -56,18 +55,9 @@ void PlayingState::Draw()
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    if (player)
+    for (const auto &entity : m_entities)
     {
-        player->Draw();
-    }
-
-    // Draw all active balls
-    for (const auto& ball : balls)
-    {
-        if (ball)
-        {
-            ball->Draw();
-        }
+        entity->Draw();
     }
 
     DrawFPS(10, 10);
@@ -77,11 +67,5 @@ void PlayingState::Draw()
 
 void PlayingState::Exit()
 {
-    player.reset();
-    balls.clear();
-}
-
-void PlayingState::AddBall(std::unique_ptr<IEntity> newBall)
-{
-    balls.push_back(std::move(newBall));
+    m_entities.clear();
 }

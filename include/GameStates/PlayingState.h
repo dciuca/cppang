@@ -1,5 +1,7 @@
 #include "IGameState.h"
 #include "IEntity.h"
+#include "Physics.h"
+#include "Player.h"
 #include <memory>
 #include <vector>
 
@@ -19,6 +21,7 @@ public:
 	void AddBall(std::unique_ptr<IEntity> newBall);
 
 private:
-	std::unique_ptr<IEntity> player;
-	std::vector<std::unique_ptr<IEntity>> balls;
+	std::vector<std::unique_ptr<IEntity>> m_entities;
+	std::vector<Player *> m_players;
+	Physics physics;
 };
