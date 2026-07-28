@@ -14,7 +14,7 @@ void Physics::UpdateCharacter(IEntity &entity)
     entity.position.y += entity.velocity.y * GetFrameTime();
     entity.velocity = {0, 0};
 
-    BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y, ShapeType::RECTANGLE);
+    BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y);
 };
 
 void Physics::UpdateBall(IEntity &entity)
@@ -22,19 +22,19 @@ void Physics::UpdateBall(IEntity &entity)
     ApplyGravity(entity);
     entity.position.x += entity.velocity.x * GetFrameTime();
     entity.position.y += entity.velocity.y * GetFrameTime();
-    BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y, ShapeType::CIRCLE);
+    BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y);
 };
 
-void Physics::BounceOnWalls(IEntity &entity, float width, float height, ShapeType shape)
+void Physics::BounceOnWalls(IEntity &entity, float width, float height)
 {
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
 
     // Calc margins depending on the shape
-    float leftOffset = (shape == ShapeType::CIRCLE) ? width : 0;
-    float rightOffset = (shape == ShapeType::CIRCLE) ? width : width;
-    float topOffset = (shape == ShapeType::CIRCLE) ? height : 0;
-    float bottomOffset = (shape == ShapeType::CIRCLE) ? height : height;
+    float leftOffset = (entity.GetShapeType() == ShapeType::CIRCLE) ? width : 0;
+    float rightOffset = (entity.GetShapeType() == ShapeType::CIRCLE) ? width : width;
+    float topOffset = (entity.GetShapeType() == ShapeType::CIRCLE) ? height : 0;
+    float bottomOffset = (entity.GetShapeType() == ShapeType::CIRCLE) ? height : height;
 
     // Bounce Left/Right Walls
     if (entity.position.x - leftOffset <= 0)

@@ -10,5 +10,5 @@ public:
 
 private:
     static void ApplyGravity(IEntity &entity, float gravity = 9.8f);
-    static void BounceOnWalls(IEntity &entity, float width, float height, ShapeType shape);
+    static void BounceOnWalls(IEntity &entity, float width, float height);
 };
