@@ -1,33 +1,25 @@
 #pragma once
-
-enum class GameStateRequest
-{
-    None,
-    ChangeToPlaying,
-    ChangeToMenu,
-    ChangeToGameOver,
-    Quit
-};
+#include "GameTypes.h"
 
 class IGameState
 {
 public:
-	virtual ~IGameState() = default;
+    virtual ~IGameState() = default;
 
-	virtual void HandleInput() = 0;
-	virtual void Enter() = 0;
-	virtual void Update() = 0;
-	virtual void Draw() = 0;
-	virtual void Exit() = 0;
+    virtual void HandleInput() = 0;
+    virtual void Enter() = 0;
+    virtual void Update() = 0;
+    virtual void Draw() = 0;
+    virtual void Exit() = 0;
 
 public:
-	GameStateRequest GetGameStateRequest() const
+    GameStateRequest GetGameStateRequest() const
     {
         return gameStateRequest;
     }
-	
+
 protected:
-	void RequestStateChange(GameStateRequest request)
+    void RequestStateChange(GameStateRequest request)
     {
         gameStateRequest = request;
     }
