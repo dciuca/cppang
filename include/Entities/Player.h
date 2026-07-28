@@ -17,10 +17,10 @@ public:
     ~Player() = default;
 
     // Implementation of pure virtual methods from IEntity
-    void SetColor(Color newColor) override;
+    void SetColor(const Color &newColor) override;
     void SetTexture(const std::string &texturePath) override;
-    Vector2 GetDimensions() override;
-    ShapeType GetShapeType() { return ShapeType::RECTANGLE; };
+    Vector2 GetDimensions() const override;
+    ShapeType GetShapeType() const { return ShapeType::RECTANGLE; };
     // void Update() override;
     void Draw() override;
 

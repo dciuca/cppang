@@ -41,7 +41,7 @@ void Player::Draw()
     }
 }
 
-void Player::SetColor(Color newColor)
+void Player::SetColor(const Color &newColor)
 {
     color = newColor;
 }
@@ -57,7 +57,7 @@ void Player::SetTexture(const std::string &texturePath)
     useTexture = true;
 }
 
-Vector2 Player::GetDimensions()
+Vector2 Player::GetDimensions() const
 {
     return {width, height};
 }

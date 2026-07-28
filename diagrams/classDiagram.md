@@ -104,6 +104,7 @@ classDiagram
         <<static>>
         -ApplyGravity(entity: IEntity&, gravity: float) void
         -BounceOnWalls(entity: IEntity&, width: float, height float, ShapeType shape) void
+        -UpdatePosition(entity: IEntity&) void
         +UpdateCharacter(entity: IEntity&) void
         +UpdateBall(entity: IEntity&) void
     }

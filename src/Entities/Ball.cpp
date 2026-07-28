@@ -40,7 +40,7 @@ void Ball::Draw()
     }
 }
 
-void Ball::SetColor(Color newColor)
+void Ball::SetColor(const Color &newColor)
 {
     color = newColor;
 }
@@ -56,7 +56,7 @@ void Ball::SetTexture(const std::string &texturePath)
     useTexture = true;
 }
 
-Vector2 Ball::GetDimensions()
+Vector2 Ball::GetDimensions() const
 {
     return {radius, radius};
 }

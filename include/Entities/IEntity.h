@@ -16,13 +16,13 @@ public:
 
     // default implementations
     void SetActive(bool active) { this->isActive = active; };
-    bool IsActive() { return isActive; };
+    bool IsActive() const { return isActive; };
 
     // pure virtual
-    virtual Vector2 GetDimensions() = 0;
-    virtual void SetColor(Color newColor) = 0;
+    virtual Vector2 GetDimensions() const = 0;
+    virtual void SetColor(const Color &newColor) = 0;
     virtual void SetTexture(const std::string &texturePath) = 0;
-    virtual ShapeType GetShapeType() = 0;
+    virtual ShapeType GetShapeType() const = 0;
     // virtual void Update() = 0;
     virtual void Draw() = 0;
 
