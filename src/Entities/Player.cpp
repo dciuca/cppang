@@ -22,11 +22,9 @@ Player::Player(
     }
 }
 
-void Player::Update()
-{
-    if (this->IsActive() == false)
-        return;
-}
+// void Player::Update()
+// {
+// }
 
 void Player::Draw()
 {

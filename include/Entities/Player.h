@@ -20,7 +20,8 @@ public:
     void SetColor(Color newColor) override;
     void SetTexture(const std::string &texturePath) override;
     Vector2 GetDimensions() override;
-    void Update() override;
+    ShapeType GetShapeType() { return ShapeType::RECTANGLE; };
+    // void Update() override;
     void Draw() override;
 
 private:

@@ -21,11 +21,9 @@ Ball::Ball(
     velocity.y = speed * sinf(angleRad);
 }
 
-void Ball::Update()
-{
-    if (this->IsActive() == false)
-        return;
-}
+// void Ball::Update()
+// {
+// }
 
 void Ball::Draw()
 {

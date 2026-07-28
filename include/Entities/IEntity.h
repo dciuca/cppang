@@ -2,6 +2,7 @@
 
 #include <string>
 #include "raylib.h"
+#include "GameTypes.h"
 
 class IEntity
 {
@@ -21,7 +22,8 @@ public:
     virtual Vector2 GetDimensions() = 0;
     virtual void SetColor(Color newColor) = 0;
     virtual void SetTexture(const std::string &texturePath) = 0;
-    virtual void Update() = 0;
+    virtual ShapeType GetShapeType() = 0;
+    // virtual void Update() = 0;
     virtual void Draw() = 0;
 
 private:

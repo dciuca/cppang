@@ -63,6 +63,7 @@ classDiagram
         +SetColor(color: Color) void
         +SetTexture(texturePath: string) void
         +GetDimensions() Vector2
+        +GetShapeType() ShapeType
         +Update() void
         +Draw() void
     }

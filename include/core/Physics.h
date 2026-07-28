@@ -1,11 +1,6 @@
 #include "raylib.h"
 #include "IEntity.h"
-
-enum class ShapeType
-{
-    CIRCLE,
-    RECTANGLE
-};
+#include "GameTypes.h"
 
 class Physics
 {

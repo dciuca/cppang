@@ -50,11 +50,11 @@ void PlayingState::Update()
     // Physics Update
     for (auto &entity : m_entities)
     {
-        if (auto *ball = dynamic_cast<Ball *>(entity.get()))
+        if (entity->GetShapeType() == ShapeType::CIRCLE)
         {
             Physics::UpdateBall(*entity);
         }
-        else if (auto *player = dynamic_cast<Player *>(entity.get()))
+        else if (entity->GetShapeType() == ShapeType::RECTANGLE)
         {
             Physics::UpdateCharacter(*entity);
         }
