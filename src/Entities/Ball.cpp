@@ -1,5 +1,5 @@
 #include "Ball.h"
-#include "Physics.h"
+// #include "Physics.h"
 #include "raylib.h"
 #include <cmath>
 
@@ -31,12 +31,6 @@ void Ball::Update()
 {
     if (!isActive)
         return;
-
-    // Update position based on velocity
-    position.x += velocity.x * GetFrameTime();
-    position.y += velocity.y * GetFrameTime();
-
-    Physics::BounceOnXY(*this, radius);
 }
 
 void Ball::Draw()
@@ -68,4 +62,9 @@ void Ball::SetTexture(const std::string &texturePath)
 
     texture = LoadTexture(texturePath.c_str());
     useTexture = true;
+}
+
+Vector2 Ball::GetDimensions()
+{
+    return {radius, radius};
 }

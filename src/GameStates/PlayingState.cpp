@@ -44,9 +44,17 @@ void PlayingState::Enter()
 
 void PlayingState::Update()
 {
+    // Physics Update
     for (auto &entity : m_entities)
     {
-        entity->Update();
+        if (auto *ball = dynamic_cast<Ball *>(entity.get()))
+        {
+            Physics::UpdateBall(*entity);
+        }
+        else if (auto *player = dynamic_cast<Player *>(entity.get()))
+        {
+            Physics::UpdateCharacter(*entity);
+        }
     }
 }
 

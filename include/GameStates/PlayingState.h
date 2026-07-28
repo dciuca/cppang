@@ -8,20 +8,16 @@
 class PlayingState : public IGameState
 {
 public:
-	PlayingState();
-	~PlayingState() override = default;
+    PlayingState();
+    ~PlayingState() override = default;
 
-	void HandleInput() override;
-	void Enter() override;
-	void Update() override;
-	void Draw() override;
-	void Exit() override;
-
-public:
-	void AddBall(std::unique_ptr<IEntity> newBall);
+    void HandleInput() override;
+    void Enter() override;
+    void Update() override;
+    void Draw() override;
+    void Exit() override;
 
 private:
-	std::vector<std::unique_ptr<IEntity>> m_entities;
-	std::vector<Player *> m_players;
-	Physics physics;
+    std::vector<std::unique_ptr<IEntity>> m_entities;
+    std::vector<Player *> m_players;
 };

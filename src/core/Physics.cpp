@@ -1,49 +1,63 @@
 #include "Physics.h"
 
-void Physics::BounceOnXY(IEntity &entity, float width)
+void Physics::ApplyGravity(IEntity &entity, float gravity)
+{
+    entity.velocity.y += gravity;
+};
+
+void Physics::UpdateCharacter(IEntity &entity)
+{
+    ApplyGravity(entity);
+
+    entity.position.x += entity.velocity.x * GetFrameTime();
+    entity.position.y += entity.velocity.y * GetFrameTime();
+    entity.velocity = {0, 0};
+
+    BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y, ShapeType::RECTANGLE);
+};
+
+void Physics::UpdateBall(IEntity &entity)
+{
+    ApplyGravity(entity);
+
+    entity.position.x += entity.velocity.x * GetFrameTime();
+    entity.position.y += entity.velocity.y * GetFrameTime();
+
+    BounceOnWalls(entity, (entity.GetDimensions()).x, (entity.GetDimensions()).y, ShapeType::CIRCLE);
+};
+
+void Physics::BounceOnWalls(IEntity &entity, float width, float height, ShapeType shape)
 {
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
 
-    // Left and right walls
-    if (entity.position.x - width <= 0)
+    // Calc margins depending on the shape
+    float leftOffset = (shape == ShapeType::CIRCLE) ? width : 0;
+    float rightOffset = (shape == ShapeType::CIRCLE) ? width : width;
+    float topOffset = (shape == ShapeType::CIRCLE) ? height : 0;
+    float bottomOffset = (shape == ShapeType::CIRCLE) ? height : height;
+
+    // Bounce Left/Right Walls
+    if (entity.position.x - leftOffset <= 0)
     {
-        entity.position.x = width;
+        entity.position.x = leftOffset;
         entity.velocity.x = -entity.velocity.x;
     }
-    else if (entity.position.x + width >= screenWidth)
+    else if (entity.position.x + rightOffset >= screenWidth)
     {
-        entity.position.x = screenWidth - width;
+        entity.position.x = screenWidth - rightOffset;
         entity.velocity.x = -entity.velocity.x;
     }
 
-    // Top wall
-    if (entity.position.y - width <= 0)
+    // Bounce Top/Bottom Walls
+    if (entity.position.y - topOffset <= 0)
     {
-        entity.position.y = width;
+        entity.position.y = topOffset;
         entity.velocity.y = -entity.velocity.y;
     }
-    // Bottom wall
-    if (entity.position.y + width >= screenHeight)
+    else if (entity.position.y + bottomOffset >= screenHeight)
     {
-        entity.position.y = screenHeight - width;
+        entity.position.y = screenHeight - bottomOffset;
         entity.velocity.y = -entity.velocity.y;
-    }
-};
-
-void Physics::BounceOnX(IEntity &entity, float width)
-{
-    int screenWidth = GetScreenWidth();
-
-    // Left and right walls
-    if (entity.position.x < 0)
-    {
-        entity.position.x = 0;
-        entity.velocity.x = -entity.velocity.x;
-    }
-    else if (entity.position.x + width > screenWidth)
-    {
-        entity.position.x = screenWidth - width;
-        entity.velocity.x = -entity.velocity.x;
     }
 };

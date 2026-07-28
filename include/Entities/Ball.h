@@ -20,6 +20,7 @@ public:
     void SetActive(bool active) override;
     void SetColor(Color newColor) override;
     void SetTexture(const std::string &texturePath) override;
+    Vector2 GetDimensions() override;
     void Update() override;
     void Draw() override;
 

@@ -43,7 +43,6 @@ classDiagram
         +Update() void
         +Draw() void
         +Exit() void
-        +AddBall(newBall: unique_ptr~IEntity~) void
     }
 
     class GameOverState {
@@ -56,13 +55,14 @@ classDiagram
 
     class IEntity {
         <<interface>>
-        #bool isActive
-        #Vector2 position
-        #Vector2 velocity
-        #float speed
+        +bool isActive
+        +Vector2 position
+        +Vector2 velocity
+        +float speed
         +SetActive(active: bool) void
         +SetColor(color: Color) void
         +SetTexture(texturePath: string) void
+        +GetDimensions() Vector2
         +Update() void
         +Draw() void
     }
@@ -78,6 +78,7 @@ classDiagram
         +SetActive(active: bool) void
         +SetColor(color: Color) void
         +SetTexture(texturePath: string) void
+        +GetDimensions() Vector2
         +Update() void
         +Draw() void
     }
@@ -85,15 +86,25 @@ classDiagram
     class Ball {
         -float radius
         -float speed
-        +Ball(x, y, radius, speed, angle)
+        -float angle
+        -Color color
+        -Texture2D texture
+        -bool useTexture
+        +Ball(x, y, radius, speed, angle, color)
+        +SetActive(active: bool) void
+        +SetColor(color: Color) void
+        +SetTexture(texturePath: string) void
+        +GetDimensions() Vector2
         +Update() void
         +Draw() void
     }
 
     class Physics {
         <<static>>
-        +BounceOnXY(entity: IEntity&, width: float) void
-        +BounceOnX(entity: IEntity&, width: float) void
+        -ApplyGravity(entity: IEntity&, gravity: float) void
+        -BounceOnWalls(entity: IEntity&, width: float, height float, ShapeType shape) void
+        +UpdateCharacter(entity: IEntity&) void
+        +UpdateBall(entity: IEntity&) void
     }
 
     GameLoop --> IGameState : contains

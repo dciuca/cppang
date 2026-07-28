@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Physics.h"
+// #include "Physics.h"
 #include "raylib.h"
 
 Player::Player(
@@ -32,15 +32,6 @@ void Player::Update()
 {
     if (!isActive)
         return;
-
-    // Update position based on velocity
-    position.x += velocity.x * GetFrameTime();
-    position.y += velocity.y * GetFrameTime();
-
-    Physics::BounceOnX(*this, width);
-
-    // Reset velocity for next frame
-    velocity = {0, 0};
 }
 
 void Player::Draw()
@@ -72,4 +63,9 @@ void Player::SetTexture(const std::string &texturePath)
 
     texture = LoadTexture(texturePath.c_str());
     useTexture = true;
+}
+
+Vector2 Player::GetDimensions()
+{
+    return {width, height};
 }
