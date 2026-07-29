@@ -20,6 +20,7 @@ void GameLoop::Run()
 
             currentState->HandleInput();
             currentState->Update();
+            currentState->Cleanup();
 
             switch (currentState->GetGameStateRequest())
             {

@@ -21,9 +21,9 @@ Ball::Ball(
     velocity.y = speed * sinf(angleRad);
 }
 
-// void Ball::Update()
-// {
-// }
+void Ball::Update()
+{
+}
 
 void Ball::Draw() const
 {

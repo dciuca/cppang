@@ -26,6 +26,7 @@ classDiagram
         +HandleInput() void
         +Enter() void
         +Update() void
+        +Clean() void
         +Draw() void
         +Exit() void
         +GetGameStateRequest() GameStateRequest
@@ -42,11 +43,14 @@ classDiagram
     }
 
     class PlayingState {
-        -unique_ptr~IEntity~ player
-        -vector~unique_ptr~IEntity~~ balls
+        -vector~unique_ptr~IEntity~~ m_entities
+        -vector~Players~~ m_players
+        -vector~Balls~~ m_balls
+        -vector~Harpoon~~ m_harpoons
         +HandleInput() void
         +Enter() void
         +Update() void
+        +Clean() void
         +Draw() void
         +Exit() void
     }
@@ -104,6 +108,21 @@ classDiagram
         +Draw() void
     }
 
+    class Harpoon {
+        -float width
+        -float height
+        -Color color
+        -Texture2D texture
+        -bool useTexture
+        +Harpoon(x, y, width, height, color, texturePath)
+        +SetActive(active: bool) void
+        +SetColor(color: Color) void
+        +SetTexture(texturePath: string) void
+        +GetDimensions() Vector2
+        +Update() void
+        +Draw() void
+    }
+
     class Physics {
         <<static>>
         -ApplyGravity(entity: IEntity&, gravity: float) void
@@ -125,8 +144,8 @@ classDiagram
     PlayingState --> IEntity : contains
     IEntity <|-- Player : implements
     IEntity <|-- Ball : implements
+    IEntity <|-- Harpoon : implements
     
     PlayingState --> Physics : uses
-    Physics --> Ball : operates on
-    Physics --> Player : operates on
+    Physics --> IEntity : operates on
 ```

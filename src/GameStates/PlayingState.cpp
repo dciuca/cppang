@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "Ball.h"
 #include "raylib.h"
+#include <algorithm>
+
+#include <iostream> // DEBUG
 
 PlayingState::PlayingState()
 {
@@ -13,14 +16,26 @@ void PlayingState::HandleInput()
     if (m_players.size() > 0 && m_players[0]->IsActive())
     {
         Player *p1 = m_players[0];
-        Vector2 velocity = p1->velocity;
 
+        // Player position
+        Vector2 velocity = p1->velocity;
         if (IsKeyDown(KEY_LEFT))
             velocity.x = -p1->speed;
         else if (IsKeyDown(KEY_RIGHT))
             velocity.x = p1->speed;
-
         p1->velocity = velocity;
+
+        // Player shoot
+        if (IsKeyPressed(KEY_SPACE))
+        {
+            // add new harpoon in m_harpoons & m_entities
+            auto harpoon = std::make_unique<Harpoon>(
+                p1->position.x + p1->GetDimensions().x / 2.0f,
+                p1->position.y);
+            harpoon->SetActive(true);
+            m_harpoons.push_back(harpoon.get());
+            m_entities.push_back(std::move(harpoon));
+        }
     }
 }
 
@@ -52,17 +67,23 @@ void PlayingState::Enter()
 void PlayingState::Update()
 {
     // Physics Update
-    for (auto &entity : m_entities)
+    for (auto &player : m_players)
     {
-        if (entity->GetShapeType() == ShapeType::CIRCLE)
+        Physics::UpdateCharacter(*player);
+    }
+    for (auto &ball : m_balls)
+    {
+        Physics::UpdateBall(*ball);
+    }
+    for (auto &harpoon : m_harpoons)
+    {
+        if (harpoon->IsActive())
         {
-            Physics::UpdateBall(*entity);
-        }
-        else if (entity->GetShapeType() == ShapeType::RECTANGLE)
-        {
-            Physics::UpdateCharacter(*entity);
+            harpoon->Update();
         }
     }
+
+    std::cout << m_entities.size() << std::endl; // DEBUG
 
     // Ball-Player Collision Detection
     for (auto &ball : m_balls)
@@ -76,6 +97,28 @@ void PlayingState::Update()
             }
         }
     }
+}
+
+void PlayingState::Cleanup()
+{
+    auto removeInactive = [](auto &vec)
+    {
+        vec.erase(
+            std::remove_if(vec.begin(), vec.end(),
+                           [](auto *e)
+                           { return !e->IsActive(); }),
+            vec.end());
+    };
+
+    removeInactive(m_harpoons);
+    removeInactive(m_balls);
+    removeInactive(m_players);
+
+    m_entities.erase(
+        std::remove_if(m_entities.begin(), m_entities.end(),
+                       [](const std::unique_ptr<IEntity> &e)
+                       { return !e->IsActive(); }),
+        m_entities.end());
 }
 
 void PlayingState::Draw() const

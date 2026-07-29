@@ -1,5 +1,4 @@
 #include "Player.h"
-// #include "Physics.h"
 #include "raylib.h"
 
 Player::Player(
@@ -22,9 +21,9 @@ Player::Player(
     }
 }
 
-// void Player::Update()
-// {
-// }
+void Player::Update()
+{
+}
 
 void Player::Draw() const
 {

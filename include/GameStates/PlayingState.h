@@ -3,6 +3,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "Ball.h"
+#include "Harpoon.h"
 #include <memory>
 #include <vector>
 
@@ -15,11 +16,13 @@ public:
     void HandleInput() override;
     void Enter() override;
     void Update() override;
+    void Cleanup() override;
     void Draw() const override;
     void Exit() override;
 
 private:
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
-    std::vector<Player *> m_players;                  // Observer
-    std::vector<Ball *> m_balls;                      // Observer
+    std::vector<Player *> m_players;                  // m_entities observer
+    std::vector<Ball *> m_balls;                      // m_entities observer
+    std::vector<Harpoon *> m_harpoons;                // m_entities observer
 };

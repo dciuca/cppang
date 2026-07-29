@@ -20,7 +20,7 @@ public:
     void SetTexture(const std::string &texturePath) override;
     Vector2 GetDimensions() const override;
     ShapeType GetShapeType() const { return ShapeType::CIRCLE; };
-    // void Update() override;
+    void Update() override;
     void Draw() const override;
 
 private:
