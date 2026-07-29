@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include <algorithm>
 
+#include <iostream> // DEBUG
+
 PlayingState::PlayingState()
 {
 }
@@ -79,6 +81,7 @@ void PlayingState::Update()
     }
 
     // Ball-Player Collision Detection
+    m_ballsToSplit.clear();
     for (auto &ball : m_balls)
     {
         for (auto &player : m_players)
@@ -96,9 +99,54 @@ void PlayingState::Update()
             if (Physics::CheckCircleRectCollision(*ball, *harpoon))
             {
                 harpoon->SetActive(false);
-                ball->SetActive(false); // temporary ball disappears
+                m_ballsToSplit.push_back(ball);
             }
         }
+    }
+
+    SplitBalls(m_ballsToSplit);
+        
+    // DEBUG
+    // // Print the size of m_entities, m_balls and m_ballsToSplit every second
+    // static float timeAccumulator = 0.0f;
+    // timeAccumulator += GetFrameTime();
+    // if (timeAccumulator >= 1.0f)
+    // {
+    //     timeAccumulator = 0.0f;
+    //     std::cout << "Entities: " << m_entities.size() << ", Balls: " << m_balls.size() << ", BallsToSplit: " << m_ballsToSplit.size() << std::endl;
+    // }
+}
+
+void PlayingState::SplitBalls(std::vector<Ball *> m_ballsToSplit) 
+{
+    for (auto &ball : m_ballsToSplit)
+    {
+        // Create two smaller balls
+        float newRadius = ball->GetDimensions().x / 2.0f; // Assuming GetDimensions().x returns diameter
+        if (newRadius > 10.0f) // Minimum size check
+        {
+            auto ball1 = std::make_unique<Ball>(
+                ball->position.x - newRadius,
+                ball->position.y,
+                newRadius,
+                45.0f,
+                RED);
+            auto ball2 = std::make_unique<Ball>(
+                ball->position.x + newRadius,
+                ball->position.y,
+                newRadius,
+                135.0f,
+                BLUE);
+
+            ball1->SetActive(true);
+            ball2->SetActive(true);
+            m_balls.push_back(ball1.get());
+            m_entities.push_back(std::move(ball1));
+
+            m_balls.push_back(ball2.get());
+            m_entities.push_back(std::move(ball2));
+        }
+        ball->SetActive(false); // Deactivate the original ball
     }
 }
 

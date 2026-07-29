@@ -1,6 +1,5 @@
 #include "Physics.h"
 #include <cmath>
-#include <iostream> // DEBUG
 
 // public methods
 void Physics::UpdateCharacter(IEntity &entity)
@@ -37,8 +36,6 @@ bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &playe
     float dy = ball.position.y - closestY;
 
     bool collision = (dx * dx + dy * dy) < (radius * radius);
-    if (collision)
-        std::cout << "Collision: " << collision << std::endl;
     return collision;
 }
 
