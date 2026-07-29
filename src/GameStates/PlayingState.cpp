@@ -4,8 +4,6 @@
 #include "raylib.h"
 #include <algorithm>
 
-#include <iostream> // DEBUG
-
 PlayingState::PlayingState()
 {
 }
@@ -77,23 +75,28 @@ void PlayingState::Update()
     }
     for (auto &harpoon : m_harpoons)
     {
-        if (harpoon->IsActive())
-        {
-            harpoon->Update();
-        }
+        harpoon->Update();
     }
-
-    std::cout << m_entities.size() << std::endl; // DEBUG
 
     // Ball-Player Collision Detection
     for (auto &ball : m_balls)
     {
         for (auto &player : m_players)
         {
-            if (Physics::CheckBallPlayerCollision(*ball, *player))
+            if (Physics::CheckCircleRectCollision(*ball, *player))
             {
                 RequestStateChange(GameStateRequest::ChangeToGameOver);
                 return;
+            }
+        }
+
+        // Harpoon-Ball Collision Detection
+        for (auto &harpoon : m_harpoons)
+        {
+            if (Physics::CheckCircleRectCollision(*ball, *harpoon))
+            {
+                harpoon->SetActive(false);
+                ball->SetActive(false); // temporary ball disappears
             }
         }
     }

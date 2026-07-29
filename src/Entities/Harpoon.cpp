@@ -11,7 +11,7 @@ Harpoon::Harpoon(
 {
     position = {x, y};
     velocity = {0, 0};
-    speed = 300.0f;
+    speed = 1000.0f;
 
     // Load texture if a path is provided
     if (!texturePath.empty())

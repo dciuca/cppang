@@ -9,7 +9,7 @@ class Physics
 public:
     static void UpdateCharacter(IEntity &entity);
     static void UpdateBall(IEntity &entity);
-    static bool CheckBallPlayerCollision(const IEntity &ball, const IEntity &player);
+    static bool CheckCircleRectCollision(const IEntity &ball, const IEntity &player);
 
 private:
     static void ApplyGravity(IEntity &entity, float gravity = 9.8f);

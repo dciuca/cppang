@@ -130,7 +130,7 @@ classDiagram
         -UpdatePosition(entity: IEntity&) void
         +UpdateCharacter(entity: IEntity&) void
         +UpdateBall(entity: IEntity&) void
-        +CheckBallPlayerCollision(ball: IEntity&, player: IEntity&) bool
+        +CheckCircleRectCollision(ball: IEntity&, player: IEntity&) bool
     }
 
     GameLoop --> IGameState : contains

@@ -22,7 +22,7 @@ void Physics::UpdateBall(IEntity &entity)
     BounceOnWalls(entity, dims.x, dims.y);
 };
 
-bool Physics::CheckBallPlayerCollision(const IEntity &ball, const IEntity &player)
+bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &player)
 {
     const Vector2 ballDims = ball.GetDimensions();
     const Vector2 playerDims = player.GetDimensions();
