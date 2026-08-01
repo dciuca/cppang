@@ -32,9 +32,6 @@ struct GameLevels
                 {500.0f, 400.0f, 30.0f, 60.0f, BLUE}, // ball 2
                 {700.0f, 200.0f, 40.0f, 45.0f, GREEN} // ball 3
             };
-
-        default:
-            break;
         }
     }
 };

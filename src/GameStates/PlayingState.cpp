@@ -47,16 +47,7 @@ void PlayingState::Enter()
     m_players.push_back(p1.get());       // observe raw pointer before moving
     m_entities.push_back(std::move(p1)); // transfer ownership
 
-    // // TESTING LEVEL 0 -----------------------------------------------------
-    // auto ball1 = std::make_unique<Ball>();
-    // m_balls.push_back(ball1.get());
-    // m_entities.push_back(std::move(ball1));
-
-    // // add a second ball for testing
-    // auto ball2 = std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 60.0f, GREEN);
-    // m_balls.push_back(ball2.get());
-    // m_entities.push_back(std::move(ball2));
-    // ---------------------------------------------------------------------
+    // Load Balls from Level 0
     auto balls = GameLevels::GetLevelBalls(0);
     for (const auto &config : balls)
     {
@@ -114,7 +105,7 @@ void PlayingState::Update()
     }
 
     SplitBalls(m_ballsToSplit);
-        
+
     // DEBUG
     // // Print the size of m_entities, m_balls and m_ballsToSplit every second
     // static float timeAccumulator = 0.0f;
@@ -126,13 +117,13 @@ void PlayingState::Update()
     // }
 }
 
-void PlayingState::SplitBalls(std::vector<Ball *> m_ballsToSplit) 
+void PlayingState::SplitBalls(std::vector<Ball *> m_ballsToSplit)
 {
     for (auto &ball : m_ballsToSplit)
     {
         // Create two smaller balls
         float newRadius = ball->GetDimensions().x / 2.0f; // Assuming GetDimensions().x returns diameter
-        if (newRadius > 10.0f) // Minimum size check
+        if (newRadius > 10.0f)                            // Minimum size check
         {
             auto ball1 = std::make_unique<Ball>(
                 ball->position.x - newRadius,
