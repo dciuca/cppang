@@ -25,10 +25,17 @@ void GameLoop::Run()
             switch (currentState->GetGameStateRequest())
             {
             case GameStateRequest::ChangeToPlaying:
-                ChangeState(std::make_unique<PlayingState>());
+                m_levelManager.Reset();
+                ChangeState(std::make_unique<PlayingState>(m_levelManager.GetCurrentLevel()));
+                break;
+
+            case GameStateRequest::ChangeToNextLevel:
+                m_levelManager.NextLevel();
+                ChangeState(std::make_unique<PlayingState>(m_levelManager.GetCurrentLevel()));
                 break;
 
             case GameStateRequest::ChangeToGameOver:
+                m_levelManager.Reset();
                 ChangeState(std::make_unique<GameOverState>());
             }
 

@@ -10,6 +10,7 @@ enum class GameStateRequest
 {
     None,
     ChangeToPlaying,
+    ChangeToNextLevel,
     ChangeToMenu,
     ChangeToGameOver,
     Quit

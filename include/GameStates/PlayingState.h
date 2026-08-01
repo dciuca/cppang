@@ -10,7 +10,7 @@
 class PlayingState : public IGameState
 {
 public:
-    PlayingState();
+    PlayingState(size_t level);
     ~PlayingState() override = default;
 
     void HandleInput() override;
@@ -22,8 +22,10 @@ public:
 
 private:
     void SplitBalls(std::vector<Ball *> m_ballsToSplit);
+    void LoadLevelBalls(size_t level);
 
 private:
+    size_t m_level;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
     std::vector<Player *> m_players;                  // m_entities observer
     std::vector<Ball *> m_balls;                      // m_entities observer

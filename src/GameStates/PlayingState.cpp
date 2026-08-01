@@ -7,7 +7,8 @@
 
 #include <iostream> // DEBUG
 
-PlayingState::PlayingState()
+PlayingState::PlayingState(size_t level)
+    : m_level(level)
 {
 }
 
@@ -47,17 +48,8 @@ void PlayingState::Enter()
     m_players.push_back(p1.get());       // observe raw pointer before moving
     m_entities.push_back(std::move(p1)); // transfer ownership
 
-    // Load Balls from Level 0
-    auto balls = GameLevels::GetLevelBalls(0);
-    for (const auto &config : balls)
-    {
-        auto ball = std::make_unique<Ball>(
-            config.x, config.y, config.radius, config.angle, config.color);
-        m_balls.push_back(ball.get());
-        m_entities.push_back(std::move(ball));
-    }
+    LoadLevelBalls(this->m_level);
 
-    // Set Active all the m_entities
     for (auto &entity : m_entities)
     {
         entity->SetActive(true);
@@ -104,10 +96,11 @@ void PlayingState::Update()
         }
     }
 
-    SplitBalls(m_ballsToSplit);
+    if (m_ballsToSplit.size() > 0)
+        SplitBalls(m_ballsToSplit);
 
     // DEBUG
-    // // Print the size of m_entities, m_balls and m_ballsToSplit every second
+    // Print the size of m_entities, m_balls and m_ballsToSplit every second
     // static float timeAccumulator = 0.0f;
     // timeAccumulator += GetFrameTime();
     // if (timeAccumulator >= 1.0f)
@@ -150,6 +143,19 @@ void PlayingState::SplitBalls(std::vector<Ball *> m_ballsToSplit)
     }
 }
 
+void PlayingState::LoadLevelBalls(size_t level)
+{
+    m_balls.clear();
+    auto balls = GameLevels::GetLevelBalls(level);
+    for (const auto &config : balls)
+    {
+        auto ball = std::make_unique<Ball>(
+            config.x, config.y, config.radius, config.angle, config.color);
+        m_balls.push_back(ball.get());
+        m_entities.push_back(std::move(ball));
+    }
+}
+
 void PlayingState::Cleanup()
 {
     auto removeInactive = [](auto &vec)
@@ -170,6 +176,11 @@ void PlayingState::Cleanup()
                        [](const std::unique_ptr<IEntity> &e)
                        { return !e->IsActive(); }),
         m_entities.end());
+
+    if (m_balls.size() == 0)
+    {
+        RequestStateChange(GameStateRequest::ChangeToNextLevel);
+    }
 }
 
 void PlayingState::Draw() const
