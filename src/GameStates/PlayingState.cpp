@@ -1,6 +1,7 @@
 #include "PlayingState.h"
 #include "Player.h"
 #include "Ball.h"
+#include "GameLevels.h"
 #include "raylib.h"
 #include <algorithm>
 
@@ -44,16 +45,24 @@ void PlayingState::Enter()
     m_players.push_back(p1.get());       // observe raw pointer before moving
     m_entities.push_back(std::move(p1)); // transfer ownership
 
-    // TESTING LEVEL 0 -----------------------------------------------------
-    auto ball1 = std::make_unique<Ball>();
-    m_balls.push_back(ball1.get());
-    m_entities.push_back(std::move(ball1));
+    // // TESTING LEVEL 0 -----------------------------------------------------
+    // auto ball1 = std::make_unique<Ball>();
+    // m_balls.push_back(ball1.get());
+    // m_entities.push_back(std::move(ball1));
 
-    // add a second ball for testing
-    auto ball2 = std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 60.0f, GREEN);
-    m_balls.push_back(ball2.get());
-    m_entities.push_back(std::move(ball2));
+    // // add a second ball for testing
+    // auto ball2 = std::make_unique<Ball>(200.0f, 200.0f, 30.0f, 60.0f, GREEN);
+    // m_balls.push_back(ball2.get());
+    // m_entities.push_back(std::move(ball2));
     // ---------------------------------------------------------------------
+    auto balls = GameLevels::GetLevelBalls(0);
+    for (const auto &config : balls)
+    {
+        auto ball = std::make_unique<Ball>(
+            config.x, config.y, config.radius, config.angle, config.color);
+        m_balls.push_back(ball.get());
+        m_entities.push_back(std::move(ball));
+    }
 
     // Set Active all the m_entities
     for (auto &entity : m_entities)
