@@ -177,6 +177,7 @@ void PlayingState::Cleanup()
                        { return !e->IsActive(); }),
         m_entities.end());
 
+    // Level complete check — runs after inactive entities are removed
     if (m_balls.size() == 0)
     {
         RequestStateChange(GameStateRequest::ChangeToNextLevel);

@@ -10,6 +10,23 @@ struct BallsConfig
     float radius;
     float angle;
     Color color;
+    Texture2D texture;
+};
+
+struct ObstacleConfig
+{
+    float x;
+    float y;
+    float width;
+    float height;
+    Color color;
+    Texture2D texture;
+};
+
+struct LevelConfig
+{
+    std::vector<BallsConfig> balls;
+    std::vector<ObstacleConfig> obstacles;
 };
 
 struct GameLevels
@@ -20,7 +37,7 @@ struct GameLevels
     {
         switch (level)
         {
-        // ---- LEVEL 0 ----
+        // ---- TEST LEVEL 0 ----
         case 0:
             return {
                 {400.0f, 300.0f, 20.0f, 45.0f, RED}, // ball 1
@@ -39,6 +56,15 @@ struct GameLevels
                 {300.0f, 200.0f, 50.0f, 30.0f, PURPLE}, // ball 1
                 {500.0f, 400.0f, 30.0f, 60.0f, YELLOW}, // ball 2
                 {700.0f, 200.0f, 40.0f, 45.0f, BLACK}   // ball 3
+            };
+
+        // ---- LEVEL 3 ----
+        case 3:
+            return {
+                {300.0f, 200.0f, 50.0f, 30.0f, PURPLE}, // ball 1
+                {500.0f, 400.0f, 30.0f, 60.0f, YELLOW}, // ball 2
+                {700.0f, 200.0f, 40.0f, 45.0f, BLACK},  // ball 3
+                {700.0f, 200.0f, 40.0f, 45.0f, ORANGE}  // ball 4
             };
 
         default:
