@@ -21,8 +21,12 @@ public:
     void Exit() override;
 
 private:
+    void SplitBalls(std::vector<Ball *> m_ballsToSplit);
+
+private:
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
     std::vector<Player *> m_players;                  // m_entities observer
     std::vector<Ball *> m_balls;                      // m_entities observer
     std::vector<Harpoon *> m_harpoons;                // m_entities observer
+    std::vector<Ball *> m_ballsToSplit;               // Balls that need to be split
 };

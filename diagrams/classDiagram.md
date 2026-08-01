@@ -99,6 +99,7 @@ classDiagram
         -Color color
         -Texture2D texture
         -bool useTexture
+        -vector~Balls~~ m_ballsToSplit
         +Ball(x, y, radius, speed, angle, color)
         +SetActive(active: bool) void
         +SetColor(color: Color) void
@@ -106,6 +107,7 @@ classDiagram
         +GetDimensions() Vector2
         +Update() void
         +Draw() void
+        -SplitBalls(-vector~Balls~~ m_ballsToSplit) void
     }
 
     class Harpoon {
