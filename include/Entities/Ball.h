@@ -8,11 +8,11 @@ class Ball : public IEntity
 {
 public:
     Ball(
-        float x = 400.0f,
-        float y = 300.0f,
-        float radius = 60.0f,
-        float angle = 45.0f,
-        Color color = RED);
+        float x,
+        float y,
+        float radius,
+        float angle,
+        Color color);
     ~Ball() = default;
 
     // Implementation of pure virtual methods from IEntity

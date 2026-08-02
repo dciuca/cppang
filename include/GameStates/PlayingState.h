@@ -3,6 +3,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "Ball.h"
+#include "Obstacle.h"
 #include "Harpoon.h"
 #include <memory>
 #include <vector>
@@ -23,6 +24,7 @@ public:
 private:
     void SplitBalls(std::vector<Ball *> m_ballsToSplit);
     void LoadLevelBalls(size_t level);
+    void LoadObstacles(size_t level);
 
 private:
     size_t m_level;
@@ -30,5 +32,6 @@ private:
     std::vector<Player *> m_players;                  // m_entities observer
     std::vector<Ball *> m_balls;                      // m_entities observer
     std::vector<Harpoon *> m_harpoons;                // m_entities observer
+    std::vector<Obstacle *> m_obstacles;              // m_entities observer
     std::vector<Ball *> m_ballsToSplit;               // Balls that need to be split
 };

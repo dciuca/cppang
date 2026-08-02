@@ -1,6 +1,7 @@
 #include "PlayingState.h"
 #include "Player.h"
 #include "Ball.h"
+#include "Obstacle.h"
 #include "GameLevels.h"
 #include "raylib.h"
 #include <algorithm>
@@ -48,6 +49,7 @@ void PlayingState::Enter()
     m_players.push_back(p1.get());       // observe raw pointer before moving
     m_entities.push_back(std::move(p1)); // transfer ownership
 
+    LoadObstacles(this->m_level);
     LoadLevelBalls(this->m_level);
 
     for (auto &entity : m_entities)
@@ -105,9 +107,8 @@ void PlayingState::Update()
     // timeAccumulator += GetFrameTime();
     // if (timeAccumulator >= 1.0f)
     // {
-    //     timeAccumulator = 0.0f;
+        // timeAccumulator = 0.0f;
     //     std::cout << "Entities: " << m_entities.size() << ", Balls: " << m_balls.size() << ", BallsToSplit: " << m_ballsToSplit.size() << std::endl;
-    // }
 }
 
 void PlayingState::SplitBalls(std::vector<Ball *> m_ballsToSplit)
@@ -153,6 +154,18 @@ void PlayingState::LoadLevelBalls(size_t level)
             config.x, config.y, config.radius, config.angle, config.color);
         m_balls.push_back(ball.get());
         m_entities.push_back(std::move(ball));
+    }
+}
+
+void PlayingState::LoadObstacles(size_t level)
+{
+    auto obstacles = GameLevels::GetLevelObstacles(level);
+    for (const auto &config : obstacles)
+    {
+        auto obstacle = std::make_unique<Obstacle>(
+            config.x, config.y, config.width, config.height, config.color);
+        m_obstacles.push_back(obstacle.get());
+        m_entities.push_back(std::move(obstacle));
     }
 }
 

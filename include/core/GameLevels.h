@@ -23,16 +23,11 @@ struct ObstacleConfig
     Texture2D texture;
 };
 
-struct LevelConfig
-{
-    std::vector<BallsConfig> balls;
-    std::vector<ObstacleConfig> obstacles;
-};
-
 struct GameLevels
 {
     static const int MAX_LEVELS = 3;
 
+    // ---- Balls Configuration ----
     static std::vector<BallsConfig> GetLevelBalls(int level)
     {
         switch (level)
@@ -70,6 +65,24 @@ struct GameLevels
         default:
             return {
                 {400.0f, 300.0f, 60.0f, 45.0f, RED}, // ball 1
+            };
+        }
+    }
+
+    // ---- Obstacles Configuration ----
+    static std::vector<ObstacleConfig> GetLevelObstacles(int level)
+    {
+        switch (level)
+        {
+        // ---- TEST LEVEL 0 ----
+        case 0:
+            return {
+                {400.0f, 300.0f, 50.0f, 15.0f, GRAY}, // obstacle 1
+            };
+
+        default:
+            return {
+                
             };
         }
     }
