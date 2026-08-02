@@ -77,7 +77,31 @@ struct GameLevels
         // ---- TEST LEVEL 0 ----
         case 0:
             return {
-                {400.0f, 300.0f, 50.0f, 15.0f, GRAY}, // obstacle 1
+                {400.0f, 400.0f, 150.0f, 15.0f, GRAY}, // obstacle 1
+            };
+        
+        // ---- LEVEL 1 ----
+        case 1:
+            return {
+                {300.0f, 400.0f, 150.0f, 15.0f, GRAY}, // obstacle 1
+                {500.0f, 200.0f, 100.0f, 15.0f, GRAY}  // obstacle 2
+            };
+
+        // ---- LEVEL 2 ----
+        case 2:
+            return {
+                {200.0f, 300.0f, 150.0f, 15.0f, GRAY}, // obstacle 1
+                {400.0f, 500.0f, 100.0f, 15.0f, GRAY}, // obstacle 2
+                {600.0f, 300.0f, 150.0f, 15.0f, GRAY}  // obstacle 3
+            };
+
+        // ---- LEVEL 3 ----
+        case 3:
+            return {
+                {200.0f, 300.0f, 150.0f, 15.0f, GRAY}, // obstacle 1
+                {400.0f, 500.0f, 100.0f, 15.0f, GRAY}, // obstacle 2
+                {600.0f, 300.0f, 150.0f, 15.0f, GRAY}, // obstacle 3
+                {500.0f, 400.0f, 200.0f, 15.0f, GRAY}  // obstacle 4
             };
 
         default:

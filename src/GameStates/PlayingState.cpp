@@ -60,20 +60,6 @@ void PlayingState::Enter()
 
 void PlayingState::Update()
 {
-    // Physics Update
-    for (auto &player : m_players)
-    {
-        Physics::UpdateCharacter(*player);
-    }
-    for (auto &ball : m_balls)
-    {
-        Physics::UpdateBall(*ball);
-    }
-    for (auto &harpoon : m_harpoons)
-    {
-        harpoon->Update();
-    }
-
     // Ball-Player Collision Detection
     m_ballsToSplit.clear();
     for (auto &ball : m_balls)
@@ -87,7 +73,7 @@ void PlayingState::Update()
             }
         }
 
-        // Harpoon-Ball Collision Detection
+        // Ball-Harpoon Collision Detection
         for (auto &harpoon : m_harpoons)
         {
             if (Physics::CheckCircleRectCollision(*ball, *harpoon))
@@ -96,10 +82,45 @@ void PlayingState::Update()
                 m_ballsToSplit.push_back(ball);
             }
         }
+
+        // Ball-Obstacle Collision Detection
+        for (auto &obstacle : m_obstacles)
+        {
+            if (Physics::CheckCircleRectCollision(*ball, *obstacle))
+            {
+                ball->velocity.y *= -1;
+            }
+        }
+    }
+
+    // Harpoon-Obstacle Collision Detection
+    for (auto &harpoon : m_harpoons)
+    {
+        for (auto &obstacle : m_obstacles)
+        {
+            if (Physics::CheckCircleRectCollision(*harpoon, *obstacle))
+            {
+                harpoon->SetActive(false);
+            }
+        }
     }
 
     if (m_ballsToSplit.size() > 0)
         SplitBalls(m_ballsToSplit);
+    
+    // Physics Update
+    for (auto &player : m_players)
+    {
+        Physics::UpdateCharacter(*player);
+    }
+    for (auto &ball : m_balls)
+    {
+        Physics::UpdateBall(*ball);
+    }
+    for (auto &harpoon : m_harpoons)
+    {
+        harpoon->Update();
+    }
 
     // DEBUG
     // Print the size of m_entities, m_balls and m_ballsToSplit every second

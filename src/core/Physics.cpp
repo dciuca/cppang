@@ -21,15 +21,15 @@ void Physics::UpdateBall(IEntity &entity)
     BounceOnWalls(entity, dims.x, dims.y);
 };
 
-bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &player)
+bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &entity)
 {
     const Vector2 ballDims = ball.GetDimensions();
-    const Vector2 playerDims = player.GetDimensions();
+    const Vector2 entityDims = entity.GetDimensions();
     float radius = ballDims.x;
 
     // Find the closest point on the rectangle to the circle center
-    float closestX = fmaxf(player.position.x, fminf(ball.position.x, player.position.x + playerDims.x));
-    float closestY = fmaxf(player.position.y, fminf(ball.position.y, player.position.y + playerDims.y));
+    float closestX = fmaxf(entity.position.x, fminf(ball.position.x, entity.position.x + entityDims.x));
+    float closestY = fmaxf(entity.position.y, fminf(ball.position.y, entity.position.y + entityDims.y));
 
     // Check if the distance from circle center to closest point is less than radius
     float dx = ball.position.x - closestX;
