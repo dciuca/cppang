@@ -73,11 +73,16 @@ void PlayingState::Update()
     {
         harpoon->Update();
     }
+    for (auto &obstacle : m_obstacles)
+    {
+        if (! obstacle->IsFixed())
+            Physics::UpdateObstacle(*obstacle);
+    }
 
-    // Ball-Player Collision Detection
     m_ballsToSplit.clear();
     for (auto &ball : m_balls)
     {
+        // Ball-Player Collision Detection
         for (auto &player : m_players)
         {
             if (Physics::CheckCircleRectCollision(*ball, *player))
@@ -109,7 +114,7 @@ void PlayingState::Update()
     {
         for (auto &obstacle : m_obstacles)
         {
-            if (Physics::CheckCircleRectCollision(*harpoon, *obstacle))
+            if (Physics::CheckRectRectCollision(*harpoon, *obstacle))
             {
                 harpoon->SetActive(false);
             }
@@ -181,7 +186,7 @@ void PlayingState::LoadObstacles(size_t level)
     for (const auto &config : obstacles)
     {
         auto obstacle = std::make_unique<Obstacle>(
-            config.x, config.y, config.width, config.height, config.color);
+            config.x, config.y, config.width, config.height, config.isFixed, config.color);
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
@@ -201,6 +206,7 @@ void PlayingState::Cleanup()
     removeInactive(m_harpoons);
     removeInactive(m_balls);
     removeInactive(m_players);
+    removeInactive(m_obstacles);
 
     m_entities.erase(
         std::remove_if(m_entities.begin(), m_entities.end(),

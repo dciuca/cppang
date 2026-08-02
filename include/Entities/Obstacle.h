@@ -10,6 +10,7 @@ public:
         float y,
         float width,
         float height,
+        bool isFixed,
         Color color);
     ~Obstacle() = default;
 
@@ -20,10 +21,12 @@ public:
     ShapeType GetShapeType() const { return ShapeType::RECTANGLE; };
     void Update() override;
     void Draw() const override;
+    bool IsFixed() const { return isFixed; }
 
 private:
     float width;
     float height;
+    bool isFixed;
     Color color;
     Texture2D texture;
     bool useTexture;

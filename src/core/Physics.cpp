@@ -21,6 +21,14 @@ void Physics::UpdateBall(IEntity &entity)
     BounceOnWalls(entity, dims.x, dims.y);
 };
 
+void Physics::UpdateObstacle(IEntity &entity)
+{
+    UpdatePosition(entity);
+
+    const Vector2 dims = entity.GetDimensions();
+    BounceOnWalls(entity, dims.x, dims.y);
+};
+
 bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &entity)
 {
     const Vector2 ballDims = ball.GetDimensions();
@@ -36,6 +44,19 @@ bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &entit
     float dy = ball.position.y - closestY;
     bool collision = (dx * dx + dy * dy) < (radius * radius);
     return collision;
+}
+
+bool Physics::CheckRectRectCollision(const IEntity &rect1, const IEntity &rect2)
+{
+    const Vector2 rect1Dims = rect1.GetDimensions();
+    const Vector2 rect2Dims = rect2.GetDimensions();
+
+    bool collisionX = rect1.position.x + rect1Dims.x >= rect2.position.x &&
+                      rect2.position.x + rect2Dims.x >= rect1.position.x;
+    bool collisionY = rect1.position.y + rect1Dims.y >= rect2.position.y &&
+                      rect2.position.y + rect2Dims.y >= rect1.position.y;
+
+    return collisionX && collisionY;
 }
 
 bool Physics::CheckAndResolveCircleRectCollision(IEntity& circle, const IEntity& rect)

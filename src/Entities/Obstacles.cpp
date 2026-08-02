@@ -5,12 +5,18 @@ Obstacle::Obstacle(
     float y,
     float width,
     float height,
+    bool isFixed,
     Color color)
-    : width(width), height(height), color(color), texture({0}), useTexture(false)
+    : width(width), height(height), isFixed(isFixed), color(color), texture({0}), useTexture(false)
 {
     position = {x, y};
-    velocity = {0, 0};
     speed = 250.0f;
+    if (isFixed)
+        velocity = {0, 0};
+    else {
+        velocity.x = speed;
+        velocity.y = 0;
+    }
 }
 
 void Obstacle::Update()
