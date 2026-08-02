@@ -34,10 +34,71 @@ bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &entit
     // Check if the distance from circle center to closest point is less than radius
     float dx = ball.position.x - closestX;
     float dy = ball.position.y - closestY;
-
     bool collision = (dx * dx + dy * dy) < (radius * radius);
     return collision;
 }
+
+bool Physics::CheckAndResolveCircleRectCollision(IEntity& circle, const IEntity& rect)
+{
+    const Vector2 circleDims = circle.GetDimensions();
+    const Vector2 rectDims = rect.GetDimensions();
+    float radius = circleDims.x;
+
+    // Find the closest point on the rectangle to the circle center
+    float closestX = fmaxf(rect.position.x, fminf(circle.position.x, rect.position.x + rectDims.x));
+    float closestY = fmaxf(rect.position.y, fminf(circle.position.y, rect.position.y + rectDims.y));
+
+    // Check if the distance from circle center to closest point is less than radius
+    float dx = circle.position.x - closestX;
+    float dy = circle.position.y - closestY;
+    float distSq = dx * dx + dy * dy;
+
+    // No Collision, return early
+    if (distSq >= radius * radius) 
+        return false;
+
+    float distance = sqrtf(distSq);
+
+    // Ball is exactly at the corner of the rectangle, resolve by pushing it out in the direction of least penetration
+    if (distance < 0.0001f) {
+        float left = circle.position.x - rect.position.x;
+        float right = (rect.position.x + rectDims.x) - circle.position.x;
+        float top = circle.position.y - rect.position.y;
+        float bottom = (rect.position.y + rectDims.y) - circle.position.y;
+
+        float minDist = fminf(fminf(left, right), fminf(top, bottom));
+
+        if (minDist == left) {
+            circle.position.x = rect.position.x - radius - 0.1f;
+            circle.velocity.x = -fabs(circle.velocity.x);
+        } else if (minDist == right) {
+            circle.position.x = rect.position.x + rectDims.x + radius + 0.1f;
+            circle.velocity.x = fabs(circle.velocity.x);
+        } else if (minDist == top) {
+            circle.position.y = rect.position.y - radius - 0.1f;
+            circle.velocity.y = -fabs(circle.velocity.y);
+        } else {
+            circle.position.y = rect.position.y + rectDims.y + radius + 0.1f;
+            circle.velocity.y = fabs(circle.velocity.y);
+        }
+        return true;
+    }
+    // Resolve collision by moving the circle out of the rectangle along the normal
+    float overlap = radius - distance;
+    Vector2 normal = {dx / distance, dy / distance};
+
+    circle.position.x += normal.x * (overlap + 0.5f);
+    circle.position.y += normal.y * (overlap + 0.5f);
+
+    if (fabs(normal.x) > fabs(normal.y)) {
+        circle.velocity.x = -circle.velocity.x;
+    } else {
+        circle.velocity.y = -circle.velocity.y;
+    }
+
+    return true;
+}
+
 
 // private methods
 void Physics::ApplyGravity(IEntity &entity, float gravity)
