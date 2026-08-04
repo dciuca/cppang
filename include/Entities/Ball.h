@@ -12,7 +12,8 @@ public:
         float y,
         float radius,
         float angle,
-        Color color);
+        Color color = WHITE,
+        const std::string &texturePath = "");
     ~Ball() = default;
 
     // Implementation of pure virtual methods from IEntity

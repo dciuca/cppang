@@ -6,7 +6,8 @@ Obstacle::Obstacle(
     float width,
     float height,
     bool isFixed,
-    Color color)
+    Color color,
+    const std::string &texturePath)
     : width(width), height(height), isFixed(isFixed), color(color), texture({0}), useTexture(false)
 {
     position = {x, y};
@@ -16,6 +17,12 @@ Obstacle::Obstacle(
     else {
         velocity.x = speed;
         velocity.y = 0;
+    }
+
+    if (!texturePath.empty())
+    {
+        texture = LoadTexture(texturePath.c_str());
+        useTexture = true;
     }
 }
 

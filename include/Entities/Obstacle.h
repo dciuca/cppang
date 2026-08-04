@@ -11,7 +11,8 @@ public:
         float width,
         float height,
         bool isFixed,
-        Color color);
+        Color color = WHITE,
+        const std::string &texturePath = "");
     ~Obstacle() = default;
 
     // Implementation of pure virtual methods from IEntity

@@ -7,17 +7,23 @@ Ball::Ball(
     float y,
     float radius,
     float angle,
-    Color color)
+    Color color,
+    const std::string &texturePath)
     : radius(radius), angle(angle), color(color), texture({0}), useTexture(false)
 {
     position = {x, y};
     velocity = {0, 0};
     speed = 250.0f;
 
-    // Sets initial velocity from angle, that's all angle ever does
     float angleRad = angle * DEG2RAD;
     velocity.x = speed * cosf(angleRad);
     velocity.y = speed * sinf(angleRad);
+
+    if (!texturePath.empty())
+    {
+        texture = LoadTexture(texturePath.c_str());
+        useTexture = true;
+    }
 }
 
 void Ball::Update()
