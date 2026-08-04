@@ -146,7 +146,6 @@ void Physics::BounceOnWalls(IEntity &entity, float width, float height)
 {
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight() - IEntity::GROUND_OFFSET;
-    ;
 
     // Calc margins depending on the shape
     const ShapeType shape = entity.GetShapeType();
