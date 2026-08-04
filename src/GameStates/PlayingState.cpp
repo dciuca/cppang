@@ -20,17 +20,18 @@ void PlayingState::HandleInput()
     {
         Player *p1 = m_players[0];
 
-        // Player position
-        Vector2 velocity = p1->velocity;
+        // Player movement
         if (IsKeyDown(KEY_LEFT))
-            velocity.x = -p1->speed;
+            p1->MoveLeft();
         else if (IsKeyDown(KEY_RIGHT))
-            velocity.x = p1->speed;
-        p1->velocity = velocity;
+            p1->MoveRight();
+        else
+            p1->StopMoving();
 
         // Player shoot
         if (IsKeyPressed(KEY_SPACE))
         {
+            p1->StartShooting();
             // add new harpoon in m_harpoons & m_entities
             auto harpoon = std::make_unique<Harpoon>(
                 p1->position.x + p1->GetDimensions().x / 2.0f,
@@ -46,8 +47,9 @@ void PlayingState::Enter()
 {
     // Init player1
     auto p1 = std::make_unique<Player>();
-    m_players.push_back(p1.get());       // observe raw pointer before moving
-    m_entities.push_back(std::move(p1)); // transfer ownership
+    m_players.push_back(p1.get());
+    m_entities.push_back(std::move(p1));
+    m_players[0]->SetTexture("assets/player.png");
 
     LoadObstacles(this->m_level);
     LoadLevelBalls(this->m_level);
@@ -60,7 +62,7 @@ void PlayingState::Enter()
 
 void PlayingState::Update()
 {
-    UpdatePhysics();
+    UpdateEntities();
     if (!HandleCollisions())
         return;
     if (!m_ballsToSplit.empty())
@@ -117,10 +119,13 @@ void PlayingState::Exit()
 }
 
 // private methods
-void PlayingState::UpdatePhysics()
+void PlayingState::UpdateEntities()
 {
     for (auto &player : m_players)
+    {
         Physics::UpdateCharacter(*player);
+        player->Update();
+    }
     for (auto &ball : m_balls)
         Physics::UpdateBall(*ball);
     for (auto &harpoon : m_harpoons)

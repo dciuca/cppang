@@ -10,11 +10,16 @@ public:
     Player(
         float x = 400.0f,
         float y = 550.0f,
-        float width = 20.0f,
-        float height = 50.0f,
-        Color color = BLUE,
+        float width = 64.0f,
+        float height = 64.0f,
+        Color color = WHITE,
         const std::string &texturePath = "");
     ~Player() = default;
+
+    void MoveLeft();
+    void MoveRight();
+    void StopMoving();
+    void StartShooting();
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
@@ -30,4 +35,16 @@ private:
     Color color;
     Texture2D texture;
     bool useTexture;
+
+    enum class AnimState
+    {
+        Idle,
+        WalkLeft,
+        WalkRight,
+        Shooting
+    };
+    AnimState m_animState = AnimState::Idle;
+    int m_currentFrame = 4;
+    int m_currentRow = 0;
+    float m_animTimer = 0.0f;
 };

@@ -33,3 +33,9 @@ add_executable(${PROJECT_NAME} ${SRC_FILES} ${INC_FILES})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 target_include_directories(${PROJECT_NAME} PRIVATE include/GameStates include/Entities include/core )
+
+add_custom_target(copy_assets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+)
