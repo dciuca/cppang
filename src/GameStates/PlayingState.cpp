@@ -183,21 +183,21 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
     for (auto &ball : m_ballsToSplit)
     {
         // Create two smaller balls
-        float newRadius = ball->GetDimensions().x / 2.0f; // Assuming GetDimensions().x returns diameter
-        if (newRadius > 10.0f)                            // Minimum size check
+        float newRadius = ball->GetDimensions().x / 2.0f;
+        if (newRadius > 10.0f) // Minimum size check
         {
             auto ball1 = std::make_unique<Ball>(
                 ball->position.x - newRadius,
                 ball->position.y,
                 newRadius,
                 45.0f,
-                RED);
+                ball->GetColor());
             auto ball2 = std::make_unique<Ball>(
                 ball->position.x + newRadius,
                 ball->position.y,
                 newRadius,
                 135.0f,
-                BLUE);
+                ball->GetColor());
 
             ball1->SetActive(true);
             ball2->SetActive(true);
