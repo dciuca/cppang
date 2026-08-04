@@ -37,7 +37,9 @@ void Ball::Draw() const
 
     if (useTexture)
     {
-        DrawTextureEx(texture, position, 0.0f, 1.0f, color);
+        Rectangle source = {0, 0, (float)texture.width, (float)texture.height};
+        Rectangle dest = {position.x - radius, position.y - radius, radius * 2, radius * 2};
+        DrawTexturePro(texture, source, dest, {0, 0}, 0.0f, color);
     }
     else
     {

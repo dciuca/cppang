@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <vector>
+#include <string>
 
 #pragma once
 
@@ -10,7 +11,7 @@ struct BallsConfig
     float radius;
     float angle;
     Color color;
-    Texture2D texture;
+    std::string texturePath;
 };
 
 struct ObstacleConfig
@@ -21,7 +22,7 @@ struct ObstacleConfig
     float height;
     bool isFixed;
     Color color;
-    Texture2D texture;
+    std::string texturePath;
 };
 
 struct GameLevels
@@ -36,7 +37,7 @@ struct GameLevels
         // ---- TEST LEVEL 0 ----
         case 0:
             return {
-                {400.0f, 300.0f, 20.0f, 45.0f, RED}, // ball 1
+                {400.0f, 300.0f, 40.0f, 45.0f, WHITE, "assets/balls/red.png"}, // ball 1
             };
 
         // ---- LEVEL 1 ----
@@ -80,12 +81,12 @@ struct GameLevels
             return {
                 {400.0f, 400.0f, 150.0f, 15.0f, false, GRAY}, // obstacle 1
             };
-        
+
         // ---- LEVEL 1 ----
         case 1:
             return {
                 {300.0f, 400.0f, 150.0f, 15.0f, true, GRAY}, // obstacle 1
-                {500.0f, 200.0f, 100.0f, 15.0f, false, GRAY}  // obstacle 2
+                {500.0f, 200.0f, 100.0f, 15.0f, false, GRAY} // obstacle 2
             };
 
         // ---- LEVEL 2 ----
@@ -99,15 +100,15 @@ struct GameLevels
         // ---- LEVEL 3 ----
         case 3:
             return {
-                {200.0f, 300.0f, 150.0f, 15.0f, true, GRAY}, // obstacle 1
-                {400.0f, 500.0f, 100.0f, 15.0f, true, GRAY}, // obstacle 2
+                {200.0f, 300.0f, 150.0f, 15.0f, true, GRAY},  // obstacle 1
+                {400.0f, 500.0f, 100.0f, 15.0f, true, GRAY},  // obstacle 2
                 {600.0f, 300.0f, 150.0f, 15.0f, false, GRAY}, // obstacle 3
                 {500.0f, 400.0f, 200.0f, 15.0f, false, GRAY}  // obstacle 4
             };
 
         default:
             return {
-                
+
             };
         }
     }

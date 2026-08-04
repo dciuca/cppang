@@ -225,6 +225,8 @@ void PlayingState::LoadLevelBalls(size_t level)
     {
         auto ball = std::make_unique<Ball>(
             config.x, config.y, config.radius, config.angle, config.color);
+        if (!config.texturePath.empty())
+            ball->SetTexture(config.texturePath);
         m_balls.push_back(ball.get());
         m_entities.push_back(std::move(ball));
     }
