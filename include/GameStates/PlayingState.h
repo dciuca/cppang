@@ -22,7 +22,9 @@ public:
     void Exit() override;
 
 private:
-    void SplitBalls(std::vector<Ball *> m_ballsToSplit);
+    void UpdatePhysics();
+    bool HandleCollisions();
+    void SplitBalls(const std::vector<Ball *> &ballsToSplit);
     void LoadLevelBalls(size_t level);
     void LoadObstacles(size_t level);
 

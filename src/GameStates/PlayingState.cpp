@@ -60,41 +60,94 @@ void PlayingState::Enter()
 
 void PlayingState::Update()
 {
-    // Physics Update
-    for (auto &player : m_players)
+    UpdatePhysics();
+    if (!HandleCollisions())
+        return;
+    if (!m_ballsToSplit.empty())
+        SplitBalls(m_ballsToSplit);
+}
+
+void PlayingState::Cleanup()
+{
+    auto removeInactive = [](auto &vec)
     {
-        Physics::UpdateCharacter(*player);
+        vec.erase(
+            std::remove_if(vec.begin(), vec.end(),
+                           [](auto *e)
+                           { return !e->IsActive(); }),
+            vec.end());
+    };
+
+    removeInactive(m_harpoons);
+    removeInactive(m_balls);
+    // removeInactive(m_players);
+    // removeInactive(m_obstacles);
+
+    // m_entities.erase(
+    //     std::remove_if(m_entities.begin(), m_entities.end(),
+    //                    [](const std::unique_ptr<IEntity> &e)
+    //                    { return !e->IsActive(); }),
+    //     m_entities.end());
+
+    // Level complete check — runs after inactive entities are removed
+    if (m_balls.size() == 0)
+    {
+        RequestStateChange(GameStateRequest::ChangeToNextLevel);
     }
-    for (auto &ball : m_balls)
+}
+
+void PlayingState::Draw() const
+{
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    for (const auto &entity : m_entities)
     {
-        Physics::UpdateBall(*ball);
-    }
-    for (auto &harpoon : m_harpoons)
-    {
-        harpoon->Update();
-    }
-    for (auto &obstacle : m_obstacles)
-    {
-        if (! obstacle->IsFixed())
-            Physics::UpdateObstacle(*obstacle);
+        entity->Draw();
     }
 
+    DrawFPS(10, 10);
+
+    EndDrawing();
+}
+
+void PlayingState::Exit()
+{
+    m_entities.clear();
+}
+
+// private methods
+void PlayingState::UpdatePhysics()
+{
+    for (auto &player : m_players)
+        Physics::UpdateCharacter(*player);
+    for (auto &ball : m_balls)
+        Physics::UpdateBall(*ball);
+    for (auto &harpoon : m_harpoons)
+        harpoon->Update();
+    for (auto &obstacle : m_obstacles)
+        if (!obstacle->IsFixed())
+            Physics::UpdateObstacle(*obstacle);
+}
+
+bool PlayingState::HandleCollisions()
+{
     m_ballsToSplit.clear();
     for (auto &ball : m_balls)
     {
-        // Ball-Player Collision Detection
         for (auto &player : m_players)
         {
             if (Physics::CheckCircleRectCollision(*ball, *player))
             {
                 RequestStateChange(GameStateRequest::ChangeToGameOver);
-                return;
+                return false;
             }
         }
 
-        // Ball-Harpoon Collision Detection
         for (auto &harpoon : m_harpoons)
         {
+            if (!harpoon->IsActive())
+                continue;
             if (Physics::CheckAndResolveCircleRectCollision(*ball, *harpoon))
             {
                 harpoon->SetActive(false);
@@ -102,39 +155,25 @@ void PlayingState::Update()
             }
         }
 
-        // Ball-Obstacle Collision Detection
         for (auto &obstacle : m_obstacles)
-        {
             Physics::CheckAndResolveCircleRectCollision(*ball, *obstacle);
-        }
     }
 
-    // Harpoon-Obstacle Collision Detection
     for (auto &harpoon : m_harpoons)
     {
+        if (!harpoon->IsActive())
+            continue;
         for (auto &obstacle : m_obstacles)
         {
             if (Physics::CheckRectRectCollision(*harpoon, *obstacle))
-            {
                 harpoon->SetActive(false);
-            }
         }
     }
 
-    if (m_ballsToSplit.size() > 0)
-        SplitBalls(m_ballsToSplit);
-
-    // DEBUG
-    // Print the size of m_entities, m_balls and m_ballsToSplit every second
-    // static float timeAccumulator = 0.0f;
-    // timeAccumulator += GetFrameTime();
-    // if (timeAccumulator >= 1.0f)
-    // {
-        // timeAccumulator = 0.0f;
-    //     std::cout << "Entities: " << m_entities.size() << ", Balls: " << m_balls.size() << ", BallsToSplit: " << m_ballsToSplit.size() << std::endl;
+    return true;
 }
 
-void PlayingState::SplitBalls(std::vector<Ball *> m_ballsToSplit)
+void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
 {
     for (auto &ball : m_ballsToSplit)
     {
@@ -190,53 +229,4 @@ void PlayingState::LoadObstacles(size_t level)
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
-}
-
-void PlayingState::Cleanup()
-{
-    auto removeInactive = [](auto &vec)
-    {
-        vec.erase(
-            std::remove_if(vec.begin(), vec.end(),
-                           [](auto *e)
-                           { return !e->IsActive(); }),
-            vec.end());
-    };
-
-    removeInactive(m_harpoons);
-    removeInactive(m_balls);
-    removeInactive(m_players);
-    removeInactive(m_obstacles);
-
-    m_entities.erase(
-        std::remove_if(m_entities.begin(), m_entities.end(),
-                       [](const std::unique_ptr<IEntity> &e)
-                       { return !e->IsActive(); }),
-        m_entities.end());
-
-    // Level complete check — runs after inactive entities are removed
-    if (m_balls.size() == 0)
-    {
-        RequestStateChange(GameStateRequest::ChangeToNextLevel);
-    }
-}
-
-void PlayingState::Draw() const
-{
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-
-    for (const auto &entity : m_entities)
-    {
-        entity->Draw();
-    }
-
-    DrawFPS(10, 10);
-
-    EndDrawing();
-}
-
-void PlayingState::Exit()
-{
-    m_entities.clear();
 }
