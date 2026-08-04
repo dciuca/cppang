@@ -45,6 +45,8 @@ void PlayingState::HandleInput()
 
 void PlayingState::Enter()
 {
+    m_background = LoadTexture(GameLevels::GetLevelBackground(m_level).texturePath.c_str());
+
     // Init player1
     auto p1 = std::make_unique<Player>();
     m_players.push_back(p1.get());
@@ -102,6 +104,10 @@ void PlayingState::Draw() const
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    DrawTexturePro(m_background,
+                   {0, 0, (float)m_background.width, (float)m_background.height},
+                   {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
+                   {0, 0}, 0.0f, WHITE);
 
     for (const auto &entity : m_entities)
     {
@@ -115,6 +121,7 @@ void PlayingState::Draw() const
 
 void PlayingState::Exit()
 {
+    UnloadTexture(m_background);
     m_entities.clear();
 }
 

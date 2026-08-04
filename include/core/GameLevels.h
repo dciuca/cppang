@@ -25,9 +25,29 @@ struct ObstacleConfig
     std::string texturePath;
 };
 
+struct BackgroundConfig
+{
+    std::string texturePath;
+};
+
 struct GameLevels
 {
     static const int MAX_LEVELS = 3;
+
+    // ---- Background Configuration ----
+    static BackgroundConfig GetLevelBackground(int level)
+    {
+        switch (level)
+        {
+        case 0:
+            return {"assets/backgrounds/level0.png"};
+        // case 1:  return {"assets/backgrounds/level1.png"};
+        // case 2:  return {"assets/backgrounds/level2.png"};
+        // case 3:  return {"assets/backgrounds/level3.png"};
+        default:
+            return {"assets/backgrounds/level0.png"};
+        }
+    }
 
     // ---- Balls Configuration ----
     static std::vector<BallsConfig> GetLevelBalls(int level)
@@ -78,9 +98,7 @@ struct GameLevels
         {
         // ---- TEST LEVEL 0 ----
         case 0:
-            return {
-                {400.0f, 400.0f, 150.0f, 15.0f, false, GRAY}, // obstacle 1
-            };
+            return {};
 
         // ---- LEVEL 1 ----
         case 1:
