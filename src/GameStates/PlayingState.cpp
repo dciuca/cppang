@@ -199,6 +199,12 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
                 135.0f,
                 ball->GetColor());
 
+            if (!ball->GetTexturePath().empty())
+            {
+                ball1->SetTexture(ball->GetTexturePath());
+                ball2->SetTexture(ball->GetTexturePath());
+            }
+
             ball1->SetActive(true);
             ball2->SetActive(true);
             m_balls.push_back(ball1.get());

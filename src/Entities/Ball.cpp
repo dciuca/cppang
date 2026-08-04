@@ -53,12 +53,11 @@ void Ball::SetColor(const Color &newColor)
 void Ball::SetTexture(const std::string &texturePath)
 {
     if (useTexture)
-    {
         UnloadTexture(texture);
-    }
 
     texture = LoadTexture(texturePath.c_str());
     useTexture = true;
+    m_texturePath = texturePath;
 }
 
 Vector2 Ball::GetDimensions() const
