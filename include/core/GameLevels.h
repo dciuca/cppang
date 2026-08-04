@@ -41,9 +41,12 @@ struct GameLevels
         {
         case 0:
             return {"assets/backgrounds/level0.png"};
-        // case 1:  return {"assets/backgrounds/level1.png"};
-        // case 2:  return {"assets/backgrounds/level2.png"};
-        // case 3:  return {"assets/backgrounds/level3.png"};
+        case 1:
+            return {"assets/backgrounds/level0.png"};
+        case 2:
+            return {"assets/backgrounds/level0.png"};
+        case 3:
+            return {"assets/backgrounds/level0.png"};
         default:
             return {"assets/backgrounds/level0.png"};
         }

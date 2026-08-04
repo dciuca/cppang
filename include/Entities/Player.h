@@ -9,7 +9,7 @@ class Player : public IEntity
 public:
     Player(
         float x = 400.0f,
-        float y = 550.0f,
+        float y = 600.0f - 64.0f - GROUND_OFFSET,
         float width = 64.0f,
         float height = 64.0f,
         Color color = WHITE,

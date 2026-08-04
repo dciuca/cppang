@@ -4,7 +4,6 @@
 // public methods
 void Physics::UpdateCharacter(IEntity &entity)
 {
-    ApplyGravity(entity);
     UpdatePosition(entity);
     entity.velocity = {0, 0}; // Stops character releasing the key
 
@@ -59,7 +58,7 @@ bool Physics::CheckRectRectCollision(const IEntity &rect1, const IEntity &rect2)
     return collisionX && collisionY;
 }
 
-bool Physics::CheckAndResolveCircleRectCollision(IEntity& circle, const IEntity& rect)
+bool Physics::CheckAndResolveCircleRectCollision(IEntity &circle, const IEntity &rect)
 {
     const Vector2 circleDims = circle.GetDimensions();
     const Vector2 rectDims = rect.GetDimensions();
@@ -75,13 +74,14 @@ bool Physics::CheckAndResolveCircleRectCollision(IEntity& circle, const IEntity&
     float distSq = dx * dx + dy * dy;
 
     // No Collision, return early
-    if (distSq >= radius * radius) 
+    if (distSq >= radius * radius)
         return false;
 
     float distance = sqrtf(distSq);
 
     // Ball is exactly at the corner of the rectangle, resolve by pushing it out in the direction of least penetration
-    if (distance < 0.0001f) {
+    if (distance < 0.0001f)
+    {
         float left = circle.position.x - rect.position.x;
         float right = (rect.position.x + rectDims.x) - circle.position.x;
         float top = circle.position.y - rect.position.y;
@@ -89,16 +89,23 @@ bool Physics::CheckAndResolveCircleRectCollision(IEntity& circle, const IEntity&
 
         float minDist = fminf(fminf(left, right), fminf(top, bottom));
 
-        if (minDist == left) {
+        if (minDist == left)
+        {
             circle.position.x = rect.position.x - radius - 0.1f;
             circle.velocity.x = -fabs(circle.velocity.x);
-        } else if (minDist == right) {
+        }
+        else if (minDist == right)
+        {
             circle.position.x = rect.position.x + rectDims.x + radius + 0.1f;
             circle.velocity.x = fabs(circle.velocity.x);
-        } else if (minDist == top) {
+        }
+        else if (minDist == top)
+        {
             circle.position.y = rect.position.y - radius - 0.1f;
             circle.velocity.y = -fabs(circle.velocity.y);
-        } else {
+        }
+        else
+        {
             circle.position.y = rect.position.y + rectDims.y + radius + 0.1f;
             circle.velocity.y = fabs(circle.velocity.y);
         }
@@ -111,15 +118,17 @@ bool Physics::CheckAndResolveCircleRectCollision(IEntity& circle, const IEntity&
     circle.position.x += normal.x * (overlap + 0.5f);
     circle.position.y += normal.y * (overlap + 0.5f);
 
-    if (fabs(normal.x) > fabs(normal.y)) {
+    if (fabs(normal.x) > fabs(normal.y))
+    {
         circle.velocity.x = -circle.velocity.x;
-    } else {
+    }
+    else
+    {
         circle.velocity.y = -circle.velocity.y;
     }
 
     return true;
 }
-
 
 // private methods
 void Physics::ApplyGravity(IEntity &entity, float gravity)
@@ -136,7 +145,8 @@ void Physics::UpdatePosition(IEntity &entity)
 void Physics::BounceOnWalls(IEntity &entity, float width, float height)
 {
     int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
+    int screenHeight = GetScreenHeight() - IEntity::GROUND_OFFSET;
+    ;
 
     // Calc margins depending on the shape
     const ShapeType shape = entity.GetShapeType();
