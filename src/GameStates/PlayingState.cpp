@@ -200,12 +200,14 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
                 ball->position.y,
                 newRadius,
                 45.0f,
+                ball->speed,
                 ball->GetColor());
             auto ball2 = std::make_unique<Ball>(
                 ball->position.x + newRadius,
                 ball->position.y,
                 newRadius,
                 135.0f,
+                ball->speed,
                 ball->GetColor());
 
             if (!ball->GetTexturePath().empty())
@@ -233,7 +235,7 @@ void PlayingState::LoadLevelBalls(size_t level)
     for (const auto &config : balls)
     {
         auto ball = std::make_unique<Ball>(
-            config.x, config.y, config.radius, config.angle, config.color);
+            config.x, config.y, config.radius, config.angle, config.speed, config.color);
         if (!config.texturePath.empty())
             ball->SetTexture(config.texturePath);
         m_balls.push_back(ball.get());

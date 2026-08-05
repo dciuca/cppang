@@ -30,4 +30,6 @@ private:
     Color color;
     Texture2D texture;
     bool useTexture;
+    float m_time = 0.0f;
+    float m_spawnY;
 };

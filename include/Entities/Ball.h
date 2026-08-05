@@ -12,6 +12,7 @@ public:
         float y,
         float radius,
         float angle,
+        float speed = 250.0f,
         Color color = WHITE,
         const std::string &texturePath = "");
     ~Ball() = default;

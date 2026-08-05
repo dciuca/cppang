@@ -10,6 +10,7 @@ struct BallsConfig
     float y;
     float radius;
     float angle;
+    float speed = 250.0f;
     Color color;
     std::string texturePath;
 };
@@ -49,36 +50,36 @@ struct GameLevels
         // ---- TEST LEVEL 0 ----
         case 0:
             return {
-                {400.0f, 300.0f, 40.0f, 45.0f, WHITE, "assets/balls/red.png"}, // ball 1
+                {400.0f, 300.0f, 40.0f, 45.0f, 200.0f, WHITE, "assets/balls/red.png"},
             };
 
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {400.0f, 300.0f, 60.0f, 45.0f, GREEN}, // ball 1
-                {500.0f, 250.0f, 40.0f, 30.0f, BLUE}   // ball 2
+                {400.0f, 300.0f, 60.0f, 45.0f, 250.0f, GREEN},
+                {500.0f, 250.0f, 40.0f, 30.0f, 250.0f, BLUE},
             };
 
         // ---- LEVEL 2 ----
         case 2:
             return {
-                {300.0f, 200.0f, 50.0f, 30.0f, PURPLE}, // ball 1
-                {500.0f, 400.0f, 30.0f, 60.0f, YELLOW}, // ball 2
-                {700.0f, 200.0f, 40.0f, 45.0f, BLACK}   // ball 3
+                {300.0f, 200.0f, 50.0f, 30.0f, 300.0f, PURPLE},
+                {500.0f, 400.0f, 30.0f, 60.0f, 300.0f, YELLOW},
+                {700.0f, 200.0f, 40.0f, 45.0f, 300.0f, BLACK},
             };
 
         // ---- LEVEL 3 ----
         case 3:
             return {
-                {300.0f, 200.0f, 50.0f, 30.0f, PURPLE}, // ball 1
-                {500.0f, 400.0f, 30.0f, 60.0f, YELLOW}, // ball 2
-                {700.0f, 200.0f, 40.0f, 45.0f, BLACK},  // ball 3
-                {700.0f, 200.0f, 40.0f, 45.0f, ORANGE}  // ball 4
+                {300.0f, 200.0f, 50.0f, 30.0f, 350.0f, PURPLE},
+                {500.0f, 400.0f, 30.0f, 60.0f, 350.0f, YELLOW},
+                {700.0f, 200.0f, 40.0f, 45.0f, 350.0f, BLACK},
+                {700.0f, 200.0f, 40.0f, 45.0f, 350.0f, ORANGE},
             };
 
         default:
             return {
-                {400.0f, 300.0f, 60.0f, 45.0f, RED}, // ball 1
+                {400.0f, 300.0f, 60.0f, 45.0f, 250.0f, RED},
             };
         }
     }
