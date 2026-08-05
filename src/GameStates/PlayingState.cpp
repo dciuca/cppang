@@ -86,8 +86,8 @@ void PlayingState::Cleanup()
 
     removeInactive(m_harpoons);
     removeInactive(m_balls);
-    // removeInactive(m_players);
-    // removeInactive(m_obstacles);
+    removeInactive(m_players);
+    removeInactive(m_obstacles);
 
     // m_entities.erase(
     //     std::remove_if(m_entities.begin(), m_entities.end(),

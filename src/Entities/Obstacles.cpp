@@ -1,4 +1,5 @@
 #include "Obstacle.h"
+#include <cmath>
 
 Obstacle::Obstacle(
     float x,
@@ -14,7 +15,8 @@ Obstacle::Obstacle(
     speed = 250.0f;
     if (isFixed)
         velocity = {0, 0};
-    else {
+    else
+    {
         velocity.x = speed;
         velocity.y = 0;
     }
@@ -37,7 +39,18 @@ void Obstacle::Draw() const
 
     if (useTexture)
     {
-        DrawTexture(texture, position.x, position.y, color);
+        // Tile the texture horizontally to fill the obstacle width
+        int tileW = texture.width;
+        int tileH = texture.height;
+        float drawn = 0.0f;
+        while (drawn < width)
+        {
+            float tileSlice = fminf(tileW, width - drawn);
+            Rectangle src = {0, 0, tileSlice, (float)tileH};
+            Rectangle dst = {position.x + drawn, position.y, tileSlice, height};
+            DrawTexturePro(texture, src, dst, {0, 0}, 0.0f, color);
+            drawn += tileSlice;
+        }
     }
     else
     {
