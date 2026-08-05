@@ -25,14 +25,16 @@ void Player::MoveLeft()
 {
     velocity.x = -speed;
     m_animState = AnimState::WalkLeft;
-    if (m_currentFrame > 3) m_currentFrame = 0;
+    if (m_currentFrame > 3)
+        m_currentFrame = 0;
 }
 
 void Player::MoveRight()
 {
     velocity.x = speed;
     m_animState = AnimState::WalkRight;
-    if (m_currentFrame > 3) m_currentFrame = 0;
+    if (m_currentFrame > 3)
+        m_currentFrame = 0;
 }
 
 void Player::StopMoving()
@@ -51,7 +53,8 @@ void Player::StartShooting()
 void Player::Update()
 {
     m_animTimer += GetFrameTime();
-    if (m_animTimer < 0.1f) return;
+    if (m_animTimer < 0.1f)
+        return;
     m_animTimer = 0.0f;
 
     switch (m_animState)
@@ -84,9 +87,8 @@ void Player::Draw() const
             (float)(m_currentFrame * 32),
             (float)(m_currentRow * 32),
             32.0f * mirror,
-            32.0f
-        };
-        Rectangle dest = { position.x, position.y, width, height };
+            32.0f};
+        Rectangle dest = {position.x, position.y, width, height};
         DrawTexturePro(texture, source, dest, {0, 0}, 0.0f, color);
     }
     else

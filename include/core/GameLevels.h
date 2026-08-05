@@ -28,6 +28,7 @@ struct ObstacleConfig
 struct BackgroundConfig
 {
     std::string texturePath;
+    Rectangle sourceRect;
 };
 
 struct GameLevels
@@ -37,19 +38,7 @@ struct GameLevels
     // ---- Background Configuration ----
     static BackgroundConfig GetLevelBackground(int level)
     {
-        switch (level)
-        {
-        case 0:
-            return {"assets/backgrounds/level0.png"};
-        case 1:
-            return {"assets/backgrounds/level0.png"};
-        case 2:
-            return {"assets/backgrounds/level0.png"};
-        case 3:
-            return {"assets/backgrounds/level0.png"};
-        default:
-            return {"assets/backgrounds/level0.png"};
-        }
+        return {"assets/backgrounds_col.png", {0, level * 200.0f, 255, 191}};
     }
 
     // ---- Balls Configuration ----

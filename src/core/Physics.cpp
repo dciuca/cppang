@@ -145,14 +145,14 @@ void Physics::UpdatePosition(IEntity &entity)
 void Physics::BounceOnWalls(IEntity &entity, float width, float height)
 {
     int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight() - IEntity::GROUND_OFFSET;
+    int screenHeight = GetScreenHeight();
 
     // Calc margins depending on the shape
     const ShapeType shape = entity.GetShapeType();
-    float leftOffset = (shape == ShapeType::CIRCLE) ? width : 0;
-    float rightOffset = width;
-    float topOffset = (shape == ShapeType::CIRCLE) ? height : 0;
-    float bottomOffset = height;
+    float leftOffset = (shape == ShapeType::CIRCLE) ? width + IEntity::BORDER_OFFSET : IEntity::BORDER_OFFSET;
+    float rightOffset = width + IEntity::BORDER_OFFSET;
+    float topOffset = (shape == ShapeType::CIRCLE) ? height + IEntity::BORDER_OFFSET : IEntity::BORDER_OFFSET;
+    float bottomOffset = height + IEntity::BORDER_OFFSET;
 
     // Bounce Left/Right Walls
     if (entity.position.x - leftOffset <= 0)
