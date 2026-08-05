@@ -250,6 +250,8 @@ void PlayingState::LoadObstacles(size_t level)
     {
         auto obstacle = std::make_unique<Obstacle>(
             config.x, config.y, config.width, config.height, config.isFixed, config.color);
+        if (!config.texturePath.empty())
+            obstacle->SetTexture(config.texturePath);
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
