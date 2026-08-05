@@ -20,6 +20,7 @@ void MenuState::HandleInput()
 void MenuState::Enter()
 {
     gameStateRequest = GameStateRequest::None;
+    m_background = LoadTexture("assets/cover.png");
 }
 
 void MenuState::Update()
@@ -30,29 +31,9 @@ void MenuState::Update()
 void MenuState::Draw() const
 {
     BeginDrawing();
-    ClearBackground(GREEN);
 
-    // Draw MENU text centered
-    const char *text = "MENU";
-    int fontSize = 60;
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-
-    int textWidth = MeasureText(text, fontSize);
-    int textX = (screenWidth - textWidth) / 2;
-    int textY = screenHeight / 2 - 50;
-
-    DrawText(text, textX, textY, fontSize, WHITE);
-
-    // Draw instructions
-    const char *instructions = "Press SPACE to start the game";
-    int instrSize = 30;
-    int instrWidth = MeasureText(instructions, instrSize);
-    int instrX = (screenWidth - instrWidth) / 2;
-    int instrY = textY + 80;
-
-    DrawText(instructions, instrX, instrY, instrSize, GRAY);
-
+    ClearBackground(RAYWHITE);
+    DrawTexture(m_background, 0, 0, WHITE);
     DrawFPS(10, 10);
 
     EndDrawing();
@@ -60,5 +41,5 @@ void MenuState::Draw() const
 
 void MenuState::Exit()
 {
-    // Cleanup if needed
+    UnloadTexture(m_background);
 }

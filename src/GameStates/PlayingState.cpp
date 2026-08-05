@@ -231,7 +231,7 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
     {
         // Create two smaller balls
         float newRadius = ball->GetDimensions().x / 2.0f;
-        if (newRadius > 10.0f) // Minimum size check
+        if (newRadius >= 10.0f) // Minimum size check
         {
             auto ball1 = std::make_unique<Ball>(
                 ball->position.x - newRadius,

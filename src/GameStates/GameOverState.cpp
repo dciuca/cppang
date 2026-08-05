@@ -21,7 +21,7 @@ void GameOverState::HandleInput()
 
 void GameOverState::Enter()
 {
-    // Any initialization for game over state
+    m_background = LoadTexture("assets/gameover.png");
 }
 
 void GameOverState::Update()
@@ -32,28 +32,27 @@ void GameOverState::Update()
 void GameOverState::Draw() const
 {
     BeginDrawing();
-    ClearBackground(RED);
+    ClearBackground(RAYWHITE);
+    DrawTexture(m_background, 0, 0, WHITE);
 
     // Draw GAME OVER text centered
     const char *text = "GAME OVER";
-    int fontSize = 60;
+    int fontSize = 80;
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
 
     int textWidth = MeasureText(text, fontSize);
     int textX = (screenWidth - textWidth) / 2;
-    int textY = screenHeight / 2 - 50;
 
-    DrawText(text, textX, textY, fontSize, WHITE);
+    DrawText(text, textX, 400, fontSize, WHITE);
 
     // Draw instructions
     const char *instructions = "Press R to restart or ESC to exit";
     int instrSize = 30;
     int instrWidth = MeasureText(instructions, instrSize);
     int instrX = (screenWidth - instrWidth) / 2;
-    int instrY = textY + 80;
 
-    DrawText(instructions, instrX, instrY, instrSize, GRAY);
+    DrawText(instructions, instrX, 480, instrSize, RED);
 
     DrawFPS(10, 10);
 
@@ -62,5 +61,5 @@ void GameOverState::Draw() const
 
 void GameOverState::Exit()
 {
-    // Cleanup if needed
+    UnloadTexture(m_background);
 }
