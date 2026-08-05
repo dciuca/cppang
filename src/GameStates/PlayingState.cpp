@@ -9,12 +9,22 @@
 #include <iostream> // DEBUG
 
 PlayingState::PlayingState(size_t level)
-    : m_level(level)
+    : m_level(level), m_levelReady(false)
 {
 }
 
 void PlayingState::HandleInput()
 {
+    // Wait for player to be ready
+    if (!m_levelReady)
+    {
+        if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
+        {
+            m_levelReady = true;
+        }
+        return; // Skip rest of input handling until ready
+    }
+
     // Input Handling for Player 1 (position [0])
     if (m_players.size() > 0 && m_players[0]->IsActive())
     {
@@ -45,6 +55,9 @@ void PlayingState::HandleInput()
 
 void PlayingState::Enter()
 {
+    // Wait for user input to start the level
+    m_levelReady = false;
+
     auto bgConfig = GameLevels::GetLevelBackground(m_level);
     m_background = LoadTexture(bgConfig.texturePath.c_str());
     m_backgroundRect = bgConfig.sourceRect;
@@ -66,6 +79,9 @@ void PlayingState::Enter()
 
 void PlayingState::Update()
 {
+    if (!m_levelReady)
+        return;
+
     UpdateEntities();
     if (!HandleCollisions())
         return;
@@ -105,6 +121,7 @@ void PlayingState::Cleanup()
 void PlayingState::Draw() const
 {
     BeginDrawing();
+
     ClearBackground(RAYWHITE);
     DrawTexturePro(m_background,
                    m_backgroundRect,
@@ -114,6 +131,27 @@ void PlayingState::Draw() const
     for (const auto &entity : m_entities)
     {
         entity->Draw();
+    }
+
+    // Draw READY message if waiting for player
+    if (!m_levelReady)
+    {
+        const char* levelText = "LEVEL %d\n";
+        levelText = TextFormat(levelText, m_level);
+        Vector2 levelTextSize = MeasureTextEx(GetFontDefault(), levelText, 50.0f, 2.0f);
+        Vector2 levelTextPos = {
+            GetScreenWidth() / 2.0f - levelTextSize.x / 2.0f,
+            100.0f
+        };
+        DrawTextEx(GetFontDefault(), levelText, levelTextPos, 50.0f, 2.0f, YELLOW);
+
+        const char* readyText = "READY! Press ENTER or SPACE to start";
+        Vector2 readyTextSize = MeasureTextEx(GetFontDefault(), readyText, 30.0, 2.0f);
+        Vector2 readyTextPos = {
+            GetScreenWidth() / 2.0f - readyTextSize.x / 2.0f,
+            400.0f
+        };
+        DrawTextEx(GetFontDefault(), readyText, readyTextPos, 30.0, 2.0f, YELLOW);
     }
 
     DrawFPS(10, 10);

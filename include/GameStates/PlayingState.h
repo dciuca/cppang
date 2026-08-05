@@ -32,6 +32,7 @@ private:
     size_t m_level;
     Texture2D m_background;
     Rectangle m_backgroundRect;
+    bool m_levelReady;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
     std::vector<Player *> m_players;                  // m_entities observer
     std::vector<Ball *> m_balls;                      // m_entities observer

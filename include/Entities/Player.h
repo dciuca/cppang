@@ -8,7 +8,7 @@ class Player : public IEntity
 {
 public:
     Player(
-        float x = 400.0f,
+        float x = 370.0f,
         float y = 600.0f - 64.0f - BORDER_OFFSET,
         float width = 64.0f,
         float height = 64.0f,

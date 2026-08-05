@@ -10,7 +10,7 @@ struct BallsConfig
     float y;
     float radius;
     float angle;
-    float speed = 250.0f;
+    float speed;
     Color color;
     std::string texturePath;
 };
@@ -54,14 +54,29 @@ struct GameLevels
         // ---- TEST LEVEL 0 ----
         case 0:
             return {
-                {200.0f, 50.0f, 40.0f, 45.0f, 150.0f, WHITE, "assets/balls/red.png"},
+                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png"},
             };
 
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {400.0f, 50.0f, 60.0f, 45.0f, 200.0f, WHITE, "assets/balls/green.png"},
-                {500.0f, 100.0f, 40.0f, 30.0f, 200.0f, WHITE, "assets/balls/green.png"},
+                {260.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {280.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {300.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {320.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {340.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {360.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {380.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {400.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+
+                {420.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {440.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {460.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {480.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {500.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {520.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {540.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {560.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"}
             };
 
         // ---- LEVEL 2 ----
@@ -96,12 +111,16 @@ struct GameLevels
         {
         // ---- TEST LEVEL 0 ----
         case 0:
-            return {};
+            return {
+                {200.0f-64.0f, 200.0f, 128.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+                {600.0f-64.0f, 200.0f, 128.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+            };
 
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {300.0f, 200.0f, 128.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+                {200.0f-32.0f, 150.0f, 64.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+                {600.0f-32.0f, 150.0f, 64.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
             };
 
         // ---- LEVEL 2 ----
