@@ -31,28 +31,16 @@ void GameOverState::Update()
 
 void GameOverState::Draw() const
 {
+    float time = GetTime();
+    bool showText = ((int)(time * 2)) % 2 == 0;
+
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(m_background, 0, 0, WHITE);
 
-    // Draw GAME OVER text centered
-    const char *text = "GAME OVER";
-    int fontSize = 80;
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-
-    int textWidth = MeasureText(text, fontSize);
-    int textX = (screenWidth - textWidth) / 2;
-
-    DrawText(text, textX, 400, fontSize, WHITE);
-
-    // Draw instructions
-    const char *instructions = "Press R to restart or ESC to exit";
-    int instrSize = 30;
-    int instrWidth = MeasureText(instructions, instrSize);
-    int instrX = (screenWidth - instrWidth) / 2;
-
-    DrawText(instructions, instrX, 480, instrSize, RED);
+    DrawTextEx(customFont, "GAME OVER", (Vector2){200, 280}, 80, 2, RED);
+    if (showText)
+        DrawTextEx(customFont, "Press R to restart or ESC to exit", (Vector2){135, 400}, 32, 2, YELLOW);
 
     DrawFPS(10, 10);
 

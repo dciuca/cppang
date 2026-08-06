@@ -1,5 +1,6 @@
 #pragma once
 #include "GameTypes.h"
+#include "raylib.h"
 
 class IGameState
 {
@@ -26,4 +27,7 @@ protected:
     }
 
     GameStateRequest gameStateRequest = GameStateRequest::None;
+
+protected:
+    Font customFont = LoadFont("assets/fonts/spicysale.ttf");
 };

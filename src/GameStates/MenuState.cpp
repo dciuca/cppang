@@ -20,20 +20,24 @@ void MenuState::HandleInput()
 void MenuState::Enter()
 {
     gameStateRequest = GameStateRequest::None;
-    m_background = LoadTexture("assets/cover.png");
+    m_background = LoadTexture("assets/menu.png");
 }
 
 void MenuState::Update()
 {
-    // Any updates for menu state, if needed
 }
 
 void MenuState::Draw() const
 {
+    float time = GetTime();
+    bool showText = ((int)(time * 2)) % 2 == 0;
+
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+    ClearBackground(DARKBLUE);
     DrawTexture(m_background, 0, 0, WHITE);
+    if (showText)
+        DrawTextEx(customFont, "Press SPACE to start", (Vector2){210, 480}, 32, 2, YELLOW);
     DrawFPS(10, 10);
 
     EndDrawing();

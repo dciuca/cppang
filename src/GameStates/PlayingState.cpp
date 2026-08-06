@@ -136,22 +136,23 @@ void PlayingState::Draw() const
     // Draw READY message if waiting for player
     if (!m_levelReady)
     {
-        const char* levelText = "LEVEL %d\n";
+        const char *levelText = "LEVEL %d\n";
         levelText = TextFormat(levelText, m_level);
         Vector2 levelTextSize = MeasureTextEx(GetFontDefault(), levelText, 50.0f, 2.0f);
         Vector2 levelTextPos = {
             GetScreenWidth() / 2.0f - levelTextSize.x / 2.0f,
-            100.0f
-        };
-        DrawTextEx(GetFontDefault(), levelText, levelTextPos, 50.0f, 2.0f, YELLOW);
+            130.0f};
+        DrawTextEx(customFont, levelText, levelTextPos, 60.0f, 2.0f, YELLOW);
 
-        const char* readyText = "READY! Press ENTER or SPACE to start";
+        float time = GetTime();
+        bool showText = ((int)(time * 2)) % 2 == 0;
+        const char *readyText = "READY! Press ENTER or SPACE to start";
         Vector2 readyTextSize = MeasureTextEx(GetFontDefault(), readyText, 30.0, 2.0f);
         Vector2 readyTextPos = {
             GetScreenWidth() / 2.0f - readyTextSize.x / 2.0f,
-            400.0f
-        };
-        DrawTextEx(GetFontDefault(), readyText, readyTextPos, 30.0, 2.0f, YELLOW);
+            400.0f};
+        if (showText)
+            DrawTextEx(customFont, readyText, readyTextPos, 30.0, 2.0f, YELLOW);
     }
 
     DrawFPS(10, 10);
