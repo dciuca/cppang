@@ -13,5 +13,7 @@ enum class GameStateRequest
     ChangeToNextLevel,
     ChangeToMenu,
     ChangeToGameOver,
+    PauseGame,
+    ResumeGame,
     Quit
 };

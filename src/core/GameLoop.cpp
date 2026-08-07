@@ -2,6 +2,7 @@
 #include "MenuState.h"
 #include "PlayingState.h"
 #include "GameOverState.h"
+#include "PauseState.h"
 #include "raylib.h"
 
 GameLoop::GameLoop()
@@ -37,6 +38,19 @@ void GameLoop::Run()
             case GameStateRequest::ChangeToGameOver:
                 m_levelManager.Reset();
                 ChangeState(std::make_unique<GameOverState>());
+                break;
+
+            case GameStateRequest::PauseGame:
+                previousState = std::move(currentState);
+                ChangeState(std::make_unique<PauseState>());
+                break;
+
+            case GameStateRequest::ResumeGame:
+                if (previousState)
+                {
+                    currentState = std::move(previousState);
+                }
+                break;
             }
 
             currentState->Draw();

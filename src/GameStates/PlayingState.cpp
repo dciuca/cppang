@@ -15,6 +15,8 @@ PlayingState::PlayingState(size_t level)
 
 void PlayingState::HandleInput()
 {
+    gameStateRequest = GameStateRequest::None;
+
     // Wait for player to be ready
     if (!m_levelReady)
     {
@@ -23,6 +25,12 @@ void PlayingState::HandleInput()
             m_levelReady = true;
         }
         return; // Skip rest of input handling until ready
+    }
+
+    // Pause Handling
+    if (IsKeyPressed(KEY_P))
+    {
+        RequestStateChange(GameStateRequest::PauseGame);
     }
 
     // Input Handling for Player 1 (position [0])

@@ -13,6 +13,7 @@ public:
 
 private:
     std::unique_ptr<IGameState> currentState;
+    std::unique_ptr<IGameState> previousState;
     void ChangeState(std::unique_ptr<IGameState> newState);
     LevelManager m_levelManager;
 };
