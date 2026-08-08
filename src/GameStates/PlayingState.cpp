@@ -153,8 +153,6 @@ void PlayingState::Draw() const
             DrawTextEx(customFont, readyText, readyTextPos, 30.0, 2.0f, YELLOW);
     }
 
-    DrawFPS(10, 10);
-
     EndDrawing();
 }
 

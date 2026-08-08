@@ -37,16 +37,13 @@ void GameOverState::Draw() const
     Vector2 position2 = {135.0f, 400.0f};
 
     BeginDrawing();
-    ClearBackground(RAYWHITE);
-    DrawTexture(m_background, 0, 0, WHITE);
 
+    DrawTexture(m_background, 0, 0, WHITE);
     DrawTextEx(customFont, "GAME OVER", position1, 80, 2, RED);
     if (showText)
     {
         DrawTextEx(customFont, "Press R to restart or ESC to exit", position2, 32, 2, YELLOW);
     }
-
-    DrawFPS(10, 10);
 
     EndDrawing();
 }

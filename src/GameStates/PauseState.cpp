@@ -1,6 +1,6 @@
 #include "PauseState.h"
 #include "raylib.h"
-
+#include <iostream> // DEBUG
 PauseState::PauseState()
 {
 }
@@ -32,9 +32,10 @@ void PauseState::Draw() const
 
     if (showText)
     {
+
+        std::cout << "Drawing pause text time=" << time << std::endl; // DEBUG
         DrawTextEx(customFont, "Press SPACE to resume", position, 32, 2, YELLOW);
     }
-    DrawFPS(10, 10);
 
     EndDrawing();
 }
