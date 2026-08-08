@@ -18,9 +18,9 @@ void GameLoop::Run()
 
         if (currentState)
         {
-
             currentState->HandleInput();
             currentState->Update();
+            currentState->Draw();
 
             switch (currentState->GetGameStateRequest())
             {
@@ -52,8 +52,6 @@ void GameLoop::Run()
                 }
                 break;
             }
-
-            currentState->Draw();
         }
     }
 }
