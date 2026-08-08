@@ -33,14 +33,18 @@ void GameOverState::Draw() const
 {
     float time = GetTime();
     bool showText = ((int)(time * 2)) % 2 == 0;
+    Vector2 position1 = {200.0f, 280.0f};
+    Vector2 position2 = {135.0f, 400.0f};
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(m_background, 0, 0, WHITE);
 
-    DrawTextEx(customFont, "GAME OVER", (Vector2){200, 280}, 80, 2, RED);
+    DrawTextEx(customFont, "GAME OVER", position1, 80, 2, RED);
     if (showText)
-        DrawTextEx(customFont, "Press R to restart or ESC to exit", (Vector2){135, 400}, 32, 2, YELLOW);
+    {
+        DrawTextEx(customFont, "Press R to restart or ESC to exit", position2, 32, 2, YELLOW);
+    }
 
     DrawFPS(10, 10);
 

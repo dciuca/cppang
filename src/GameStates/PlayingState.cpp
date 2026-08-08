@@ -11,12 +11,19 @@
 PlayingState::PlayingState(size_t level)
     : m_level(level), m_levelReady(false)
 {
+    LoadLevelBackground(this->m_level);
+    LoadPlayers();
+    LoadObstacles(this->m_level);
+    LoadLevelBalls(this->m_level);
+
+    for (auto &entity : m_entities)
+    {
+        entity->SetActive(true);
+    }
 }
 
 void PlayingState::HandleInput()
 {
-    gameStateRequest = GameStateRequest::None;
-
     // Wait for player to be ready
     if (!m_levelReady)
     {
@@ -30,7 +37,7 @@ void PlayingState::HandleInput()
     // Pause Handling
     if (IsKeyPressed(KEY_P))
     {
-        RequestStateChange(GameStateRequest::PauseGame);
+        PauseGame();
     }
 
     // Input Handling for Player 1 (position [0])
@@ -63,26 +70,7 @@ void PlayingState::HandleInput()
 
 void PlayingState::Enter()
 {
-    // Wait for user input to start the level
-    m_levelReady = false;
-
-    auto bgConfig = GameLevels::GetLevelBackground(m_level);
-    m_background = LoadTexture(bgConfig.texturePath.c_str());
-    m_backgroundRect = bgConfig.sourceRect;
-
-    // Init player1
-    auto p1 = std::make_unique<Player>();
-    m_players.push_back(p1.get());
-    m_entities.push_back(std::move(p1));
-    m_players[0]->SetTexture("assets/player.png");
-
-    LoadObstacles(this->m_level);
-    LoadLevelBalls(this->m_level);
-
-    for (auto &entity : m_entities)
-    {
-        entity->SetActive(true);
-    }
+    gameStateRequest = GameStateRequest::None;
 }
 
 void PlayingState::Update()
@@ -95,6 +83,8 @@ void PlayingState::Update()
         return;
     if (!m_ballsToSplit.empty())
         SplitBalls(m_ballsToSplit);
+
+    Cleanup();
 }
 
 void PlayingState::Cleanup()
@@ -275,6 +265,24 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
     }
 }
 
+// LOADERS
+
+void PlayingState::LoadLevelBackground(size_t level)
+{
+    auto bgConfig = GameLevels::GetLevelBackground(m_level);
+    m_background = LoadTexture(bgConfig.texturePath.c_str());
+    m_backgroundRect = bgConfig.sourceRect;
+}
+
+void PlayingState::LoadPlayers()
+{
+    // Init player1
+    auto p1 = std::make_unique<Player>();
+    m_players.push_back(p1.get());
+    m_entities.push_back(std::move(p1));
+    m_players[0]->SetTexture("assets/player.png");
+}
+
 void PlayingState::LoadLevelBalls(size_t level)
 {
     m_balls.clear();
@@ -302,4 +310,9 @@ void PlayingState::LoadObstacles(size_t level)
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
+}
+
+void PlayingState::PauseGame()
+{
+    RequestStateChange(GameStateRequest::PauseGame);
 }

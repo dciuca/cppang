@@ -31,13 +31,16 @@ void MenuState::Draw() const
 {
     float time = GetTime();
     bool showText = ((int)(time * 2)) % 2 == 0;
+    Vector2 position = {210.0f, 480.0f};
 
     BeginDrawing();
 
     ClearBackground(DARKBLUE);
     DrawTexture(m_background, 0, 0, WHITE);
     if (showText)
-        DrawTextEx(customFont, "Press SPACE to start", (Vector2){210, 480}, 32, 2, YELLOW);
+    {
+        DrawTextEx(customFont, "Press SPACE to start", position, 32, 2, YELLOW);
+    }
     DrawFPS(10, 10);
 
     EndDrawing();

@@ -21,7 +21,6 @@ void GameLoop::Run()
 
             currentState->HandleInput();
             currentState->Update();
-            currentState->Cleanup();
 
             switch (currentState->GetGameStateRequest())
             {
@@ -49,6 +48,7 @@ void GameLoop::Run()
                 if (previousState)
                 {
                     currentState = std::move(previousState);
+                    currentState->Enter();
                 }
                 break;
             }

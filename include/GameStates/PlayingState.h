@@ -17,7 +17,7 @@ public:
     void HandleInput() override;
     void Enter() override;
     void Update() override;
-    void Cleanup() override;
+    // void Cleanup() override;
     void Draw() const override;
     void Exit() override;
 
@@ -25,8 +25,12 @@ private:
     void UpdateEntities();
     bool HandleCollisions();
     void SplitBalls(const std::vector<Ball *> &ballsToSplit);
+    void LoadLevelBackground(size_t level);
+    void LoadPlayers();
     void LoadLevelBalls(size_t level);
     void LoadObstacles(size_t level);
+    void PauseGame();
+    void Cleanup();
 
 private:
     size_t m_level;

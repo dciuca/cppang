@@ -26,11 +26,14 @@ void PauseState::Draw() const
 {
     float time = GetTime();
     bool showText = ((int)(time * 2)) % 2 == 0;
+    Vector2 position = {210.0f, 280.0f};
 
     BeginDrawing();
 
     if (showText)
-        DrawTextEx(customFont, "Press SPACE to resume", (Vector2){210, 280}, 32, 2, YELLOW);
+    {
+        DrawTextEx(customFont, "Press SPACE to resume", position, 32, 2, YELLOW);
+    }
     DrawFPS(10, 10);
 
     EndDrawing();
