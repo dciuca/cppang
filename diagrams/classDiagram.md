@@ -1,153 +1,72 @@
 ```mermaid
 classDiagram
     class GameLoop {
-        +Run()
-        -unique_ptr~IGameState~ currentState
-        -ChangeState(newState) void
     }
 
-    class GameStateRequest {
-        <<Enumeration>>
-        None
-        ChangeToPlaying
-        ChangeToMenu
-        ChangeToGameOver
-        Quit
-    }
-
-    class ShapeType {
-        <<Enumeration>>
-        CIRCLE
-        RECTANGLE
+    class LevelManager {
     }
 
     class IGameState {
-        <<interface>>
-        +HandleInput() void
-        +Enter() void
-        +Update() void
-        +Clean() void
-        +Draw() void
-        +Exit() void
-        +GetGameStateRequest() GameStateRequest
-        #RequestStateChange(GameStateRequest: request)
-        #GameStateRequest gameStateRequest
     }
 
     class MenuState {
-        +HandleInput() void
-        +Enter() void
-        +Update() void
-        +Draw() void
-        +Exit() void
     }
 
     class PlayingState {
-        -vector~unique_ptr~IEntity~~ m_entities
-        -vector~Players~~ m_players
-        -vector~Balls~~ m_balls
-        -vector~Harpoon~~ m_harpoons
-        +HandleInput() void
-        +Enter() void
-        +Update() void
-        +Clean() void
-        +Draw() void
-        +Exit() void
+    }
+
+    class PauseState {
     }
 
     class GameOverState {
-        +HandleInput() void
-        +Enter() void
-        +Update() void
-        +Draw() void
-        +Exit() void
     }
 
     class IEntity {
-        <<interface>>
-        -bool isActive
-        +Vector2 position
-        +Vector2 velocity
-        +float speed
-        +SetActive(active: bool) void
-        +SetColor(color: Color) void
-        +SetTexture(texturePath: string) void
-        +GetDimensions() Vector2
-        +GetShapeType() ShapeType
-        +Update() void
-        +Draw() void
     }
 
     class Player {
-        -float width
-        -float height
-        -Color color
-        -Texture2D texture
-        -bool useTexture
-        +Player(x, y, width, height, color, texturePath)
-        +SetActive(active: bool) void
-        +SetColor(color: Color) void
-        +SetTexture(texturePath: string) void
-        +GetDimensions() Vector2
-        +Update() void
-        +Draw() void
     }
 
     class Ball {
-        -float radius
-        -float angle
-        -Color color
-        -Texture2D texture
-        -bool useTexture
-        -vector~Balls~~ m_ballsToSplit
-        +Ball(x, y, radius, speed, angle, color)
-        +SetActive(active: bool) void
-        +SetColor(color: Color) void
-        +SetTexture(texturePath: string) void
-        +GetDimensions() Vector2
-        +Update() void
-        +Draw() void
-        -SplitBalls(-vector~Balls~~ m_ballsToSplit) void
     }
 
     class Harpoon {
-        -float width
-        -float height
-        -Color color
-        -Texture2D texture
-        -bool useTexture
-        +Harpoon(x, y, width, height, color, texturePath)
-        +SetActive(active: bool) void
-        +SetColor(color: Color) void
-        +SetTexture(texturePath: string) void
-        +GetDimensions() Vector2
-        +Update() void
-        +Draw() void
+    }
+
+    class Obstacle {
     }
 
     class Physics {
-        <<static>>
-        -ApplyGravity(entity: IEntity&, gravity: float) void
-        -BounceOnWalls(entity: IEntity&, width: float, height float, ShapeType shape) void
-        -UpdatePosition(entity: IEntity&) void
-        +UpdateCharacter(entity: IEntity&) void
-        +UpdateBall(entity: IEntity&) void
-        +CheckCircleRectCollision(ball: IEntity&, player: IEntity&) bool
     }
 
-    GameLoop --> IGameState : contains
+    class GameStateRequest {
+    }
+
+    class ShapeType {
+    }
+
+    GameLoop *-- IGameState : owns current/previous state
+    GameLoop --> LevelManager : uses
+
     IGameState <|-- MenuState : implements
     IGameState <|-- PlayingState : implements
+    IGameState <|-- PauseState : implements
     IGameState <|-- GameOverState : implements
-    IGameState --> GameStateRequest: uses
-    Physics --> ShapeType: uses
-    IEntity --> ShapeType: uses
-    
-    PlayingState --> IEntity : contains
+    IGameState --> GameStateRequest : reports requests
+
+    PlayingState *-- IEntity : owns entities
+    PlayingState --> Player : manages
+    PlayingState --> Ball : manages
+    PlayingState --> Harpoon : manages
+    PlayingState --> Obstacle : manages
+    PlayingState ..> Physics : uses for updates
+
     IEntity <|-- Player : implements
     IEntity <|-- Ball : implements
     IEntity <|-- Harpoon : implements
-    
-    PlayingState --> Physics : uses
-    Physics --> IEntity : operates on
+    IEntity <|-- Obstacle : implements
+
+    Physics ..> IEntity : updates and checks collisions
+    Physics --> ShapeType : uses
+    IEntity --> ShapeType : exposes shape type
 ```
