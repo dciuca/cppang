@@ -1,6 +1,7 @@
 #pragma once
 #include "GameTypes.h"
 #include "raylib.h"
+#include <cstddef>
 
 class IGameState
 {

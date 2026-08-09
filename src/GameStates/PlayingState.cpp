@@ -9,7 +9,7 @@
 #include <iostream> // DEBUG
 
 PlayingState::PlayingState(size_t level)
-    : m_level(level), m_levelReady(false)
+    : m_level(level), m_waitingForReady(true)
 {
     LoadLevelBackground(this->m_level);
     LoadPlayers();
@@ -24,16 +24,6 @@ PlayingState::PlayingState(size_t level)
 
 void PlayingState::HandleInput()
 {
-    // Wait for player to be ready
-    if (!m_levelReady)
-    {
-        if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
-        {
-            m_levelReady = true;
-        }
-        return; // Skip rest of input handling until ready
-    }
-
     // Pause Handling
     if (IsKeyPressed(KEY_P))
     {
@@ -57,7 +47,6 @@ void PlayingState::HandleInput()
         if (IsKeyPressed(KEY_SPACE))
         {
             p1->StartShooting();
-            // add new harpoon in m_harpoons & m_entities
             auto harpoon = std::make_unique<Harpoon>(
                 p1->position.x + p1->GetDimensions().x / 2.0f,
                 p1->position.y);
@@ -75,8 +64,10 @@ void PlayingState::Enter()
 
 void PlayingState::Update()
 {
-    if (!m_levelReady)
-        return;
+    if (m_waitingForReady)
+    {
+        PauseGame();
+    }
 
     UpdateEntities();
     if (!HandleCollisions())
@@ -129,28 +120,6 @@ void PlayingState::Draw() const
     for (const auto &entity : m_entities)
     {
         entity->Draw();
-    }
-
-    // Draw READY message if waiting for player
-    if (!m_levelReady)
-    {
-        const char *levelText = "LEVEL %d\n";
-        levelText = TextFormat(levelText, m_level);
-        Vector2 levelTextSize = MeasureTextEx(GetFontDefault(), levelText, 50.0f, 2.0f);
-        Vector2 levelTextPos = {
-            GetScreenWidth() / 2.0f - levelTextSize.x / 2.0f,
-            130.0f};
-        DrawTextEx(customFont, levelText, levelTextPos, 60.0f, 2.0f, YELLOW);
-
-        float time = GetTime();
-        bool showText = ((int)(time * 2)) % 2 == 0;
-        const char *readyText = "READY! Press ENTER or SPACE to start";
-        Vector2 readyTextSize = MeasureTextEx(GetFontDefault(), readyText, 30.0, 2.0f);
-        Vector2 readyTextPos = {
-            GetScreenWidth() / 2.0f - readyTextSize.x / 2.0f,
-            400.0f};
-        if (showText)
-            DrawTextEx(customFont, readyText, readyTextPos, 30.0, 2.0f, YELLOW);
     }
 
     EndDrawing();
@@ -263,6 +232,12 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
     }
 }
 
+void PlayingState::PauseGame()
+{
+    m_waitingForReady = false;
+    RequestStateChange(GameStateRequest::PauseGame);
+}
+
 // LOADERS
 
 void PlayingState::LoadLevelBackground(size_t level)
@@ -308,9 +283,4 @@ void PlayingState::LoadObstacles(size_t level)
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
-}
-
-void PlayingState::PauseGame()
-{
-    RequestStateChange(GameStateRequest::PauseGame);
 }

@@ -9,7 +9,7 @@ void MenuState::HandleInput()
 {
     if (IsKeyPressed(KEY_SPACE))
     {
-        RequestStateChange(GameStateRequest::ChangeToPlaying);
+        RequestStateChange(GameStateRequest::ChangeToNextLevel);
     }
     else if (IsKeyPressed(KEY_ESCAPE))
     {
@@ -41,7 +41,7 @@ void MenuState::Draw() const
     {
         DrawTextEx(customFont, "Press SPACE to start", position, 32, 2, YELLOW);
     }
-    DrawFPS(10, 10);
+    DrawFPS(10, 10); // DEBUG
 
     EndDrawing();
 }

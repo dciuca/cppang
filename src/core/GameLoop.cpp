@@ -13,20 +13,20 @@ GameLoop::GameLoop()
 
 void GameLoop::Run()
 {
+    m_levelManager.Reset();
+
     while (!WindowShouldClose())
     {
-
         if (currentState)
         {
-            currentState->HandleInput();
-            currentState->Update();
-            currentState->Draw();
-
             switch (currentState->GetGameStateRequest())
             {
-            case GameStateRequest::ChangeToPlaying:
+            case GameStateRequest::None:
+                break;
+
+            case GameStateRequest::ChangeToMenu:
                 m_levelManager.Reset();
-                ChangeState(std::make_unique<PlayingState>(m_levelManager.GetCurrentLevel()));
+                ChangeState(std::make_unique<MenuState>());
                 break;
 
             case GameStateRequest::ChangeToNextLevel:
@@ -41,7 +41,7 @@ void GameLoop::Run()
 
             case GameStateRequest::PauseGame:
                 previousState = std::move(currentState);
-                ChangeState(std::make_unique<PauseState>());
+                ChangeState(std::make_unique<PauseState>(m_levelManager.GetCurrentLevel()));
                 break;
 
             case GameStateRequest::ResumeGame:
@@ -52,22 +52,23 @@ void GameLoop::Run()
                 }
                 break;
             }
+
+            currentState->HandleInput();
+            currentState->Update();
+            currentState->Draw();
         }
     }
 }
 
 void GameLoop::ChangeState(std::unique_ptr<IGameState> newState)
 {
-    // Exit current state if it exists
     if (currentState)
     {
         currentState->Exit();
     }
 
-    // Change to new state
     currentState = std::move(newState);
 
-    // Enter new state if it exists
     if (currentState)
     {
         currentState->Enter();

@@ -17,7 +17,6 @@ public:
     void HandleInput() override;
     void Enter() override;
     void Update() override;
-    // void Cleanup() override;
     void Draw() const override;
     void Exit() override;
 
@@ -36,7 +35,7 @@ private:
     size_t m_level;
     Texture2D m_background;
     Rectangle m_backgroundRect;
-    bool m_levelReady;
+    bool m_waitingForReady;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
     std::vector<Player *> m_players;                  // m_entities observer
     std::vector<Ball *> m_balls;                      // m_entities observer

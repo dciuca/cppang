@@ -5,7 +5,7 @@
 class PauseState : public IGameState
 {
 public:
-    PauseState();
+    PauseState(size_t level);
     ~PauseState() override = default;
 
     void HandleInput() override;
@@ -13,4 +13,7 @@ public:
     void Update() override;
     void Draw() const override;
     void Exit() override;
+
+private:
+    size_t m_level;
 };

@@ -10,7 +10,7 @@ void GameOverState::HandleInput()
     // Check for restart or exit input
     if (IsKeyPressed(KEY_R))
     {
-        RequestStateChange(GameStateRequest::ChangeToPlaying);
+        RequestStateChange(GameStateRequest::ChangeToMenu);
     }
 
     if (IsKeyPressed(KEY_ESCAPE))
