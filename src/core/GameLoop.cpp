@@ -40,9 +40,15 @@ void GameLoop::Run()
                 break;
 
             case GameStateRequest::PauseGame:
+            {
+                Image frame = LoadImageFromScreen();
+                Texture2D ghost = LoadTextureFromImage(frame);
+                UnloadImage(frame);
+
                 previousState = std::move(currentState);
-                ChangeState(std::make_unique<PauseState>(m_levelManager.GetCurrentLevel()));
+                ChangeState(std::make_unique<PauseState>(m_levelManager.GetCurrentLevel(), ghost));
                 break;
+            }
 
             case GameStateRequest::ResumeGame:
                 if (previousState)

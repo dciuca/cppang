@@ -5,7 +5,7 @@
 class PauseState : public IGameState
 {
 public:
-    PauseState(size_t level);
+    PauseState(size_t level, Texture2D levelGhost);
     ~PauseState() override = default;
 
     void HandleInput() override;
@@ -16,4 +16,6 @@ public:
 
 private:
     size_t m_level;
+    Texture2D m_levelGhost{};
+    bool m_hasGhost = false;
 };
