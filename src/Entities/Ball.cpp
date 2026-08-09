@@ -23,6 +23,7 @@ Ball::Ball(
     if (!texturePath.empty())
     {
         texture = LoadTexture(texturePath.c_str());
+        m_texturePath = texturePath;
         useTexture = true;
     }
 }

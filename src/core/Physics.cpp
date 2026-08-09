@@ -1,5 +1,6 @@
 #include "Physics.h"
 #include <cmath>
+#include "GameTypes.h"
 
 // public methods
 void Physics::UpdateCharacter(IEntity &entity)
@@ -149,10 +150,10 @@ void Physics::BounceOnWalls(IEntity &entity, float width, float height)
 
     // Calc margins depending on the shape
     const ShapeType shape = entity.GetShapeType();
-    float leftOffset = (shape == ShapeType::CIRCLE) ? width + IEntity::BORDER_OFFSET : IEntity::BORDER_OFFSET;
-    float rightOffset = width + IEntity::BORDER_OFFSET;
-    float topOffset = (shape == ShapeType::CIRCLE) ? height + IEntity::BORDER_OFFSET : IEntity::BORDER_OFFSET;
-    float bottomOffset = height + IEntity::BORDER_OFFSET;
+    float leftOffset = (shape == ShapeType::CIRCLE) ? width + BORDER_OFFSET : BORDER_OFFSET;
+    float rightOffset = width + BORDER_OFFSET;
+    float topOffset = (shape == ShapeType::CIRCLE) ? height + BORDER_OFFSET : BORDER_OFFSET;
+    float bottomOffset = height + BORDER_OFFSET;
 
     // Bounce Left/Right Walls
     if (entity.position.x - leftOffset <= 0)

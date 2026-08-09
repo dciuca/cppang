@@ -4,6 +4,16 @@
 
 #pragma once
 
+struct PlayerConfig
+{
+    float x;
+    float y;
+    float width;
+    float height;
+    Color color;
+    std::string texturePath;
+};
+
 struct BallsConfig
 {
     float x;
@@ -42,6 +52,14 @@ struct GameLevels
     static BackgroundConfig GetLevelBackground(int level)
     {
         return {"assets/backgrounds_col.png", {0, (level - 1) * 200.0f, 255, 191}};
+    }
+
+    //
+    // PLAYER CONFIGURATION
+    //
+    static PlayerConfig GetPlayerConfig()
+    {
+        return {370.0f, 600.0f - 64.0f - BORDER_OFFSET, 64.0f, 64.0f, WHITE, "assets/player.png"};
     }
 
     //

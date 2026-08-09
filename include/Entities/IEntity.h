@@ -7,8 +7,6 @@
 class IEntity
 {
 public:
-    static constexpr float BORDER_OFFSET = 22.0f;
-
     Vector2 position = {0, 0};
     Vector2 velocity = {0, 0};
     float speed = 0.0f;

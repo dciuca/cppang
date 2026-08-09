@@ -250,10 +250,11 @@ void PlayingState::LoadLevelBackground(size_t level)
 void PlayingState::LoadPlayers()
 {
     // Init player1
-    auto p1 = std::make_unique<Player>();
+    auto pConfig = GameLevels::GetPlayerConfig();
+    auto p1 = std::make_unique<Player>(
+        pConfig.x, pConfig.y, pConfig.width, pConfig.height, pConfig.color, pConfig.texturePath);
     m_players.push_back(p1.get());
     m_entities.push_back(std::move(p1));
-    m_players[0]->SetTexture("assets/player.png");
 }
 
 void PlayingState::LoadLevelBalls(size_t level)
@@ -263,9 +264,7 @@ void PlayingState::LoadLevelBalls(size_t level)
     for (const auto &config : balls)
     {
         auto ball = std::make_unique<Ball>(
-            config.x, config.y, config.radius, config.angle, config.speed, config.color);
-        if (!config.texturePath.empty())
-            ball->SetTexture(config.texturePath);
+            config.x, config.y, config.radius, config.angle, config.speed, config.color, config.texturePath);
         m_balls.push_back(ball.get());
         m_entities.push_back(std::move(ball));
     }
@@ -277,9 +276,7 @@ void PlayingState::LoadObstacles(size_t level)
     for (const auto &config : obstacles)
     {
         auto obstacle = std::make_unique<Obstacle>(
-            config.x, config.y, config.width, config.height, config.isFixed, config.color);
-        if (!config.texturePath.empty())
-            obstacle->SetTexture(config.texturePath);
+            config.x, config.y, config.width, config.height, config.isFixed, config.color, config.texturePath);
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }

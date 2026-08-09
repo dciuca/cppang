@@ -8,11 +8,11 @@ class Player : public IEntity
 {
 public:
     Player(
-        float x = 370.0f,
-        float y = 600.0f - 64.0f - BORDER_OFFSET,
-        float width = 64.0f,
-        float height = 64.0f,
-        Color color = WHITE,
+        float x,
+        float y,
+        float width,
+        float height,
+        Color color,
         const std::string &texturePath = "");
     ~Player() = default;
 
