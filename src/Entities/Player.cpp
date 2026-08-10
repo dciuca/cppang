@@ -50,6 +50,13 @@ void Player::StartShooting()
     m_currentFrame = 4;
 }
 
+void Player::Winning()
+{
+    m_animState = AnimState::Winning;
+    m_currentRow = 1;
+    m_currentFrame = 7;
+}
+
 void Player::Update()
 {
     m_animTimer += GetFrameTime();
@@ -71,6 +78,10 @@ void Player::Update()
         break;
     case AnimState::Idle:
         m_currentFrame = 4;
+        break;
+    case AnimState::Winning:
+        m_currentRow = 1;
+        m_currentFrame = 7;
         break;
     }
 }

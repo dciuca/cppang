@@ -20,6 +20,7 @@ public:
     void MoveRight();
     void StopMoving();
     void StartShooting();
+    void Winning();
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
@@ -41,7 +42,8 @@ private:
         Idle,
         WalkLeft,
         WalkRight,
-        Shooting
+        Shooting,
+        Winning
     };
     AnimState m_animState = AnimState::Idle;
     int m_currentFrame = 4;
