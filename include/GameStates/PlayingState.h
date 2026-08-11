@@ -13,7 +13,7 @@
 class PlayingState : public IGameState
 {
 public:
-    PlayingState(LevelManager &LevelManager);
+    PlayingState(LevelManager &levelManager);
     ~PlayingState() override = default;
 
     void HandleInput() override;
