@@ -17,4 +17,5 @@ public:
 
 private:
     Texture2D m_background;
+    Font m_font;
 };

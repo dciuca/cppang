@@ -1,4 +1,5 @@
 #include "GameOverState.h"
+#include "TextUtils.h"
 #include "raylib.h"
 
 GameOverState::GameOverState()
@@ -7,7 +8,6 @@ GameOverState::GameOverState()
 
 void GameOverState::HandleInput()
 {
-    // Check for restart or exit input
     if (IsKeyPressed(KEY_R))
     {
         RequestStateChange(GameStateRequest::ChangeToMenu);
@@ -15,35 +15,27 @@ void GameOverState::HandleInput()
 
     if (IsKeyPressed(KEY_ESCAPE))
     {
-        // TODO: Exit game
+        RequestStateChange(GameStateRequest::Quit);
     }
 }
 
 void GameOverState::Enter()
 {
     m_background = LoadTexture("assets/gameover.png");
+    m_font = LoadFont(GetFontPath());
 }
 
 void GameOverState::Update()
 {
-    // Any updates for game over state, if needed
 }
 
 void GameOverState::Draw() const
 {
-    float time = GetTime();
-    bool showText = ((int)(time * 2)) % 2 == 0;
-    Vector2 position1 = {200.0f, 280.0f};
-    Vector2 position2 = {135.0f, 400.0f};
-
     BeginDrawing();
 
     DrawTexture(m_background, 0, 0, WHITE);
-    DrawTextEx(customFont, "GAME OVER", position1, 80, 2, RED);
-    if (showText)
-    {
-        DrawTextEx(customFont, "Press R to restart or ESC to exit", position2, 32, 2, YELLOW);
-    }
+    DrawCenteredText("GAME OVER", m_font, TextStyles::Title(), 0.0f);
+    DrawFadingText("Press R to restart or ESC to exit", m_font, TextStyles::Subtitle(), 200.0f);
 
     EndDrawing();
 }
@@ -51,4 +43,5 @@ void GameOverState::Draw() const
 void GameOverState::Exit()
 {
     UnloadTexture(m_background);
+    UnloadFont(m_font);
 }

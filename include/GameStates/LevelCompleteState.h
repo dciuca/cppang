@@ -18,4 +18,5 @@ private:
     size_t m_level;
     Texture2D m_levelGhost{};
     bool m_hasGhost = false;
+    Font m_font;
 };

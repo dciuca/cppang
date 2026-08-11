@@ -1,8 +1,9 @@
 #include "PauseState.h"
 #include "raylib.h"
+#include "TextUtils.h"
 
 PauseState::PauseState(size_t level, Texture2D levelGhost)
-    : m_level(level), m_levelGhost(levelGhost), m_hasGhost(levelGhost.id != 0)
+    : m_level(level), m_levelGhost(levelGhost), m_hasGhost(levelGhost.id != 0), m_font(LoadFont(GetFontPath()))
 {
 }
 
@@ -40,21 +41,9 @@ void PauseState::Draw() const
             Fade(WHITE, 0.5f));
     }
 
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.45f));
-
-    float time = GetTime();
-    bool showText = ((int)(time * 2)) % 2 == 0;
-
-    Vector2 positionFixedText = {290.0f, 200.0f};
-    Vector2 positionFlashingText = {220.0f, 380.0f};
-
-    const char *levelText = TextFormat("LEVEL %d", m_level);
-
-    DrawTextEx(customFont, levelText, positionFixedText, 64, 2, YELLOW);
-    if (showText)
-    {
-        DrawTextEx(customFont, "Press SPACE to play", positionFlashingText, 32, 2, YELLOW);
-    }
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.45f)); // Black Fade
+    DrawCenteredText(TextFormat("LEVEL %d", m_level), m_font, TextStyles::Title(), 0.0f);
+    DrawFadingText("Press SPACE to start", m_font, TextStyles::Subtitle(), 200.0f);
 
     EndDrawing();
 }
@@ -65,4 +54,5 @@ void PauseState::Exit()
     {
         UnloadTexture(m_levelGhost);
     }
+    UnloadFont(m_font);
 }
