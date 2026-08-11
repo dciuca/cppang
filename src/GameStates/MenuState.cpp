@@ -1,5 +1,4 @@
 #include "MenuState.h"
-#include "raylib.h"
 #include "TextUtils.h"
 
 MenuState::MenuState()

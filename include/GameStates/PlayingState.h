@@ -1,5 +1,7 @@
+#pragma once
 #include "IGameState.h"
 #include "IEntity.h"
+#include "LevelManager.h"
 #include "Physics.h"
 #include "Player.h"
 #include "Ball.h"
@@ -11,7 +13,7 @@
 class PlayingState : public IGameState
 {
 public:
-    PlayingState(size_t level);
+    PlayingState(LevelManager &LevelManager);
     ~PlayingState() override = default;
 
     void HandleInput() override;

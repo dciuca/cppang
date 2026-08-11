@@ -1,5 +1,4 @@
 #include "Ball.h"
-#include "raylib.h"
 #include <cmath>
 
 Ball::Ball(

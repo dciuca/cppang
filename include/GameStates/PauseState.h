@@ -1,11 +1,12 @@
 #pragma once
 
 #include "IGameState.h"
+#include "LevelManager.h"
 
 class PauseState : public IGameState
 {
 public:
-    PauseState(size_t level, Texture2D levelGhost);
+    PauseState(LevelManager &levelManager, Texture2D levelGhost);
     ~PauseState() override = default;
 
     void HandleInput() override;

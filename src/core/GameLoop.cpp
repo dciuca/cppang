@@ -36,13 +36,13 @@ void GameLoop::Run()
                 Texture2D ghost = LoadTextureFromImage(frame);
                 UnloadImage(frame);
 
-                ChangeState(std::make_unique<LevelCompleteState>(m_levelManager.GetCurrentLevel(), ghost));
+                ChangeState(std::make_unique<LevelCompleteState>(m_levelManager, ghost));
                 break;
             }
 
             case GameStateRequest::ChangeToNextLevel:
                 m_levelManager.NextLevel();
-                ChangeState(std::make_unique<PlayingState>(m_levelManager.GetCurrentLevel()));
+                ChangeState(std::make_unique<PlayingState>(m_levelManager));
                 break;
 
             case GameStateRequest::ChangeToGameOver:
@@ -57,7 +57,7 @@ void GameLoop::Run()
                 UnloadImage(frame);
 
                 previousState = std::move(currentState);
-                ChangeState(std::make_unique<PauseState>(m_levelManager.GetCurrentLevel(), ghost));
+                ChangeState(std::make_unique<PauseState>(m_levelManager, ghost));
                 break;
             }
 

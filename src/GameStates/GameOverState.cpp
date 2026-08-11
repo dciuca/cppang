@@ -1,6 +1,5 @@
 #include "GameOverState.h"
 #include "TextUtils.h"
-#include "raylib.h"
 
 GameOverState::GameOverState()
 {

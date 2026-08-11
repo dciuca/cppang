@@ -1,6 +1,5 @@
 #include "Physics.h"
 #include <cmath>
-#include "GameTypes.h"
 
 // public methods
 void Physics::UpdateCharacter(IEntity &entity)

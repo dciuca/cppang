@@ -1,15 +1,10 @@
 #include "PlayingState.h"
-#include "Player.h"
-#include "Ball.h"
-#include "Obstacle.h"
 #include "GameLevels.h"
 #include "raylib.h"
 #include <algorithm>
 
-#include <iostream> // DEBUG
-
-PlayingState::PlayingState(size_t level)
-    : m_level(level), m_waitingForReady(true)
+PlayingState::PlayingState(LevelManager &levelManager)
+    : m_level(levelManager.GetCurrentLevel()), m_waitingForReady(true)
 {
     LoadLevelBackground(this->m_level);
     LoadPlayers();

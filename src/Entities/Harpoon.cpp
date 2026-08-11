@@ -1,6 +1,5 @@
 #include "Harpoon.h"
-#include "raylib.h"
-#include <math.h>
+#include <cmath>
 
 Harpoon::Harpoon(
     float x,

@@ -1,9 +1,8 @@
 #include "LevelCompleteState.h"
 #include "TextUtils.h"
-#include "raylib.h"
 
-LevelCompleteState::LevelCompleteState(size_t level, Texture2D levelGhost)
-    : m_level(level), m_levelGhost(levelGhost), m_hasGhost(levelGhost.id != 0)
+LevelCompleteState::LevelCompleteState(LevelManager &levelManager, Texture2D levelGhost)
+    : m_level(levelManager.GetCurrentLevel()), m_levelGhost(levelGhost), m_hasGhost(levelGhost.id != 0)
 {
 }
 

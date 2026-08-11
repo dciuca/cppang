@@ -1,9 +1,8 @@
 #include "PauseState.h"
-#include "raylib.h"
 #include "TextUtils.h"
 
-PauseState::PauseState(size_t level, Texture2D levelGhost)
-    : m_level(level), m_levelGhost(levelGhost), m_hasGhost(levelGhost.id != 0), m_font(LoadFont(GetFontPath()))
+PauseState::PauseState(LevelManager &levelManager, Texture2D levelGhost)
+    : m_level(levelManager.GetCurrentLevel()), m_levelGhost(levelGhost), m_hasGhost(levelGhost.id != 0), m_font(LoadFont(GetFontPath()))
 {
 }
 

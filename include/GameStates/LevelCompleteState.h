@@ -1,11 +1,12 @@
 #pragma once
 
 #include "IGameState.h"
+#include "LevelManager.h"
 
 class LevelCompleteState : public IGameState
 {
 public:
-    LevelCompleteState(size_t level, Texture2D levelGhost);
+    LevelCompleteState(LevelManager &levelManager, Texture2D levelGhost);
     ~LevelCompleteState() override = default;
 
     void HandleInput() override;
