@@ -11,8 +11,9 @@ enum class ShapeType
 enum class GameStateRequest
 {
     None,
-    ChangeToNextLevel,
     ChangeToMenu,
+    ChangeToLevelComplete,
+    ChangeToNextLevel,
     ChangeToGameOver,
     PauseGame,
     ResumeGame,

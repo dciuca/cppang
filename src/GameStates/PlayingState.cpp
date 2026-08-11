@@ -283,6 +283,6 @@ void PlayingState::CheckWinCondition()
     if (m_balls.size() == 0)
     {
         m_players[0]->Winning();
-        RequestStateChange(GameStateRequest::ChangeToNextLevel);
+        RequestStateChange(GameStateRequest::ChangeToLevelComplete);
     }
 }

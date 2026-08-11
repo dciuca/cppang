@@ -1,5 +1,6 @@
 #include "GameLoop.h"
 #include "MenuState.h"
+#include "LevelCompleteState.h"
 #include "PlayingState.h"
 #include "GameOverState.h"
 #include "PauseState.h"
@@ -28,6 +29,16 @@ void GameLoop::Run()
                 m_levelManager.Reset();
                 ChangeState(std::make_unique<MenuState>());
                 break;
+
+            case GameStateRequest::ChangeToLevelComplete:
+            {
+                Image frame = LoadImageFromScreen();
+                Texture2D ghost = LoadTextureFromImage(frame);
+                UnloadImage(frame);
+
+                ChangeState(std::make_unique<LevelCompleteState>(m_levelManager.GetCurrentLevel(), ghost));
+                break;
+            }
 
             case GameStateRequest::ChangeToNextLevel:
                 m_levelManager.NextLevel();
