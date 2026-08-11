@@ -40,6 +40,7 @@ private:
     size_t m_lives;
     size_t m_score;
     Texture2D m_background;
+    Font m_font;
     Rectangle m_backgroundRect;
     bool m_waitingForReady;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game

@@ -20,6 +20,13 @@ namespace TextStyles
     inline TextStyle Subtitle() { return {32.0f, 2, YELLOW}; }
 }
 
+inline void DrawOffsetText(const char *text, const Font &font, const TextStyle &style,
+                           float offsetX = 0.0f, float offsetY = 0.0f)
+{
+    Vector2 position = {offsetX, offsetY};
+    DrawTextEx(font, text, position, style.size, style.spacing, style.color);
+}
+
 inline void DrawCenteredText(const char *text, const Font &font, const TextStyle &style,
                              float offsetY = 0.0f)
 {

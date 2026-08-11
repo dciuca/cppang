@@ -1,5 +1,6 @@
 #include "PlayingState.h"
 #include "GameLevels.h"
+#include "TextUtils.h"
 #include "raylib.h"
 #include <algorithm>
 #include <iostream>
@@ -59,6 +60,7 @@ void PlayingState::HandleInput()
 void PlayingState::Enter()
 {
     gameStateRequest = GameStateRequest::None;
+    m_font = LoadFont(GetFontPath());
 }
 
 void PlayingState::Update()
@@ -113,6 +115,8 @@ void PlayingState::Draw() const
                    {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
                    {0, 0}, 0.0f, WHITE);
 
+    DrawOffsetText(TextFormat("Lives: %d", m_lives), m_font, TextStyles::Subtitle(), 50.0f, 50.0f);
+
     for (const auto &entity : m_entities)
     {
         if (entity->IsActive())
@@ -155,9 +159,7 @@ bool PlayingState::HandleCollisions()
         for (auto &player : m_players)
         {
             if (Physics::CheckAndResolveCircleRectCollision(*ball, *player))
-            {
                 m_lives--;
-            }
         }
 
         for (auto &harpoon : m_harpoons)
