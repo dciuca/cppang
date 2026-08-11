@@ -30,6 +30,7 @@ private:
     void LoadObstacles(size_t level);
     void PauseGame();
     void Cleanup();
+    void CheckWinCondition();
 
 private:
     size_t m_level;

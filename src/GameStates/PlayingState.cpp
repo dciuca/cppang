@@ -76,6 +76,8 @@ void PlayingState::Update()
         SplitBalls(m_ballsToSplit);
 
     Cleanup();
+
+    CheckWinCondition();
 }
 
 void PlayingState::Cleanup()
@@ -99,13 +101,6 @@ void PlayingState::Cleanup()
     //                    [](const std::unique_ptr<IEntity> &e)
     //                    { return !e->IsActive(); }),
     //     m_entities.end());
-
-    // Level complete check — runs after inactive entities are removed
-    if (m_balls.size() == 0)
-    {
-        m_players[0]->Winning();
-        RequestStateChange(GameStateRequest::ChangeToNextLevel);
-    }
 }
 
 void PlayingState::Draw() const
@@ -280,5 +275,14 @@ void PlayingState::LoadObstacles(size_t level)
             config.x, config.y, config.width, config.height, config.isFixed, config.color, config.texturePath);
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
+    }
+}
+
+void PlayingState::CheckWinCondition()
+{
+    if (m_balls.size() == 0)
+    {
+        m_players[0]->Winning();
+        RequestStateChange(GameStateRequest::ChangeToNextLevel);
     }
 }
