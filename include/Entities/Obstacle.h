@@ -17,7 +17,6 @@ public:
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
-    void SetTexture(const std::string &texturePath) override;
     Vector2 GetDimensions() const override;
     ShapeType GetShapeType() const { return ShapeType::RECTANGLE; };
     void Update() override;
@@ -29,6 +28,4 @@ private:
     float height;
     bool isFixed;
     Color color;
-    Texture2D texture;
-    bool useTexture;
 };

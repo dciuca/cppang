@@ -7,7 +7,7 @@ Player::Player(
     float width,
     float height,
     Color color,
-    const std::string &texturePath) : width(width), height(height), color(color), texture({0}), useTexture(false)
+    const std::string &texturePath) : width(width), height(height), color(color)
 {
     position = {x, y};
     velocity = {0, 0};
@@ -111,17 +111,6 @@ void Player::Draw() const
 void Player::SetColor(const Color &newColor)
 {
     color = newColor;
-}
-
-void Player::SetTexture(const std::string &texturePath)
-{
-    if (useTexture)
-    {
-        UnloadTexture(texture);
-    }
-
-    texture = LoadTexture(texturePath.c_str());
-    useTexture = true;
 }
 
 Vector2 Player::GetDimensions() const

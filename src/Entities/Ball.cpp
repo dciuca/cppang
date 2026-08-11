@@ -10,7 +10,7 @@ Ball::Ball(
     float speed,
     Color color,
     const std::string &texturePath)
-    : radius(radius), angle(angle), color(color), texture({0}), useTexture(false)
+    : radius(radius), angle(angle), color(color)
 {
     position = {x, y};
     velocity = {0, 0};
@@ -52,16 +52,6 @@ void Ball::Draw() const
 void Ball::SetColor(const Color &newColor)
 {
     color = newColor;
-}
-
-void Ball::SetTexture(const std::string &texturePath)
-{
-    if (useTexture)
-        UnloadTexture(texture);
-
-    texture = LoadTexture(texturePath.c_str());
-    useTexture = true;
-    m_texturePath = texturePath;
 }
 
 Vector2 Ball::GetDimensions() const

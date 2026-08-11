@@ -8,7 +8,7 @@ Harpoon::Harpoon(
     float width,
     float height,
     Color color,
-    const std::string &texturePath) : width(width), height(height), color(color), texture({0}), useTexture(false)
+    const std::string &texturePath) : width(width), height(height), color(color)
 {
     position = {x, y};
     velocity = {0, 0};
@@ -107,17 +107,6 @@ void Harpoon::Draw() const
 void Harpoon::SetColor(const Color &newColor)
 {
     color = newColor;
-}
-
-void Harpoon::SetTexture(const std::string &texturePath)
-{
-    if (useTexture)
-    {
-        UnloadTexture(texture);
-    }
-
-    texture = LoadTexture(texturePath.c_str());
-    useTexture = true;
 }
 
 Vector2 Harpoon::GetDimensions() const

@@ -9,7 +9,7 @@ Obstacle::Obstacle(
     bool isFixed,
     Color color,
     const std::string &texturePath)
-    : width(width), height(height), isFixed(isFixed), color(color), texture({0}), useTexture(false)
+    : width(width), height(height), isFixed(isFixed), color(color)
 {
     position = {x, y};
     speed = 250.0f;
@@ -61,17 +61,6 @@ void Obstacle::Draw() const
 void Obstacle::SetColor(const Color &newColor)
 {
     color = newColor;
-}
-
-void Obstacle::SetTexture(const std::string &texturePath)
-{
-    if (useTexture)
-    {
-        UnloadTexture(texture);
-    }
-
-    texture = LoadTexture(texturePath.c_str());
-    useTexture = true;
 }
 
 Vector2 Obstacle::GetDimensions() const
