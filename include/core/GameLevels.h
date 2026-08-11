@@ -44,8 +44,6 @@ struct BackgroundConfig
 
 struct GameLevels
 {
-    static const int MAX_LEVELS = 4;
-
     //
     // BACKGROUND CONFIGURATION
     //

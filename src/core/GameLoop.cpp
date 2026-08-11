@@ -8,14 +8,14 @@
 
 GameLoop::GameLoop()
 {
-    // Initialize the game with a default state
+    m_levelManager.Reset();
+    m_levelManager.SetLives(3);
+    m_levelManager.SetScore(0);
     ChangeState(std::make_unique<MenuState>());
 }
 
 void GameLoop::Run()
 {
-    m_levelManager.Reset();
-
     while (!WindowShouldClose())
     {
         if (currentState)
