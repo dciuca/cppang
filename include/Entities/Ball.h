@@ -29,5 +29,4 @@ private:
     float radius;
     float angle; // in degrees
     Color color;
-    std::string m_texturePath;
 };
