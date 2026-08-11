@@ -33,9 +33,12 @@ private:
     void PauseGame();
     void Cleanup();
     void CheckWinCondition();
+    void CheckGameOver();
 
 private:
     size_t m_level;
+    size_t m_lives;
+    size_t m_score;
     Texture2D m_background;
     Rectangle m_backgroundRect;
     bool m_waitingForReady;

@@ -2,9 +2,13 @@
 #include "GameLevels.h"
 #include "raylib.h"
 #include <algorithm>
+#include <iostream>
 
 PlayingState::PlayingState(LevelManager &levelManager)
-    : m_level(levelManager.GetCurrentLevel()), m_waitingForReady(true)
+    : m_level(levelManager.GetCurrentLevel()),
+      m_lives(levelManager.GetLives()),
+      m_score(levelManager.GetScore()),
+      m_waitingForReady(true)
 {
     LoadLevelBackground(this->m_level);
     LoadPlayers();
@@ -73,6 +77,7 @@ void PlayingState::Update()
     Cleanup();
 
     CheckWinCondition();
+    CheckGameOver();
 }
 
 void PlayingState::Cleanup()
@@ -149,10 +154,9 @@ bool PlayingState::HandleCollisions()
     {
         for (auto &player : m_players)
         {
-            if (Physics::CheckCircleRectCollision(*ball, *player))
+            if (Physics::CheckAndResolveCircleRectCollision(*ball, *player))
             {
-                RequestStateChange(GameStateRequest::ChangeToGameOver);
-                return false;
+                m_lives--;
             }
         }
 
@@ -280,4 +284,10 @@ void PlayingState::CheckWinCondition()
         m_players[0]->Winning();
         RequestStateChange(GameStateRequest::ChangeToLevelComplete);
     }
+}
+
+void PlayingState::CheckGameOver()
+{
+    if (m_lives <= 0)
+        RequestStateChange(GameStateRequest::ChangeToGameOver);
 }
