@@ -115,7 +115,10 @@ void PlayingState::Draw() const
 
     for (const auto &entity : m_entities)
     {
-        entity->Draw();
+        if (entity->IsActive())
+        {
+            entity->Draw();
+        }
     }
 
     EndDrawing();
