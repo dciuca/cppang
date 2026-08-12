@@ -119,8 +119,16 @@ void PlayingState::Draw() const
                    {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
                    {0, 0}, 0.0f, WHITE);
 
-    DrawOffsetText(TextFormat("Lives: %d", m_levelManager.GetLives()), m_font, TextStyles::Subtitle(), 50.0f, 50.0f);
-    DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::Subtitle(), 50.0f, 80.0f);
+    DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::Subtitle(), 40.0f, 40.0f);
+    DrawRectangle(GetScreenWidth() - 150.0f, 35.0f, 100.0f, 45.0f, ColorAlpha(WHITE, 0.5f));
+    DrawRectangleLines(GetScreenWidth() - 150.0f, 35.0f, 100.0f, 45.0f, YELLOW);
+    for (int i = 0; i < m_levelManager.GetLives(); i++)
+    {
+        DrawTexturePro(m_players[0]->GetTexture(),
+                       {0, 0, 32, 32},
+                       {(GetScreenWidth() - 50.0f) - (40.0f + i * 30.0f), 40.0f, 35.0f, 35.0f},
+                       {0, 0}, 0.0f, WHITE);
+    }
 
     for (const auto &entity : m_entities)
     {
@@ -163,7 +171,7 @@ bool PlayingState::HandleCollisions()
     {
         for (auto &player : m_players)
         {
-            if (m_invisibilityFrames == 0 && Physics::CheckAndResolveCircleRectCollision(*ball, *player))
+            if (Physics::CheckAndResolveCircleRectCollision(*ball, *player) && m_invisibilityFrames == 0)
             {
                 m_levelManager.SetLives(m_levelManager.GetLives() - 1);
                 m_invisibilityFrames = GetFPS() * 2;
