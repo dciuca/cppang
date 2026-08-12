@@ -6,15 +6,14 @@
 #include <iostream>
 
 PlayingState::PlayingState(LevelManager &levelManager)
-    : m_level(levelManager.GetCurrentLevel()),
-      m_lives(levelManager.GetLives()),
-      m_score(levelManager.GetScore()),
-      m_waitingForReady(true)
+    : m_levelManager(levelManager),
+      m_waitingForReady(true),
+      m_invisibilityFrames(0)
 {
-    LoadLevelBackground(this->m_level);
+    LoadLevelBackground(m_levelManager.GetCurrentLevel());
     LoadPlayers();
-    LoadObstacles(this->m_level);
-    LoadLevelBalls(this->m_level);
+    LoadObstacles(m_levelManager.GetCurrentLevel());
+    LoadLevelBalls(m_levelManager.GetCurrentLevel());
 
     for (auto &entity : m_entities)
     {
@@ -61,18 +60,23 @@ void PlayingState::Enter()
 {
     gameStateRequest = GameStateRequest::None;
     m_font = LoadFont(GetFontPath());
+    std::cout << "m_levelManager lives: " << m_levelManager.GetLives() << std::endl;
+    std::cout << "m_levelManager scores: " << m_levelManager.GetScore() << std::endl;
 }
 
 void PlayingState::Update()
 {
     if (m_waitingForReady)
-    {
         PauseGame();
-    }
+
+    if (m_invisibilityFrames > 0)
+        m_invisibilityFrames--;
 
     UpdateEntities();
+
     if (!HandleCollisions())
         return;
+
     if (!m_ballsToSplit.empty())
         SplitBalls(m_ballsToSplit);
 
@@ -115,7 +119,8 @@ void PlayingState::Draw() const
                    {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
                    {0, 0}, 0.0f, WHITE);
 
-    DrawOffsetText(TextFormat("Lives: %d", m_lives), m_font, TextStyles::Subtitle(), 50.0f, 50.0f);
+    DrawOffsetText(TextFormat("Lives: %d", m_levelManager.GetLives()), m_font, TextStyles::Subtitle(), 50.0f, 50.0f);
+    DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::Subtitle(), 50.0f, 80.0f);
 
     for (const auto &entity : m_entities)
     {
@@ -158,8 +163,11 @@ bool PlayingState::HandleCollisions()
     {
         for (auto &player : m_players)
         {
-            if (Physics::CheckAndResolveCircleRectCollision(*ball, *player))
-                m_lives--;
+            if (m_invisibilityFrames == 0 && Physics::CheckAndResolveCircleRectCollision(*ball, *player))
+            {
+                m_levelManager.SetLives(m_levelManager.GetLives() - 1);
+                m_invisibilityFrames = GetFPS() * 2;
+            }
         }
 
         for (auto &harpoon : m_harpoons)
@@ -170,6 +178,7 @@ bool PlayingState::HandleCollisions()
             {
                 harpoon->SetActive(false);
                 m_ballsToSplit.push_back(ball);
+                m_levelManager.SetScore(m_levelManager.GetScore() + 100);
             }
         }
 
@@ -239,7 +248,7 @@ void PlayingState::PauseGame()
 
 void PlayingState::LoadLevelBackground(size_t level)
 {
-    auto bgConfig = GameLevels::GetLevelBackground(m_level);
+    auto bgConfig = GameLevels::GetLevelBackground(m_levelManager.GetCurrentLevel());
     m_background = LoadTexture(bgConfig.texturePath.c_str());
     m_backgroundRect = bgConfig.sourceRect;
 }
@@ -290,6 +299,6 @@ void PlayingState::CheckWinCondition()
 
 void PlayingState::CheckGameOver()
 {
-    if (m_lives <= 0)
+    if (m_levelManager.GetLives() <= 0)
         RequestStateChange(GameStateRequest::ChangeToGameOver);
 }

@@ -36,9 +36,8 @@ private:
     void CheckGameOver();
 
 private:
-    size_t m_level;
-    size_t m_lives;
-    size_t m_score;
+    size_t m_invisibilityFrames;
+    LevelManager &m_levelManager;
     Texture2D m_background;
     Font m_font;
     Rectangle m_backgroundRect;

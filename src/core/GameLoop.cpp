@@ -9,8 +9,6 @@
 GameLoop::GameLoop()
 {
     m_levelManager.Reset();
-    m_levelManager.SetLives(3);
-    m_levelManager.SetScore(0);
     ChangeState(std::make_unique<MenuState>());
 }
 

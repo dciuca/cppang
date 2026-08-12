@@ -9,7 +9,12 @@ public:
 
     size_t GetCurrentLevel() const { return m_currentLevel; };
     void NextLevel() { m_currentLevel++; };
-    void Reset() { m_currentLevel = 0; };
+    void Reset()
+    {
+        m_currentLevel = 0;
+        m_lives = 3;
+        m_score = 0;
+    };
     size_t GetLives() const { return m_lives; };
     size_t GetScore() const { return m_score; };
     void SetLives(size_t lives) { m_lives = lives; };
