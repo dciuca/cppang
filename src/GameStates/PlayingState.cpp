@@ -143,7 +143,13 @@ void PlayingState::Draw() const
 void PlayingState::Exit()
 {
     UnloadTexture(m_background);
+    UnloadTexture(m_lifebar);
+    UnloadFont(m_font);
     m_entities.clear();
+    m_balls.clear();
+    m_harpoons.clear();
+    m_obstacles.clear();
+    m_players.clear();
 }
 
 // private methods
