@@ -27,6 +27,7 @@ private:
     bool HandleCollisions();
     void SplitBalls(const std::vector<Ball *> &ballsToSplit);
     void LoadLevelBackground(size_t level);
+    void LoadLifebar();
     void LoadPlayers();
     void LoadLevelBalls(size_t level);
     void LoadObstacles(size_t level);
@@ -38,9 +39,9 @@ private:
 private:
     size_t m_invisibilityFrames;
     LevelManager &m_levelManager;
-    Texture2D m_background;
+    Texture2D m_background, m_lifebar;
     Font m_font;
-    Rectangle m_backgroundRect;
+    Rectangle m_backgroundRect, m_lifebarRect;
     bool m_waitingForReady;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
     std::vector<Player *> m_players;                  // m_entities observer

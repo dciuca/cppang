@@ -42,6 +42,12 @@ struct BackgroundConfig
     Rectangle sourceRect;
 };
 
+struct LifebarConfig
+{
+    std::string texturePath;
+    Rectangle sourceRect;
+};
+
 struct GameLevels
 {
     //
@@ -50,6 +56,14 @@ struct GameLevels
     static BackgroundConfig GetLevelBackground(int level)
     {
         return {"assets/backgrounds_col.png", {0, (level - 1) * 200.0f, 255, 191}};
+    }
+
+    //
+    // LIFEBAR CONFIGURATION
+    //
+    static LifebarConfig GetLifebarConfig()
+    {
+        return {"assets/hearth.png", {0, 0, 16, 16}};
     }
 
     //

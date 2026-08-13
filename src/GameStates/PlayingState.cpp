@@ -11,6 +11,7 @@ PlayingState::PlayingState(LevelManager &levelManager)
       m_invisibilityFrames(0)
 {
     LoadLevelBackground(m_levelManager.GetCurrentLevel());
+    LoadLifebar();
     LoadPlayers();
     LoadObstacles(m_levelManager.GetCurrentLevel());
     LoadLevelBalls(m_levelManager.GetCurrentLevel());
@@ -120,13 +121,11 @@ void PlayingState::Draw() const
                    {0, 0}, 0.0f, WHITE);
 
     DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::Subtitle(), 40.0f, 40.0f);
-    DrawRectangle(GetScreenWidth() - 150.0f, 35.0f, 100.0f, 45.0f, ColorAlpha(WHITE, 0.5f));
-    DrawRectangleLines(GetScreenWidth() - 150.0f, 35.0f, 100.0f, 45.0f, YELLOW);
     for (int i = 0; i < m_levelManager.GetLives(); i++)
     {
-        DrawTexturePro(m_players[0]->GetTexture(),
-                       {0, 0, 32, 32},
-                       {(GetScreenWidth() - 50.0f) - (40.0f + i * 30.0f), 40.0f, 35.0f, 35.0f},
+        DrawTexturePro(m_lifebar,
+                       m_lifebarRect,
+                       {(GetScreenWidth() - 50.0f) - (40.0f + i * 30.0f), 40.0f, 28.0f, 28.0f},
                        {0, 0}, 0.0f, WHITE);
     }
 
@@ -259,6 +258,13 @@ void PlayingState::LoadLevelBackground(size_t level)
     auto bgConfig = GameLevels::GetLevelBackground(m_levelManager.GetCurrentLevel());
     m_background = LoadTexture(bgConfig.texturePath.c_str());
     m_backgroundRect = bgConfig.sourceRect;
+}
+
+void PlayingState::LoadLifebar()
+{
+    auto lifebarConfig = GameLevels::GetLifebarConfig();
+    m_lifebar = LoadTexture(lifebarConfig.texturePath.c_str());
+    m_lifebarRect = lifebarConfig.sourceRect;
 }
 
 void PlayingState::LoadPlayers()
