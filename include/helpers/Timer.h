@@ -19,7 +19,7 @@ public:
     {
         start_time = 0;
         active = false;
-        func = func;
+        this->func = func;
         if (autostart)
             activate();
     }

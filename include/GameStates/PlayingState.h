@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Obstacle.h"
 #include "Harpoon.h"
+#include "Timer.h"
 #include <memory>
 #include <vector>
 
@@ -38,7 +39,7 @@ private:
     void CheckGameOver();
 
 private:
-    size_t m_invisibilityFrames;
+    Timer m_invincibilityTimer;
     LevelManager &m_levelManager;
     Texture2D m_background, m_lifebar;
     Font m_font;
