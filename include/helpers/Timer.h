@@ -25,6 +25,9 @@ public:
     }
     ~Timer() = default;
 
+    /// Returns true if the timer is currently active (counting down).
+    bool isActive() const { return active; };
+
     /// Starts (or restarts) the timer from the current time.
     void activate()
     {
