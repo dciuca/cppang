@@ -60,6 +60,7 @@ void PlayingState::Update()
     if (m_waitingForReady)
         PauseGame();
 
+    m_levelManager.GetLevelTimer().update();
     UpdateEntities();
 
     if (!HandleCollisions())
@@ -108,6 +109,7 @@ void PlayingState::Draw() const
                    {0, 0}, 0.0f, WHITE);
 
     DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::Subtitle(), 40.0f, 40.0f);
+    DrawOffsetText(TextFormat("Time: %d", (int)m_levelManager.GetLevelTimer().GetTimeLeft()), m_font, TextStyles::Subtitle(), (float)GetScreenWidth() / 2.0f, 40.0f);
     for (int i = 0; i < m_levelManager.GetLives(); i++)
     {
         DrawTexturePro(m_lifebar,
@@ -316,6 +318,6 @@ void PlayingState::CheckWinCondition()
 
 void PlayingState::CheckGameOver()
 {
-    if (m_levelManager.GetLives() <= 0)
+    if (m_levelManager.GetLives() <= 0 || !m_levelManager.GetLevelTimer().isActive())
         RequestStateChange(GameStateRequest::ChangeToGameOver);
 }

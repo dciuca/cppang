@@ -28,6 +28,9 @@ public:
     /// Returns true if the timer is currently active (counting down).
     bool isActive() const { return active; };
 
+    /// Returns the remaining time in seconds, or 0 if inactive.
+    float GetTimeLeft() const { return active ? duration - (GetTime() - start_time) : 0; };
+
     /// Starts (or restarts) the timer from the current time.
     void activate()
     {
