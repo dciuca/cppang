@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <cmath>
 
 Player::Player(
     float x,
@@ -98,8 +99,8 @@ void Player::Update()
 
 void Player::Draw() const
 {
-    if (this->IsActive() == false)
-        return;
+    if (!IsActive()) return;
+    if (IsInvincible() && fmod(GetTime(), 0.2) < 0.1) return;
 
     if (useTexture)
     {
