@@ -31,6 +31,7 @@ private:
     void LoadPlayers();
     void LoadLevelBalls(size_t level);
     void LoadObstacles(size_t level);
+    void LoadHarpoon(Player *p);
     void PauseGame();
     void Cleanup();
     void CheckWinCondition();

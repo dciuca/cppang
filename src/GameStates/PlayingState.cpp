@@ -26,9 +26,7 @@ void PlayingState::HandleInput()
 {
     // Pause Handling
     if (IsKeyPressed(KEY_P))
-    {
         PauseGame();
-    }
 
     // Input Handling for Player 1 (position [0])
     if (m_players.size() > 0 && m_players[0]->IsActive())
@@ -47,12 +45,7 @@ void PlayingState::HandleInput()
         if (IsKeyPressed(KEY_SPACE))
         {
             p1->StartShooting();
-            auto harpoon = std::make_unique<Harpoon>(
-                p1->position.x + p1->GetDimensions().x / 2.0f,
-                p1->position.y);
-            harpoon->SetActive(true);
-            m_harpoons.push_back(harpoon.get());
-            m_entities.push_back(std::move(harpoon));
+            LoadHarpoon(p1);
         }
     }
 }
@@ -61,8 +54,6 @@ void PlayingState::Enter()
 {
     gameStateRequest = GameStateRequest::None;
     m_font = LoadFont(GetFontPath());
-    std::cout << "m_levelManager lives: " << m_levelManager.GetLives() << std::endl;
-    std::cout << "m_levelManager scores: " << m_levelManager.GetScore() << std::endl;
 }
 
 void PlayingState::Update()
@@ -306,6 +297,16 @@ void PlayingState::LoadObstacles(size_t level)
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
+}
+
+void PlayingState::LoadHarpoon(Player *p)
+{
+    auto harpoon = std::make_unique<Harpoon>(
+        p->position.x + p->GetDimensions().x / 2.0f,
+        p->position.y);
+    harpoon->SetActive(true);
+    m_harpoons.push_back(harpoon.get());
+    m_entities.push_back(std::move(harpoon));
 }
 
 void PlayingState::CheckWinCondition()
