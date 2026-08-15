@@ -6,7 +6,7 @@ Player::Player(
     float width,
     float height,
     Color color,
-    const std::string &texturePath) : width(width), height(height), color(color)
+    const std::string &texturePath) : width(width), height(height), color(color), m_invincibilityTimer(2, false, false, nullptr)
 {
     position = {x, y};
     velocity = {0, 0};
@@ -56,8 +56,19 @@ void Player::Winning()
     m_currentFrame = 7;
 }
 
+void Player::ActivateInvincibility()
+{
+    m_invincibilityTimer.activate();
+}
+
+bool Player::IsInvincible() const
+{
+    return m_invincibilityTimer.isActive();
+}
+
 void Player::Update()
 {
+    m_invincibilityTimer.update();
     m_animTimer += GetFrameTime();
     if (m_animTimer < 0.1f)
         return;

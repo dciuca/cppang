@@ -1,15 +1,13 @@
 #include "PlayingState.h"
 #include "GameLevels.h"
 #include "TextUtils.h"
-#include "Timer.h"
 #include "raylib.h"
 #include <algorithm>
 #include <iostream>
 
 PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
-      m_waitingForReady(true),
-      m_invincibilityTimer(2, 0, 0, nullptr) // 2 second invincibility timer
+      m_waitingForReady(true)
 {
     LoadLevelBackground(m_levelManager.GetCurrentLevel());
     LoadLifebar();
@@ -61,8 +59,6 @@ void PlayingState::Update()
 {
     if (m_waitingForReady)
         PauseGame();
-
-    m_invincibilityTimer.update();
 
     UpdateEntities();
 
@@ -167,10 +163,10 @@ bool PlayingState::HandleCollisions()
     {
         for (auto &player : m_players)
         {
-            if (Physics::CheckAndResolveCircleRectCollision(*ball, *player) && !m_invincibilityTimer.isActive())
+            if (Physics::CheckAndResolveCircleRectCollision(*ball, *player) && !player->IsInvincible())
             {
                 m_levelManager.SetLives(m_levelManager.GetLives() - 1);
-                m_invincibilityTimer.activate();
+                player->ActivateInvincibility();
             }
         }
 

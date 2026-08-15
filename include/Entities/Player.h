@@ -2,6 +2,7 @@
 
 #include <string>
 #include "IEntity.h"
+#include "Timer.h"
 #include "raylib.h"
 
 class Player : public IEntity
@@ -21,6 +22,8 @@ public:
     void StopMoving();
     void StartShooting();
     void Winning();
+    void ActivateInvincibility();
+    bool IsInvincible() const;
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
@@ -46,4 +49,5 @@ private:
     int m_currentFrame = 4;
     int m_currentRow = 0;
     float m_animTimer = 0.0f;
+    Timer m_invincibilityTimer;
 };
