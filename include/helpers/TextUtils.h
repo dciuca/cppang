@@ -18,6 +18,7 @@ namespace TextStyles
 {
     inline TextStyle Title() { return {64.0f, 2, YELLOW}; }
     inline TextStyle Subtitle() { return {32.0f, 2, YELLOW}; }
+    inline TextStyle HUD() { return {28.0f, 2, YELLOW}; }
 }
 
 inline void DrawOffsetText(const char *text, const Font &font, const TextStyle &style,

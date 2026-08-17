@@ -104,8 +104,14 @@ void PlayingState::Draw() const
                    {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
                    {0, 0}, 0.0f, WHITE);
 
-    DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::Subtitle(), 40.0f, 40.0f);
-    DrawOffsetText(TextFormat("Time: %d", (int)m_levelManager.GetLevelTimer().GetTimeLeft()), m_font, TextStyles::Subtitle(), (float)GetScreenWidth() / 2.0f, 40.0f);
+    DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::HUD(), 40.0f, 40.0f);
+
+    DrawCenteredText(TextFormat("Time: %d",
+                                (int)m_levelManager.GetLevelTimer().GetTimeLeft()),
+                     m_font,
+                     TextStyles::HUD(),
+                     (55.0f - (float)GetScreenHeight() / 2.0f));
+
     for (int i = 0; i < m_levelManager.GetLives(); i++)
     {
         DrawTexturePro(m_lifebar,
@@ -117,9 +123,7 @@ void PlayingState::Draw() const
     for (const auto &entity : m_entities)
     {
         if (entity->IsActive())
-        {
             entity->Draw();
-        }
     }
 
     EndDrawing();
