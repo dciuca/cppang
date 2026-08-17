@@ -1,72 +1,69 @@
 ```mermaid
 classDiagram
-    class GameLoop {
-    }
-
-    class LevelManager {
-    }
-
-    class IGameState {
-    }
-
-    class MenuState {
-    }
-
-    class PlayingState {
-    }
-
-    class PauseState {
-    }
-
-    class GameOverState {
-    }
-
-    class IEntity {
-    }
-
-    class Player {
-    }
-
-    class Ball {
-    }
-
-    class Harpoon {
-    }
-
-    class Obstacle {
-    }
-
-    class Physics {
-    }
-
+    class GameLoop
+    class LevelManager
+    class Timer
+    class IGameState
+    class MenuState
+    class PlayingState
+    class PauseState
+    class LevelCompleteState
+    class GameOverState
+    class IEntity
+    class Player
+    class Ball
+    class Harpoon
+    class Obstacle
+    class Physics
+    class GameLevels
     class GameStateRequest {
+        <<enumeration>>
+        None
+        ChangeToMenu
+        ChangeToLevelComplete
+        ChangeToNextLevel
+        ChangeToGameOver
+        PauseGame
+        ResumeGame
+        Quit
     }
-
     class ShapeType {
+        <<enumeration>>
+        CIRCLE
+        RECTANGLE
     }
 
     GameLoop *-- IGameState : owns current/previous state
-    GameLoop --> LevelManager : uses
+    GameLoop *-- LevelManager : owns
 
-    IGameState <|-- MenuState : implements
-    IGameState <|-- PlayingState : implements
-    IGameState <|-- PauseState : implements
-    IGameState <|-- GameOverState : implements
-    IGameState --> GameStateRequest : reports requests
+    LevelManager *-- Timer : owns m_levelTimer
+    Player *-- Timer : owns m_invincibilityTimer
 
-    PlayingState *-- IEntity : owns entities
-    PlayingState --> Player : manages
-    PlayingState --> Ball : manages
-    PlayingState --> Harpoon : manages
-    PlayingState --> Obstacle : manages
-    PlayingState ..> Physics : uses for updates
+    IGameState <|-- MenuState
+    IGameState <|-- PlayingState
+    IGameState <|-- PauseState
+    IGameState <|-- LevelCompleteState
+    IGameState <|-- GameOverState
+    IGameState --> GameStateRequest : reports
 
-    IEntity <|-- Player : implements
-    IEntity <|-- Ball : implements
-    IEntity <|-- Harpoon : implements
-    IEntity <|-- Obstacle : implements
+    PlayingState --> LevelManager : ref
+    PlayingState *-- IEntity : owns via unique_ptr
+    PlayingState --> Player : observes (raw ptr)
+    PlayingState --> Ball : observes (raw ptr)
+    PlayingState --> Harpoon : observes (raw ptr)
+    PlayingState --> Obstacle : observes (raw ptr)
+    PlayingState ..> Physics : uses
+    PlayingState ..> GameLevels : uses
 
-    Physics ..> IEntity : updates and checks collisions
+    PauseState --> LevelManager : ref
+    LevelCompleteState --> LevelManager : ref
+
+    IEntity <|-- Player
+    IEntity <|-- Ball
+    IEntity <|-- Harpoon
+    IEntity <|-- Obstacle
+
+    IEntity --> ShapeType : exposes
+    Physics ..> IEntity : updates / checks collisions
     Physics --> ShapeType : uses
-    IEntity --> ShapeType : exposes shape type
 ```

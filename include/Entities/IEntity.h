@@ -12,7 +12,11 @@ public:
     float speed = 0.0f;
 
 public:
-    virtual ~IEntity() = default;
+    ~IEntity()
+    {
+        if (useTexture)
+            UnloadTexture(texture);
+    };
 
     // default implementations
     void SetActive(bool active) { this->isActive = active; };
