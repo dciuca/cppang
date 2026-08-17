@@ -12,7 +12,7 @@ public:
     float speed = 0.0f;
 
 public:
-    ~IEntity()
+    virtual ~IEntity()
     {
         if (useTexture)
             UnloadTexture(texture);

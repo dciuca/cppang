@@ -15,7 +15,7 @@ public:
         float speed = 250.0f,
         Color color = WHITE,
         const std::string &texturePath = "");
-    ~Ball() = default;
+    ~Ball();
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
@@ -29,4 +29,5 @@ private:
     float radius;
     float angle; // in degrees
     Color color;
+    bool m_ownsTexture = false;
 };

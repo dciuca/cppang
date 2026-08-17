@@ -23,7 +23,14 @@ Ball::Ball(
     {
         texture = LoadTexture(texturePath.c_str());
         useTexture = true;
+        m_ownsTexture = true;
     }
+}
+
+Ball::~Ball()
+{
+    if (!m_ownsTexture)
+        useTexture = false; // prevent IEntity from unloading a handle we don't own
 }
 
 void Ball::Update()
