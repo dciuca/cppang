@@ -322,6 +322,7 @@ void PlayingState::CheckWinCondition()
 {
     if (m_balls.size() == 0)
     {
+        m_levelManager.SetScore(m_levelManager.GetScore() + ((unsigned int)m_levelManager.GetLevelTimer().GetTimeLeft() * 10));
         m_players[0]->Winning();
         RequestStateChange(GameStateRequest::ChangeToLevelComplete);
     }

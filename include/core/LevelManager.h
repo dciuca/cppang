@@ -21,7 +21,7 @@ public:
         m_score = 0;
     };
     unsigned short GetLives() const { return m_lives; };
-    unsigned short GetScore() const { return m_score; };
+    unsigned int GetScore() const { return m_score; };
     void SetLives(unsigned short lives) { m_lives = lives; };
     void SetScore(unsigned short score) { m_score = score; };
     Timer &GetLevelTimer() { return m_levelTimer; };
@@ -29,6 +29,6 @@ public:
 private:
     unsigned short m_currentLevel;
     unsigned short m_lives;
-    unsigned short m_score;
+    unsigned int m_score;
     Timer m_levelTimer;
 };
