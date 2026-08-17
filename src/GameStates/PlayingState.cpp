@@ -9,6 +9,8 @@ PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
       m_waitingForReady(true)
 {
+    m_levelManager.GetLevelTimer().activate();
+
     LoadLevelBackground(m_levelManager.GetCurrentLevel());
     LoadLifebar();
     LoadPlayers();

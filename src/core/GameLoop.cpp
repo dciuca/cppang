@@ -54,6 +54,7 @@ void GameLoop::Run()
                 Texture2D ghost = LoadTextureFromImage(frame);
                 UnloadImage(frame);
 
+                m_levelManager.GetLevelTimer().pause();
                 previousState = std::move(currentState);
                 ChangeState(std::make_unique<PauseState>(m_levelManager, ghost));
                 break;
@@ -63,6 +64,7 @@ void GameLoop::Run()
                 if (previousState)
                 {
                     currentState = std::move(previousState);
+                    m_levelManager.GetLevelTimer().resume();
                     currentState->Enter();
                 }
                 break;

@@ -6,7 +6,7 @@
 class LevelManager
 {
 public:
-    LevelManager() : m_currentLevel(0), m_levelTimer(100, false, true, nullptr) {};
+    LevelManager() : m_currentLevel(0), m_levelTimer(100, false, false, nullptr) {};
 
     unsigned short GetCurrentLevel() const { return m_currentLevel; };
     void NextLevel()
@@ -19,7 +19,6 @@ public:
         m_currentLevel = 0;
         m_lives = 3;
         m_score = 0;
-        m_levelTimer.activate();
     };
     unsigned short GetLives() const { return m_lives; };
     unsigned short GetScore() const { return m_score; };

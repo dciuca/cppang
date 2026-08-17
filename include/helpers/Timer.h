@@ -18,6 +18,7 @@ public:
         : duration(duration), repeat(repeat)
     {
         start_time = 0;
+        elapsed = 0;
         active = false;
         this->func = func;
         if (autostart)
@@ -29,11 +30,12 @@ public:
     bool isActive() const { return active; };
 
     /// Returns the remaining time in seconds, or 0 if inactive.
-    float GetTimeLeft() const { return active ? duration - (GetTime() - start_time) : 0; };
+    float GetTimeLeft() const { return active ? duration - elapsed - (GetTime() - start_time) : 0; };
 
     /// Starts (or restarts) the timer from the current time.
     void activate()
     {
+        elapsed = 0;
         active = true;
         start_time = GetTime();
     };
@@ -52,7 +54,7 @@ public:
     {
         if (active)
         {
-            if (GetTime() - start_time >= duration)
+            if (elapsed + (GetTime() - start_time) >= duration)
             {
                 if (func && start_time)
                     func();
@@ -61,9 +63,28 @@ public:
         }
     };
 
+    // pause() — freeze current elapsed
+    void pause()
+    {
+        if (!active)
+            return;
+        elapsed += GetTime() - start_time;
+        active = false;
+    }
+
+    // resume() — restart start_time from now, elapsed carries the history
+    void resume()
+    {
+        if (active)
+            return;
+        start_time = GetTime();
+        active = true;
+    }
+
 private:
     int duration;
-    int start_time;
+    double start_time;
+    double elapsed;
     bool repeat;
     bool active;
     void (*func)(void);
