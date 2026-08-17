@@ -16,7 +16,7 @@ public:
     void Exit() override;
 
 private:
-    size_t m_level;
+    unsigned short m_level;
     Texture2D m_levelGhost{};
     bool m_hasGhost = false;
     Font m_font;

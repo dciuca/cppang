@@ -23,16 +23,13 @@ PlayingState::PlayingState(LevelManager &levelManager)
 
 void PlayingState::HandleInput()
 {
-    // Pause Handling
     if (IsKeyPressed(KEY_P))
         PauseGame();
 
-    // Input Handling for Player 1 (position [0])
     if (m_players.size() > 0 && m_players[0]->IsActive())
     {
         Player *p1 = m_players[0];
 
-        // Player movement
         if (IsKeyDown(KEY_LEFT))
             p1->MoveLeft();
         else if (IsKeyDown(KEY_RIGHT))
@@ -40,7 +37,6 @@ void PlayingState::HandleInput()
         else
             p1->StopMoving();
 
-        // Player shoot
         if (IsKeyPressed(KEY_SPACE))
         {
             p1->StartShooting();
@@ -61,10 +57,10 @@ void PlayingState::Update()
         PauseGame();
 
     m_levelManager.GetLevelTimer().update();
+
     UpdateEntities();
 
-    if (!HandleCollisions())
-        return;
+    HandleCollisions();
 
     if (!m_ballsToSplit.empty())
         SplitBalls(m_ballsToSplit);
@@ -158,20 +154,29 @@ void PlayingState::UpdateEntities()
             Physics::UpdateObstacle(*obstacle);
 }
 
-bool PlayingState::HandleCollisions()
+void PlayingState::HandleCollisions()
 {
     m_ballsToSplit.clear();
+    HandleBallPlayerCollisions();
+    HandleBallHarpoonCollisions();
+    HandleBallObstacleCollisions();
+    HandleHarpoonObstacleCollisions();
+}
+
+void PlayingState::HandleBallPlayerCollisions()
+{
     for (auto &ball : m_balls)
-    {
         for (auto &player : m_players)
-        {
             if (Physics::CheckAndResolveCircleRectCollision(*ball, *player) && !player->IsInvincible())
             {
                 m_levelManager.SetLives(m_levelManager.GetLives() - 1);
                 player->ActivateInvincibility();
             }
-        }
+}
 
+void PlayingState::HandleBallHarpoonCollisions()
+{
+    for (auto &ball : m_balls)
         for (auto &harpoon : m_harpoons)
         {
             if (!harpoon->IsActive())
@@ -183,32 +188,34 @@ bool PlayingState::HandleCollisions()
                 m_levelManager.SetScore(m_levelManager.GetScore() + 100);
             }
         }
+}
 
+void PlayingState::HandleBallObstacleCollisions()
+{
+    for (auto &ball : m_balls)
         for (auto &obstacle : m_obstacles)
             Physics::CheckAndResolveCircleRectCollision(*ball, *obstacle);
-    }
+}
 
+void PlayingState::HandleHarpoonObstacleCollisions()
+{
     for (auto &harpoon : m_harpoons)
     {
         if (!harpoon->IsActive())
             continue;
         for (auto &obstacle : m_obstacles)
-        {
             if (Physics::CheckRectRectCollision(*harpoon, *obstacle))
                 harpoon->SetActive(false);
-        }
     }
-
-    return true;
 }
 
 void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
 {
     for (auto &ball : m_ballsToSplit)
     {
-        // Create two smaller balls
+        ball->SetActive(false);
         float newRadius = ball->GetDimensions().x / 2.0f;
-        if (newRadius >= 10.0f) // Minimum size check
+        if (newRadius >= 10.0f)
         {
             auto ball1 = std::make_unique<Ball>(
                 ball->position.x - newRadius,
@@ -236,7 +243,6 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
             m_balls.push_back(ball2.get());
             m_entities.push_back(std::move(ball2));
         }
-        ball->SetActive(false); // Deactivate the original ball
     }
 }
 
@@ -248,7 +254,7 @@ void PlayingState::PauseGame()
 
 // LOADERS
 
-void PlayingState::LoadLevelBackground(size_t level)
+void PlayingState::LoadLevelBackground(unsigned short level)
 {
     auto bgConfig = GameLevels::GetLevelBackground(m_levelManager.GetCurrentLevel());
     m_background = LoadTexture(bgConfig.texturePath.c_str());
@@ -264,7 +270,6 @@ void PlayingState::LoadLifebar()
 
 void PlayingState::LoadPlayers()
 {
-    // Init player1
     auto pConfig = GameLevels::GetPlayerConfig();
     auto p1 = std::make_unique<Player>(
         pConfig.x, pConfig.y, pConfig.width, pConfig.height, pConfig.color, pConfig.texturePath);
@@ -272,7 +277,7 @@ void PlayingState::LoadPlayers()
     m_entities.push_back(std::move(p1));
 }
 
-void PlayingState::LoadLevelBalls(size_t level)
+void PlayingState::LoadLevelBalls(unsigned short level)
 {
     m_balls.clear();
     auto balls = GameLevels::GetLevelBalls(level);
@@ -285,7 +290,7 @@ void PlayingState::LoadLevelBalls(size_t level)
     }
 }
 
-void PlayingState::LoadObstacles(size_t level)
+void PlayingState::LoadObstacles(unsigned short level)
 {
     auto obstacles = GameLevels::GetLevelObstacles(level);
     for (const auto &config : obstacles)

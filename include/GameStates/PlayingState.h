@@ -24,13 +24,17 @@ public:
 
 private:
     void UpdateEntities();
-    bool HandleCollisions();
+    void HandleCollisions();
+    void HandleBallPlayerCollisions();
+    void HandleBallHarpoonCollisions();
+    void HandleBallObstacleCollisions();
+    void HandleHarpoonObstacleCollisions();
     void SplitBalls(const std::vector<Ball *> &ballsToSplit);
-    void LoadLevelBackground(size_t level);
+    void LoadLevelBackground(unsigned short level);
     void LoadLifebar();
     void LoadPlayers();
-    void LoadLevelBalls(size_t level);
-    void LoadObstacles(size_t level);
+    void LoadLevelBalls(unsigned short level);
+    void LoadObstacles(unsigned short level);
     void LoadHarpoon(Player *p);
     void PauseGame();
     void Cleanup();
