@@ -24,10 +24,11 @@ Harpoon::Harpoon(
 
 void Harpoon::Update()
 {
-    float growth = speed * GetFrameTime();
+    const float dt = GetFrameTime();
+    float growth = speed * dt;
     position.y -= growth;
     height += growth;
-    m_time += GetFrameTime();
+    m_time += dt;
 
     if (position.y <= 0)
     {

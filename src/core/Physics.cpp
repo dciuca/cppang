@@ -138,8 +138,9 @@ void Physics::ApplyGravity(IEntity &entity, float gravity)
 
 void Physics::UpdatePosition(IEntity &entity)
 {
-    entity.position.x += entity.velocity.x * GetFrameTime();
-    entity.position.y += entity.velocity.y * GetFrameTime();
+    const float dt = GetFrameTime();
+    entity.position.x += entity.velocity.x * dt;
+    entity.position.y += entity.velocity.y * dt;
 }
 
 void Physics::BounceOnWalls(IEntity &entity, float width, float height)
