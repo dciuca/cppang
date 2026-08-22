@@ -171,6 +171,24 @@ struct GameLevels
                 {300.0f, 400.0f, 20.0f, 20.0f, 100.0f, WHITE, "assets/balls/green.png"},
             };
 
+        // ---- LEVEL 6 ----
+        case 6:
+            return {
+                {200.0f, 80.0f, 30.0f, 45.0f, 130.0f, WHITE, "assets/balls/red.png"},
+                {600.0f, 80.0f, 30.0f, 135.0f, 130.0f, WHITE, "assets/balls/red.png"},
+                {350.0f, 200.0f, 20.0f, 60.0f, 110.0f, WHITE, "assets/balls/green.png"},
+                {450.0f, 200.0f, 20.0f, 120.0f, 110.0f, WHITE, "assets/balls/green.png"},
+            };
+
+        // ---- LEVEL 7 ----
+        case 7:
+            return {
+                {400.0f, 60.0f, 40.0f, 90.0f, 90.0f, WHITE, "assets/balls/red.png"},
+                {150.0f, 120.0f, 15.0f, 30.0f, 170.0f, WHITE, "assets/balls/blue.png"},
+                {650.0f, 120.0f, 15.0f, 150.0f, 170.0f, WHITE, "assets/balls/blue.png"},
+                {400.0f, 300.0f, 15.0f, 210.0f, 170.0f, WHITE, "assets/balls/blue.png"},
+            };
+
         default:
             return {
                 {400.0f, 300.0f, 60.0f, 45.0f, 250.0f, RED},
@@ -241,6 +259,23 @@ struct GameLevels
 
                 // One moving platform sliding horizontally at the bottom area
                 {100.0f, 450.0f, 120.0f, 15.0f, false, 50.0f, WHITE, "assets/obstacle.png"},
+            };
+
+        // ---- LEVEL 6 ----
+        case 6:
+            return {
+                {150.0f, 300.0f, 160.0f, 15.0f, false, 80.0f, WHITE, "assets/obstacle.png"},
+                {550.0f, 200.0f, 160.0f, 15.0f, false, 80.0f, WHITE, "assets/obstacle.png"},
+            };
+
+        // ---- LEVEL 7 ----
+        // Staggered fixed shelves — zigzag layout forcing balls to bounce between them
+        case 7:
+            return {
+                {100.0f, 180.0f, 150.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {550.0f, 280.0f, 150.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {250.0f, 380.0f, 150.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {300.0f, 150.0f, 120.0f, 15.0f, false, 60.0f, WHITE, "assets/obstacle.png"},
             };
 
         default:

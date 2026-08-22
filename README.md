@@ -31,3 +31,13 @@ If the window stops rendering after a WSL/Ubuntu upgrade, run this from an admin
 ```powershell
 wsl --system sh -lc "pkill -9 weston"
 ```
+
+## Level testing
+
+To jump directly into a specific level without going through the menu, run the `test_level` binary with the level number as an argument:
+
+```bash
+./build/test_level 3
+```
+
+Defaults to level 1 if no argument is provided. The test exits automatically when the level is completed or game over is reached.

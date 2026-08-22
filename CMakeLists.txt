@@ -48,3 +48,20 @@ add_custom_command(
 set_target_properties(${PROJECT_NAME} PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
+
+# --- Level test target ---
+file(GLOB_RECURSE GAME_SRC_FILES "${SOURCE_DIR}/*.cpp")
+list(FILTER GAME_SRC_FILES EXCLUDE REGEX ".*main\.cpp$")
+
+add_executable(test_level test/test_level.cpp ${GAME_SRC_FILES} ${INC_FILES})
+target_link_libraries(test_level PRIVATE raylib)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_link_libraries(test_level PRIVATE X11 GL m pthread dl)
+endif()
+target_include_directories(test_level PRIVATE include/GameStates include/Entities include/core include/helpers)
+add_custom_command(
+    TARGET test_level POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:test_level>/assets"
+)
