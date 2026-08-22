@@ -10,8 +10,9 @@ public:
     Harpoon(
         float x,
         float y,
-        float width = 3.0f,
-        float height = 0.0f,
+        float width,
+        float height,
+        float speed,
         Color color = PURPLE,
         const std::string &texturePath = "");
     ~Harpoon() = default;
@@ -26,6 +27,7 @@ public:
 private:
     float width;
     float height;
+    float speed;
     Color color;
     float m_time = 0.0f;
     float m_spawnY;

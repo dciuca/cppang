@@ -36,6 +36,17 @@ struct ObstacleConfig
     std::string texturePath;
 };
 
+struct HarpoonConfig
+{
+    float x;
+    float y;
+    float width;
+    float height;
+    float speed;
+    Color color;
+    std::string texturePath;
+};
+
 struct BackgroundConfig
 {
     std::string texturePath;
@@ -71,7 +82,18 @@ struct GameLevels
     //
     static PlayerConfig GetPlayerConfig()
     {
-        return {370.0f, 600.0f - 64.0f - BORDER_OFFSET, 64.0f, 64.0f, WHITE, "assets/player.png"};
+        const float PLAYER_WIDTH = 64.0f;
+        const float PLAYER_HEIGHT = 64.0f;
+        return {(float)(GetScreenWidth() / 2), (float)(GetScreenHeight()) - PLAYER_HEIGHT - BORDER_OFFSET, PLAYER_WIDTH, PLAYER_HEIGHT, WHITE, "assets/player.png"};
+    }
+
+    //
+    // HARPOON CONFIGURATION
+    //
+    static HarpoonConfig GetHarpoonConfig()
+    {
+        const float HARPOON_SPEED = 900.0f;
+        return {0.0f, 0.0f, 30.0f, 0.0f, HARPOON_SPEED, WHITE, "assets/harpoon.png"};
     }
 
     //

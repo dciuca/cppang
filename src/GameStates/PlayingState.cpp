@@ -310,9 +310,11 @@ void PlayingState::LoadObstacles(unsigned short level)
 
 void PlayingState::LoadHarpoon(Player *p)
 {
+    auto hConfig = GameLevels::GetHarpoonConfig();
     auto harpoon = std::make_unique<Harpoon>(
-        p->position.x + p->GetDimensions().x / 2.0f,
-        p->position.y);
+        p->position.x + 12.0f,
+        p->position.y + 10.0f,
+        hConfig.width, hConfig.height, hConfig.speed, hConfig.color, hConfig.texturePath);
     harpoon->SetActive(true);
     m_harpoons.push_back(harpoon.get());
     m_entities.push_back(std::move(harpoon));
