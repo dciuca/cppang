@@ -11,6 +11,7 @@ public:
         float width,
         float height,
         bool isFixed,
+        float speed,
         Color color = WHITE,
         const std::string &texturePath = "");
     ~Obstacle() = default;
@@ -27,5 +28,6 @@ private:
     float width;
     float height;
     bool isFixed;
+    float speed;
     Color color;
 };

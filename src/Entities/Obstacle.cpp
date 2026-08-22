@@ -7,12 +7,12 @@ Obstacle::Obstacle(
     float width,
     float height,
     bool isFixed,
+    float speed,
     Color color,
     const std::string &texturePath)
-    : width(width), height(height), isFixed(isFixed), color(color)
+    : width(width), height(height), isFixed(isFixed), speed(speed), color(color)
 {
     position = {x, y};
-    speed = 250.0f;
     if (isFixed)
         velocity = {0, 0};
     else

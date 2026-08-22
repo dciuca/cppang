@@ -32,6 +32,7 @@ struct ObstacleConfig
     float width;
     float height;
     bool isFixed;
+    float speed;
     Color color;
     std::string texturePath;
 };
@@ -160,6 +161,16 @@ struct GameLevels
                 {740.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
             };
 
+        // ---- LEVEL 5 ----
+        case 5:
+            return {
+                // Two large fast red balls from opposite corners
+                {150.0f, 100.0f, 40.0f, 45.0f, 100.0f, WHITE, "assets/balls/red.png"},
+                {650.0f, 100.0f, 40.0f, 135.0f, 100.0f, WHITE, "assets/balls/red.png"},
+                // One medium green bouncing low
+                {300.0f, 400.0f, 20.0f, 20.0f, 100.0f, WHITE, "assets/balls/green.png"},
+            };
+
         default:
             return {
                 {400.0f, 300.0f, 60.0f, 45.0f, 250.0f, RED},
@@ -177,44 +188,59 @@ struct GameLevels
         // ---- TEST LEVEL 1 ----
         case 1:
             return {
-                {200.0f - 64.0f, 200.0f, 128.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
-                {600.0f - 64.0f, 200.0f, 128.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+                {200.0f - 64.0f, 200.0f, 128.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {600.0f - 64.0f, 200.0f, 128.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
             };
 
         // ---- LEVEL 2 ----
         case 2:
             return {
-                {200.0f - 32.0f, 150.0f, 64.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
-                {600.0f - 32.0f, 150.0f, 64.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+                {200.0f - 32.0f, 150.0f, 64.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {600.0f - 32.0f, 150.0f, 64.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
             };
 
         // ---- LEVEL 3 ----
         case 3:
             return {
-                {200.0f - 8.0f, 250.0f, 16.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
-                {600.0f - 8.0f, 250.0f, 16.0f, 15.0f, true, WHITE, "assets/obstacle.png"},
+                {200.0f - 8.0f, 250.0f, 16.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {600.0f - 8.0f, 250.0f, 16.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
             };
 
         // ---- LEVEL 4 ----
         case 4:
             return {
-                {80.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {110.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {140.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {170.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {200.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {230.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {260.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {290.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
+                {80.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {110.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {140.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {170.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {200.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {230.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {260.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {290.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
 
-                {510.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {540.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {570.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {600.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {630.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {660.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {690.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
-                {720.0f, 22.0f, 10.0f, 400.0f, true, WHITE, "assets/obstacle.png"},
+                {510.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {540.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {570.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {600.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {630.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {660.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {690.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {720.0f, 22.0f, 10.0f, 400.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+            };
+
+        // ---- LEVEL 5 ----
+        // Cross shape in the center + one moving horizontal platform
+        case 5:
+            return {
+                // Horizontal bar of the cross (center y=285, spanning x=260..540)
+                {260.0f, 285.0f, 60.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {320.0f, 285.0f, 60.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {380.0f, 285.0f, 60.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {440.0f, 285.0f, 60.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+                {500.0f, 285.0f, 60.0f, 15.0f, true, 0.0f, WHITE, "assets/obstacle.png"},
+
+                // One moving platform sliding horizontally at the bottom area
+                {100.0f, 450.0f, 120.0f, 15.0f, false, 50.0f, WHITE, "assets/obstacle.png"},
             };
 
         default:

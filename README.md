@@ -1,4 +1,4 @@
-# cppang 🎮
+# cppang
 
 A game loosely inspired by the classic **Super Pang**, built as a learning project to explore C++ in a game development context. This is my first C++ game — the goal was to get hands-on experience with the language, game loops, physics, and state management using raylib as the rendering layer.
 

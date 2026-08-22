@@ -302,7 +302,7 @@ void PlayingState::LoadObstacles(unsigned short level)
     for (const auto &config : obstacles)
     {
         auto obstacle = std::make_unique<Obstacle>(
-            config.x, config.y, config.width, config.height, config.isFixed, config.color, config.texturePath);
+            config.x, config.y, config.width, config.height, config.isFixed, config.speed, config.color, config.texturePath);
         m_obstacles.push_back(obstacle.get());
         m_entities.push_back(std::move(obstacle));
     }
