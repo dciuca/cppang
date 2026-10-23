@@ -28,6 +28,13 @@ void Physics::UpdateObstacle(IEntity &entity)
     BounceOnWalls(entity, dims.x, dims.y);
 };
 
+void Physics::UpdateCollectible(IEntity &entity)
+{
+    ApplyGravity(entity);
+    UpdatePosition(entity);
+    TouchTheGround(entity, entity.GetDimensions().y);
+};
+
 bool Physics::CheckCircleRectCollision(const IEntity &ball, const IEntity &entity)
 {
     const Vector2 ballDims = ball.GetDimensions();
@@ -177,5 +184,18 @@ void Physics::BounceOnWalls(IEntity &entity, float width, float height)
     {
         entity.position.y = screenHeight - bottomOffset;
         entity.velocity.y = -entity.velocity.y;
+    }
+};
+
+void Physics::TouchTheGround(IEntity &entity, float height)
+{
+    int screenHeight = GetScreenHeight();
+
+    float bottomOffset = height + BORDER_OFFSET;
+
+    if (entity.position.y + bottomOffset >= screenHeight)
+    {
+        entity.position.y = screenHeight - bottomOffset;
+        entity.velocity.y = 0;
     }
 };

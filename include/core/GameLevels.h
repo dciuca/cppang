@@ -1,3 +1,4 @@
+#include "GameTypes.h"
 #include "raylib.h"
 #include <vector>
 #include <string>
@@ -23,6 +24,8 @@ struct BallsConfig
     float speed;
     Color color;
     std::string texturePath;
+    CollectibleType collectibleType = CollectibleType::None;
+    int dropGeneration = 0;
 };
 
 struct ObstacleConfig
@@ -107,7 +110,7 @@ struct GameLevels
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png"},
+                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png", CollectibleType::Clock, 1},
             };
 
         // ---- LEVEL 2 ----

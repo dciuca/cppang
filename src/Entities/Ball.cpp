@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "GameTypes.h"
 #include <cmath>
 
 Ball::Ball(
@@ -8,8 +9,15 @@ Ball::Ball(
     float angle,
     float speed,
     Color color,
-    const std::string &texturePath)
-    : radius(radius), angle(angle), color(color)
+    const std::string &texturePath,
+    int generation,
+    CollectibleType pendingCollectibleType,
+    int pendingDropGeneration
+)
+    : radius(radius), angle(angle), color(color), 
+    generation(generation), 
+    pendingCollectibleType(pendingCollectibleType), 
+    pendingDropGeneration(pendingDropGeneration)
 {
     position = {x, y};
     velocity = {0, 0};

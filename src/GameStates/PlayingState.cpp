@@ -1,9 +1,9 @@
 #include "PlayingState.h"
 #include "GameLevels.h"
+#include "Physics.h"
 #include "TextUtils.h"
 #include "raylib.h"
 #include <algorithm>
-#include <iostream>
 
 PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
@@ -88,12 +88,7 @@ void PlayingState::Cleanup()
     removeInactive(m_balls);
     removeInactive(m_players);
     removeInactive(m_obstacles);
-
-    // m_entities.erase(
-    //     std::remove_if(m_entities.begin(), m_entities.end(),
-    //                    [](const std::unique_ptr<IEntity> &e)
-    //                    { return !e->IsActive(); }),
-    //     m_entities.end());
+    removeInactive(m_collectibles);
 }
 
 void PlayingState::Draw() const
@@ -158,6 +153,8 @@ void PlayingState::UpdateEntities()
     for (auto &obstacle : m_obstacles)
         if (!obstacle->IsFixed())
             Physics::UpdateObstacle(*obstacle);
+    for (auto &collectible : m_collectibles)
+        Physics::UpdateCollectible(*collectible);
 }
 
 void PlayingState::HandleCollisions()
@@ -290,7 +287,9 @@ void PlayingState::LoadLevelBalls(unsigned short level)
     for (const auto &config : balls)
     {
         auto ball = std::make_unique<Ball>(
-            config.x, config.y, config.radius, config.angle, config.speed, config.color, config.texturePath);
+    config.x, config.y, config.radius, config.angle, config.speed, config.color, config.texturePath,
+    1, config.collectibleType, config.dropGeneration);
+
         m_balls.push_back(ball.get());
         m_entities.push_back(std::move(ball));
     }

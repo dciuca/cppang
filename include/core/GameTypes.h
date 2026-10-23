@@ -19,3 +19,9 @@ enum class GameStateRequest
     ResumeGame,
     Quit
 };
+
+enum class CollectibleType
+{
+    None,
+    Clock
+};

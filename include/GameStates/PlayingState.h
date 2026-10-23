@@ -3,6 +3,7 @@
 #include "IEntity.h"
 #include "LevelManager.h"
 #include "Physics.h"
+#include "ICollectible.h"
 #include "Player.h"
 #include "Ball.h"
 #include "Obstacle.h"
@@ -52,5 +53,6 @@ private:
     std::vector<Ball *> m_balls;                      // m_entities observer
     std::vector<Harpoon *> m_harpoons;                // m_entities observer
     std::vector<Obstacle *> m_obstacles;              // m_entities observer
+    std::vector<ICollectible *> m_collectibles;       // m_entities observer    
     std::vector<Ball *> m_ballsToSplit;               // Balls that need to be split
 };
