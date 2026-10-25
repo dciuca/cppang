@@ -5,6 +5,8 @@
 #include "raylib.h"
 #include <algorithm>
 
+#include "Clock.h"
+
 PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
       m_waitingForReady(true)
@@ -217,6 +219,29 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
     for (auto &ball : m_ballsToSplit)
     {
         ball->SetActive(false);
+
+        // Check Collectible
+        if (ball->GetGeneration() == ball->GetPendingDropGeneration())
+        {
+            // collectible factory
+            switch (ball->GetPendingCollectibleType())
+            {
+            case CollectibleType::Clock:
+            {
+                auto collectible = std::make_unique<Clock>(
+                    ball->position.x,
+                    ball->position.y);
+                collectible->SetActive(true);
+                m_collectibles.push_back(collectible.get());
+                m_entities.push_back(std::move(collectible));
+                break;
+            }
+
+            default:
+                break;
+            }
+        }
+
         float newRadius = ball->GetDimensions().x / 2.0f;
         if (newRadius >= 10.0f)
         {
@@ -287,8 +312,8 @@ void PlayingState::LoadLevelBalls(unsigned short level)
     for (const auto &config : balls)
     {
         auto ball = std::make_unique<Ball>(
-    config.x, config.y, config.radius, config.angle, config.speed, config.color, config.texturePath,
-    1, config.collectibleType, config.dropGeneration);
+            config.x, config.y, config.radius, config.angle, config.speed, config.color, config.texturePath,
+            1, config.collectibleType, config.dropGeneration);
 
         m_balls.push_back(ball.get());
         m_entities.push_back(std::move(ball));
