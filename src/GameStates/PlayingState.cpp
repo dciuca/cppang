@@ -11,7 +11,7 @@
 PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
       m_waitingForReady(true),
-      m_freezeTimer(5, false, false, nullptr)
+      m_freezeTimer(4, false, false, nullptr)
 {
     m_levelManager.GetLevelTimer().activate();
 
@@ -264,44 +264,19 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
         if (shouldDrop)
         {
             // collectible factory
-            switch (ball->GetPendingCollectibleType())
-            {
-            case CollectibleType::Clock:
-            {
-                auto clock = std::make_unique<Collectible>(
-                    ball->position.x,
-                    ball->position.y,
-                    CollectibleType::Clock,
-                    15.0f,
-                    0.0f,
-                    WHITE,
-                    "assets/clock.png"
-                );
-                clock->SetActive(true);
-                m_collectibles.push_back(clock.get());
-                m_entities.push_back(std::move(clock));
-                break;
-            }
-            case CollectibleType::LifeUp:
-            {
-                auto lifeUp = std::make_unique<Collectible>(
-                    ball->position.x,
-                    ball->position.y,
-                    CollectibleType::LifeUp,
-                    15.0f,
-                    0.0f,
-                    WHITE,
-                    "assets/lifeUp.png"
-                );
-                lifeUp->SetActive(true);
-                m_collectibles.push_back(lifeUp.get());
-                m_entities.push_back(std::move(lifeUp));
-                break;
-            }
-
-            default:
-                break;
-            }
+            auto visual = GameLevels::GetCollectibleVisualConfig(ball->GetPendingCollectibleType());
+            auto collectible = std::make_unique<Collectible>(
+                ball->position.x, 
+                ball->position.y, 
+                ball->GetPendingCollectibleType(),
+                visual.radius, 
+                0.0f, 
+                visual.color, 
+                visual.texturePath
+            );
+            collectible->SetActive(true);
+            m_collectibles.push_back(collectible.get());
+            m_entities.push_back(std::move(collectible));
         }
 
         float newRadius = ball->GetDimensions().x / 2.0f;

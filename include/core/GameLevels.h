@@ -63,6 +63,13 @@ struct LifebarConfig
     Rectangle sourceRect;
 };
 
+struct CollectibleVisualConfig 
+{
+    float radius; 
+    Color color; 
+    std::string texturePath; 
+};
+
 struct GameLevels
 {
     //
@@ -110,7 +117,7 @@ struct GameLevels
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png", CollectibleType::LifeUp, 1},
+                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png"},
             };
 
         // ---- LEVEL 2 ----
@@ -119,7 +126,7 @@ struct GameLevels
                 {260.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {280.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {300.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
-                {320.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {320.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png", CollectibleType::LifeUp, 1},
                 {340.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {360.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {380.0f, 340.0f, 10.0f, 145.0f, 80.0f, WHITE, "assets/balls/blue.png"},
@@ -128,7 +135,7 @@ struct GameLevels
                 {420.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {440.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {460.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
-                {480.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
+                {480.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png", CollectibleType::Clock, 1},
                 {500.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {520.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
                 {540.0f, 340.0f, 10.0f, 35.0f, 80.0f, WHITE, "assets/balls/blue.png"},
@@ -287,4 +294,17 @@ struct GameLevels
             };
         }
     }
+
+    //
+    // COLLECTIBLES CONFIGURATION
+    //    
+    static CollectibleVisualConfig GetCollectibleVisualConfig(CollectibleType type)
+    {
+    switch (type)
+    {
+    case CollectibleType::Clock:  return {15.0f, WHITE, "assets/clock.png"};
+    case CollectibleType::LifeUp: return {15.0f, WHITE, "assets/lifeUp.png"};
+    default:                      return {15.0f, WHITE, ""};
+    }
+}
 };
