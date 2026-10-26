@@ -10,7 +10,8 @@
 
 PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
-      m_waitingForReady(true)
+      m_waitingForReady(true),
+      m_freezeTimer(5, false, false, nullptr)
 {
     m_levelManager.GetLevelTimer().activate();
 
@@ -62,6 +63,7 @@ void PlayingState::Update()
         PauseGame();
 
     m_levelManager.GetLevelTimer().update();
+    m_freezeTimer.update();
 
     UpdateEntities();
 
@@ -149,13 +151,18 @@ void PlayingState::UpdateEntities()
         Physics::UpdateCharacter(*player);
         player->Update();
     }
+
     for (auto &ball : m_balls)
-        Physics::UpdateBall(*ball);
+        if (!m_freezeTimer.isActive())
+            Physics::UpdateBall(*ball);
+
     for (auto &harpoon : m_harpoons)
         harpoon->Update();
+
     for (auto &obstacle : m_obstacles)
         if (!obstacle->IsFixed())
             Physics::UpdateObstacle(*obstacle);
+
     for (auto &collectible : m_collectibles)
         Physics::UpdateCollectible(*collectible);
 }
@@ -167,6 +174,7 @@ void PlayingState::HandleCollisions()
     HandleBallHarpoonCollisions();
     HandleBallObstacleCollisions();
     HandleHarpoonObstacleCollisions();
+    HandlePlayerCollectibleCollisions();
 }
 
 void PlayingState::HandleBallPlayerCollisions()
@@ -215,6 +223,34 @@ void PlayingState::HandleHarpoonObstacleCollisions()
     }
 }
 
+void PlayingState::HandlePlayerCollectibleCollisions()
+{
+    for (auto &collectible : m_collectibles)
+        for (auto &player : m_players)
+            if (Physics::CheckCircleRectCollision(*collectible, *player))
+            {
+                collectible->SetActive(false);
+
+                switch(collectible->GetCollectibleType()) 
+                {
+                    case CollectibleType::Clock:
+                    {
+                        m_freezeTimer.activate();
+                        break;
+                    }
+                    case CollectibleType::LifeUp:
+                    {
+                        if ( m_levelManager.GetLives() < m_levelManager.GetMaxLives() )
+                            m_levelManager.SetLives(m_levelManager.GetLives() + 1);
+                        break;
+                    }
+
+                    default:
+                        break;
+                }
+            }
+}
+
 void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
 {
     for (auto &ball : m_ballsToSplit)
@@ -244,6 +280,22 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
                 clock->SetActive(true);
                 m_collectibles.push_back(clock.get());
                 m_entities.push_back(std::move(clock));
+                break;
+            }
+            case CollectibleType::LifeUp:
+            {
+                auto lifeUp = std::make_unique<Collectible>(
+                    ball->position.x,
+                    ball->position.y,
+                    CollectibleType::LifeUp,
+                    15.0f,
+                    0.0f,
+                    WHITE,
+                    "assets/lifeUp.png"
+                );
+                lifeUp->SetActive(true);
+                m_collectibles.push_back(lifeUp.get());
+                m_entities.push_back(std::move(lifeUp));
                 break;
             }
 

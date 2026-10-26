@@ -2,7 +2,7 @@
 #include "IGameState.h"
 #include "IEntity.h"
 #include "LevelManager.h"
-#include "Physics.h"
+#include "Timer.h"
 #include "ICollectible.h"
 #include "Player.h"
 #include "Ball.h"
@@ -30,6 +30,7 @@ private:
     void HandleBallHarpoonCollisions();
     void HandleBallObstacleCollisions();
     void HandleHarpoonObstacleCollisions();
+    void HandlePlayerCollectibleCollisions();
     void SplitBalls(const std::vector<Ball *> &ballsToSplit);
     void LoadLevelBackground(unsigned short level);
     void LoadLifebar();
@@ -48,6 +49,7 @@ private:
     Font m_font;
     Rectangle m_backgroundRect, m_lifebarRect;
     bool m_waitingForReady;
+    Timer m_freezeTimer;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game
     std::vector<Player *> m_players;                  // m_entities observer
     std::vector<Ball *> m_balls;                      // m_entities observer

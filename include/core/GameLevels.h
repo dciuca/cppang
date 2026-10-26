@@ -110,7 +110,7 @@ struct GameLevels
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png", CollectibleType::Clock, 2},
+                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png", CollectibleType::LifeUp, 1},
             };
 
         // ---- LEVEL 2 ----
