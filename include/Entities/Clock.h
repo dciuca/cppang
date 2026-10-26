@@ -10,7 +10,7 @@ public:
     Clock(
         float x,
         float y,
-        float radius = 10.0f,
+        float radius = 15.0f,
         float speed = 0.0f,
         Color color = WHITE,
         const std::string &texturePath = "assets/clock.png");

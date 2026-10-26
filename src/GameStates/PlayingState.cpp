@@ -1,5 +1,6 @@
 #include "PlayingState.h"
 #include "GameLevels.h"
+#include "GameTypes.h"
 #include "Physics.h"
 #include "TextUtils.h"
 #include "raylib.h"
@@ -221,19 +222,22 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
         ball->SetActive(false);
 
         // Check Collectible
-        if (ball->GetGeneration() == ball->GetPendingDropGeneration())
+        bool shouldDrop = ball->GetPendingCollectibleType() != CollectibleType::None &&
+                  ball->GetGeneration() == ball->GetPendingDropGeneration();
+
+        if (shouldDrop)
         {
             // collectible factory
             switch (ball->GetPendingCollectibleType())
             {
             case CollectibleType::Clock:
             {
-                auto collectible = std::make_unique<Clock>(
+                auto clock = std::make_unique<Clock>(
                     ball->position.x,
                     ball->position.y);
-                collectible->SetActive(true);
-                m_collectibles.push_back(collectible.get());
-                m_entities.push_back(std::move(collectible));
+                clock->SetActive(true);
+                m_collectibles.push_back(clock.get());
+                m_entities.push_back(std::move(clock));
                 break;
             }
 
@@ -251,14 +255,24 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
                 newRadius,
                 45.0f,
                 ball->speed,
-                ball->GetColor());
+                ball->GetColor(),
+                "",
+                ball->GetGeneration() + 1,
+                shouldDrop ? CollectibleType::None : ball->GetPendingCollectibleType(),
+                shouldDrop ? 0 : ball->GetPendingDropGeneration()
+            );
             auto ball2 = std::make_unique<Ball>(
                 ball->position.x + newRadius,
                 ball->position.y,
                 newRadius,
                 135.0f,
                 ball->speed,
-                ball->GetColor());
+                ball->GetColor(),
+                "",
+                ball->GetGeneration() + 1,
+                CollectibleType::None,
+                0
+            );
 
             ball1->SetTexture(ball->GetTexture());
             ball2->SetTexture(ball->GetTexture());
