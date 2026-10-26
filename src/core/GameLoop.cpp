@@ -68,6 +68,9 @@ void GameLoop::Run()
                     currentState->Enter();
                 }
                 break;
+
+            case GameStateRequest::Quit:
+                break;
             }
 
             currentState->HandleInput();

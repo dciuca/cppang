@@ -6,7 +6,7 @@
 #include "raylib.h"
 #include <algorithm>
 
-#include "Clock.h"
+#include "Collectible.h"
 
 PlayingState::PlayingState(LevelManager &levelManager)
     : m_levelManager(levelManager),
@@ -232,9 +232,15 @@ void PlayingState::SplitBalls(const std::vector<Ball *> &m_ballsToSplit)
             {
             case CollectibleType::Clock:
             {
-                auto clock = std::make_unique<Clock>(
+                auto clock = std::make_unique<Collectible>(
                     ball->position.x,
-                    ball->position.y);
+                    ball->position.y,
+                    CollectibleType::Clock,
+                    15.0f,
+                    0.0f,
+                    WHITE,
+                    "assets/clock.png"
+                );
                 clock->SetActive(true);
                 m_collectibles.push_back(clock.get());
                 m_entities.push_back(std::move(clock));

@@ -23,5 +23,6 @@ enum class GameStateRequest
 enum class CollectibleType
 {
     None,
-    Clock
+    Clock,
+    LifeUp
 };

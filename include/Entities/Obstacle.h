@@ -19,7 +19,7 @@ public:
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
     Vector2 GetDimensions() const override;
-    ShapeType GetShapeType() const { return ShapeType::RECTANGLE; };
+    ShapeType GetShapeType() const override { return ShapeType::RECTANGLE; };
     void Update() override;
     void Draw() const override;
     bool IsFixed() const { return isFixed; }

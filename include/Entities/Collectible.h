@@ -1,20 +1,22 @@
 #pragma once
 
+#include "GameTypes.h"
 #include "ICollectible.h"
 #include "raylib.h"
 #include <string>
 
-class Clock : public ICollectible
+class Collectible : public ICollectible
 {
 public:
-    Clock(
+    Collectible(
         float x,
         float y,
+        CollectibleType type,
         float radius = 15.0f,
         float speed = 0.0f,
         Color color = WHITE,
-        const std::string &texturePath = "assets/clock.png");
-    ~Clock() = default;
+        const std::string &texturePath = "");
+    ~Collectible() = default;
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
@@ -23,9 +25,10 @@ public:
     ShapeType GetShapeType() const override { return ShapeType::CIRCLE; };
     void Update() override;
     void Draw() const override;
-    CollectibleType GetCollectibleType() const override;
+    CollectibleType GetCollectibleType() const override { return type; };
 
 private:
+    CollectibleType type;
     float radius;
     Color color;
 };

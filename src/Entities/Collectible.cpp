@@ -1,14 +1,15 @@
-#include "Clock.h"
+#include "Collectible.h"
 #include "GameTypes.h"
 
-Clock::Clock(
+Collectible::Collectible(
     float x,
     float y,
+    CollectibleType type,
     float radius,
     float speed,
     Color color,
     const std::string &texturePath)
-    : radius(radius), color(color)
+    : type(type), radius(radius), color(color)
 {
     position = {x, y};
     velocity = {0, 0};
@@ -21,11 +22,11 @@ Clock::Clock(
     }
 }
 
-void Clock::Update()
+void Collectible::Update()
 {
 }
 
-void Clock::Draw() const
+void Collectible::Draw() const
 {
     if (this->IsActive() == false)
         return;
@@ -42,17 +43,12 @@ void Clock::Draw() const
     }
 }
 
-void Clock::SetColor(const Color &newColor)
+void Collectible::SetColor(const Color &newColor)
 {
     color = newColor;
 }
 
-Vector2 Clock::GetDimensions() const
+Vector2 Collectible::GetDimensions() const
 {
     return {radius, radius};
-}
-
-CollectibleType Clock::GetCollectibleType() const
-{
-    return CollectibleType::Clock;
 }
