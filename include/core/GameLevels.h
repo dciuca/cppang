@@ -117,7 +117,7 @@ struct GameLevels
         // ---- LEVEL 1 ----
         case 1:
             return {
-                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png"},
+                {400.0f, 200.0f, 40.0f, 45.0f, 80.0f, WHITE, "assets/balls/red.png", CollectibleType::Clock, 1},
             };
 
         // ---- LEVEL 2 ----
@@ -145,8 +145,8 @@ struct GameLevels
         // ---- LEVEL 3 ----
         case 3:
             return {
-                {300.0f, 250.0f, 50.0f, 145.0f, 120.0f, WHITE, "assets/balls/green.png"},
-                {500.0f, 250.0f, 50.0f, 35.0f, 120.0f, WHITE, "assets/balls/green.png"},
+                {300.0f, 250.0f, 50.0f, 145.0f, 120.0f, WHITE, "assets/balls/green.png", CollectibleType::LifeUp, 1},
+                {500.0f, 250.0f, 50.0f, 35.0f, 120.0f, WHITE, "assets/balls/green.png", CollectibleType::Clock, 2},
             };
 
         // ---- LEVEL 4 ----
@@ -157,7 +157,7 @@ struct GameLevels
                 {130.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
                 {160.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
                 {190.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
-                {220.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
+                {220.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png", CollectibleType::Clock, 1},
                 {250.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
                 {280.0f, 40.0f, 10.0f, 0.0f, 70.0f, WHITE, "assets/balls/blue.png"},
 
@@ -175,16 +175,16 @@ struct GameLevels
         case 5:
             return {
                 // Two large fast red balls from opposite corners
-                {150.0f, 100.0f, 40.0f, 45.0f, 100.0f, WHITE, "assets/balls/red.png"},
+                {150.0f, 100.0f, 40.0f, 45.0f, 100.0f, WHITE, "assets/balls/red.png", CollectibleType::Clock, 2},
                 {650.0f, 100.0f, 40.0f, 135.0f, 100.0f, WHITE, "assets/balls/red.png"},
                 // One medium green bouncing low
-                {300.0f, 400.0f, 20.0f, 20.0f, 100.0f, WHITE, "assets/balls/green.png"},
+                {300.0f, 400.0f, 20.0f, 20.0f, 100.0f, WHITE, "assets/balls/green.png", CollectibleType::LifeUp, 1},
             };
 
         // ---- LEVEL 6 ----
         case 6:
             return {
-                {200.0f, 80.0f, 30.0f, 45.0f, 130.0f, WHITE, "assets/balls/red.png"},
+                {200.0f, 80.0f, 30.0f, 45.0f, 130.0f, WHITE, "assets/balls/red.png", CollectibleType::Clock, 1},
                 {600.0f, 80.0f, 30.0f, 135.0f, 130.0f, WHITE, "assets/balls/red.png"},
                 {350.0f, 200.0f, 20.0f, 60.0f, 110.0f, WHITE, "assets/balls/green.png"},
                 {450.0f, 200.0f, 20.0f, 120.0f, 110.0f, WHITE, "assets/balls/green.png"},
@@ -193,8 +193,8 @@ struct GameLevels
         // ---- LEVEL 7 ----
         case 7:
             return {
-                {400.0f, 60.0f, 40.0f, 90.0f, 90.0f, WHITE, "assets/balls/red.png"},
-                {150.0f, 120.0f, 15.0f, 30.0f, 170.0f, WHITE, "assets/balls/blue.png"},
+                {400.0f, 60.0f, 40.0f, 90.0f, 90.0f, WHITE, "assets/balls/red.png", CollectibleType::Clock, 2},
+                {150.0f, 120.0f, 15.0f, 30.0f, 170.0f, WHITE, "assets/balls/blue.png", CollectibleType::LifeUp, 1},
                 {650.0f, 120.0f, 15.0f, 150.0f, 170.0f, WHITE, "assets/balls/blue.png"},
                 {400.0f, 300.0f, 15.0f, 210.0f, 170.0f, WHITE, "assets/balls/blue.png"},
             };
