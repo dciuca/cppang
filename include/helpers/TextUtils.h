@@ -4,7 +4,8 @@
 
 inline const char *GetFontPath()
 {
-    return "assets/fonts/spicysale.ttf";
+    // return "assets/fonts/spicysale.ttf";
+    return "assets/fonts/TitanOne-Regular.ttf";
 };
 
 struct TextStyle
@@ -21,11 +22,28 @@ namespace TextStyles
     inline TextStyle HUD() { return {28.0f, 2, YELLOW}; }
 }
 
+inline void DrawTextOutlined(const char *text, const Font &font, const TextStyle &style,
+                              Vector2 position, float outlineSize = 2.0f,
+                              Color outlineColor = BLACK)
+{
+    for (float dx = -outlineSize; dx <= outlineSize; dx += outlineSize)
+    {
+        for (float dy = -outlineSize; dy <= outlineSize; dy += outlineSize)
+        {
+            if (dx == 0.0f && dy == 0.0f)
+                continue;
+            Vector2 outlinePos = {position.x + dx, position.y + dy};
+            DrawTextEx(font, text, outlinePos, style.size, style.spacing, outlineColor);
+        }
+    }
+    DrawTextEx(font, text, position, style.size, style.spacing, style.color);
+}
+
 inline void DrawOffsetText(const char *text, const Font &font, const TextStyle &style,
                            float offsetX = 0.0f, float offsetY = 0.0f)
 {
     Vector2 position = {offsetX, offsetY};
-    DrawTextEx(font, text, position, style.size, style.spacing, style.color);
+    DrawTextOutlined(text, font, style, position);
 }
 
 inline void DrawCenteredText(const char *text, const Font &font, const TextStyle &style,
@@ -35,7 +53,7 @@ inline void DrawCenteredText(const char *text, const Font &font, const TextStyle
     Vector2 position = {
         (GetScreenWidth() - textSize.x) / 2.0f,
         (GetScreenHeight() - textSize.y) / 2.0f + offsetY};
-    DrawTextEx(font, text, position, style.size, style.spacing, style.color);
+    DrawTextOutlined(text, font, style, position);
 }
 
 inline void DrawFadingText(const char *text, const Font &font, const TextStyle &style,
