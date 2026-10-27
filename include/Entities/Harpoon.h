@@ -14,8 +14,9 @@ public:
         float height,
         float speed,
         Color color = PURPLE,
-        const std::string &texturePath = "");
-    ~Harpoon() = default;
+        const std::string &texturePath = "",
+        const std::string &arrowTexturePath = "");
+    ~Harpoon();
 
     // Implementation of pure virtual methods from IEntity
     void SetColor(const Color &newColor) override;
@@ -31,4 +32,6 @@ private:
     Color color;
     float m_time = 0.0f;
     float m_spawnY;
+    Texture2D m_arrowTexture{};
+    bool m_useArrowTexture = false;
 };

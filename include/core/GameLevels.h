@@ -49,6 +49,7 @@ struct HarpoonConfig
     float speed;
     Color color;
     std::string texturePath;
+    std::string arrowTexturePath;
 };
 
 struct BackgroundConfig
@@ -113,7 +114,7 @@ struct GameLevels
     static HarpoonConfig GetHarpoonConfig()
     {
         const float HARPOON_SPEED = 900.0f;
-        return {0.0f, 0.0f, 30.0f, 0.0f, HARPOON_SPEED, WHITE, "assets/harpoon.png"};
+        return {0.0f, 0.0f, 30.0f, 0.0f, HARPOON_SPEED, WHITE, "assets/harpoon_rope.png", "assets/harpoon_arrow.png"};
     }
 
     //

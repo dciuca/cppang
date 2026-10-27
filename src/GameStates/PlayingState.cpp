@@ -403,7 +403,7 @@ void PlayingState::LoadHarpoon(Player *p)
     auto harpoon = std::make_unique<Harpoon>(
         p->position.x + 12.0f,
         p->position.y + 10.0f,
-        hConfig.width, hConfig.height, hConfig.speed, hConfig.color, hConfig.texturePath);
+        hConfig.width, hConfig.height, hConfig.speed, hConfig.color, hConfig.texturePath, hConfig.arrowTexturePath);
     harpoon->SetActive(true);
     m_harpoons.push_back(harpoon.get());
     m_entities.push_back(std::move(harpoon));
