@@ -116,6 +116,12 @@ void PlayingState::Draw() const
                    {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
                    {0, 0}, 0.0f, WHITE);
 
+    for (const auto &entity : m_entities)
+    {
+        if (entity->IsActive())
+            entity->Draw();
+    }
+
     DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::HUD(), 40.0f, 40.0f);
     
     DrawCenteredText(TextFormat("Time: %d",
@@ -133,12 +139,6 @@ void PlayingState::Draw() const
                        m_lifebarRect,
                        {(GetScreenWidth() - 50.0f) - (40.0f + i * 30.0f), 40.0f, 28.0f, 28.0f},
                        {0, 0}, 0.0f, WHITE);
-    }
-
-    for (const auto &entity : m_entities)
-    {
-        if (entity->IsActive())
-            entity->Draw();
     }
 
     if (m_waitingForReady)
