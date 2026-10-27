@@ -32,6 +32,9 @@ public:
     /// Returns the remaining time in seconds, or 0 if inactive.
     float GetTimeLeft() const { return active ? duration - elapsed - (GetTime() - start_time) : 0; };
 
+    // Return the initial timer duration
+    int GetDuration() const { return duration; };
+
     /// Starts (or restarts) the timer from the current time.
     void activate()
     {

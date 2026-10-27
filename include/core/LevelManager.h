@@ -13,7 +13,6 @@ public:
     void NextLevel()
     {
         m_currentLevel++;
-        m_levelTimer.activate();
     };
     void Reset()
     {

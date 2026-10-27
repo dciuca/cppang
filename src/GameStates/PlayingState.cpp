@@ -13,7 +13,7 @@ PlayingState::PlayingState(LevelManager &levelManager)
       m_waitingForReady(true),
       m_freezeTimer(4, false, false, nullptr)
 {
-    m_levelManager.GetLevelTimer().activate();
+    m_levelManager.GetLevelTimer().pause();
 
     LoadLevelBackground(m_levelManager.GetCurrentLevel());
     LoadLifebar();
@@ -29,6 +29,16 @@ PlayingState::PlayingState(LevelManager &levelManager)
 
 void PlayingState::HandleInput()
 {
+    if (m_waitingForReady)
+    {
+        if (IsKeyPressed(KEY_SPACE))
+        {
+            m_waitingForReady = false;
+            m_levelManager.GetLevelTimer().activate();
+        }
+        return;
+    }
+
     if (IsKeyPressed(KEY_P))
         PauseGame();
 
@@ -60,7 +70,7 @@ void PlayingState::Enter()
 void PlayingState::Update()
 {
     if (m_waitingForReady)
-        PauseGame();
+        return;
 
     m_levelManager.GetLevelTimer().update();
     m_freezeTimer.update();
@@ -107,12 +117,15 @@ void PlayingState::Draw() const
                    {0, 0}, 0.0f, WHITE);
 
     DrawOffsetText(TextFormat("Scores: %d", m_levelManager.GetScore()), m_font, TextStyles::HUD(), 40.0f, 40.0f);
-
+    
     DrawCenteredText(TextFormat("Time: %d",
-                                (int)m_levelManager.GetLevelTimer().GetTimeLeft()),
-                     m_font,
-                     TextStyles::HUD(),
-                     (55.0f - (float)GetScreenHeight() / 2.0f));
+                            m_waitingForReady
+                                ? m_levelManager.GetLevelTimer().GetDuration()
+                                : (int)m_levelManager.GetLevelTimer().GetTimeLeft()),
+                 m_font,
+                 TextStyles::HUD(),
+                 (55.0f - (float)GetScreenHeight() / 2.0f));
+
 
     for (int i = 0; i < m_levelManager.GetLives(); i++)
     {
@@ -120,6 +133,12 @@ void PlayingState::Draw() const
                        m_lifebarRect,
                        {(GetScreenWidth() - 50.0f) - (40.0f + i * 30.0f), 40.0f, 28.0f, 28.0f},
                        {0, 0}, 0.0f, WHITE);
+    }
+
+    if (m_waitingForReady)
+    {
+        DrawCenteredText(TextFormat("LEVEL %d", m_levelManager.GetCurrentLevel()), m_font, TextStyles::Title(), 0.0f);
+        DrawFadingText("Press SPACE to start", m_font, TextStyles::Subtitle(), 200.0f);
     }
 
     for (const auto &entity : m_entities)
