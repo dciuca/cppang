@@ -112,7 +112,7 @@ void PlayingState::Draw() const
 
     ClearBackground(RAYWHITE);
     DrawTexturePro(m_background,
-                   m_backgroundRect,
+                   {0, 0, (float)m_background.width, (float)m_background.height},
                    {0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()},
                    {0, 0}, 0.0f, WHITE);
 
@@ -135,16 +135,16 @@ void PlayingState::Draw() const
                        {0, 0}, 0.0f, WHITE);
     }
 
-    if (m_waitingForReady)
-    {
-        DrawCenteredText(TextFormat("LEVEL %d", m_levelManager.GetCurrentLevel()), m_font, TextStyles::Title(), 0.0f);
-        DrawFadingText("Press SPACE to start", m_font, TextStyles::Subtitle(), 200.0f);
-    }
-
     for (const auto &entity : m_entities)
     {
         if (entity->IsActive())
             entity->Draw();
+    }
+
+    if (m_waitingForReady)
+    {
+        DrawCenteredText(TextFormat("LEVEL %d", m_levelManager.GetCurrentLevel()), m_font, TextStyles::Title(), 0.0f);
+        DrawFadingText("Press SPACE to start", m_font, TextStyles::Subtitle(), 200.0f);
     }
 
     EndDrawing();
@@ -352,7 +352,6 @@ void PlayingState::LoadLevelBackground(unsigned short level)
 {
     auto bgConfig = GameLevels::GetLevelBackground(m_levelManager.GetCurrentLevel());
     m_background = LoadTexture(bgConfig.texturePath.c_str());
-    m_backgroundRect = bgConfig.sourceRect;
 }
 
 void PlayingState::LoadLifebar()

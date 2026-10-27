@@ -47,7 +47,7 @@ private:
     LevelManager &m_levelManager;
     Texture2D m_background, m_lifebar;
     Font m_font;
-    Rectangle m_backgroundRect, m_lifebarRect;
+    Rectangle m_lifebarRect;
     bool m_waitingForReady;
     Timer m_freezeTimer;
     std::vector<std::unique_ptr<IEntity>> m_entities; // All entities in the game

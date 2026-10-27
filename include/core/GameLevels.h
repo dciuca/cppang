@@ -54,7 +54,6 @@ struct HarpoonConfig
 struct BackgroundConfig
 {
     std::string texturePath;
-    Rectangle sourceRect;
 };
 
 struct LifebarConfig
@@ -77,7 +76,17 @@ struct GameLevels
     //
     static BackgroundConfig GetLevelBackground(int level)
     {
-        return {"assets/backgrounds_col.png", {0, (level - 1) * 200.0f, 255, 191}};
+        switch (level)
+        {
+        case 1: return {"assets/backgrounds/level-1.png"};
+        case 2: return {"assets/backgrounds/level-2.png"};
+        case 3: return {"assets/backgrounds/level-3.png"};
+        case 4: return {"assets/backgrounds/level-4.png"};
+        case 5: return {"assets/backgrounds/level-5.png"};
+        case 6: return {"assets/backgrounds/level-6.png"};
+        case 7: return {"assets/backgrounds/level-7.png"};
+        default: return {"assets/backgrounds/level-1.png"};
+        }
     }
 
     //
