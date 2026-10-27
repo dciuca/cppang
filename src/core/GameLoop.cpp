@@ -30,6 +30,7 @@ void GameLoop::Run()
 
             case GameStateRequest::ChangeToLevelComplete:
             {
+                currentState->Draw();
                 Image frame = LoadImageFromScreen();
                 Texture2D ghost = LoadTextureFromImage(frame);
                 UnloadImage(frame);

@@ -105,11 +105,13 @@ void Player::Draw() const
     if (useTexture)
     {
         float mirror = (m_animState == AnimState::WalkRight) ? -1.0f : 1.0f;
+        float tileW = (float)texture.width / 8.0f;
+        float tileH = (float)texture.height / 2.0f;
         Rectangle source = {
-            (float)(m_currentFrame * 32),
-            (float)(m_currentRow * 32),
-            32.0f * mirror,
-            32.0f};
+            m_currentFrame * tileW,
+            m_currentRow * tileH,
+            tileW * mirror,
+            tileH};
         Rectangle dest = {position.x, position.y, width, height};
         DrawTexturePro(texture, source, dest, {0, 0}, 0.0f, color);
     }
