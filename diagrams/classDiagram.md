@@ -14,6 +14,8 @@ classDiagram
     class Ball
     class Harpoon
     class Obstacle
+    class ICollectible
+    class Collectible
     class Physics
     class GameLevels
     class GameStateRequest {
@@ -31,6 +33,12 @@ classDiagram
         <<enumeration>>
         CIRCLE
         RECTANGLE
+    }
+    class CollectibleType {
+        <<enumeration>>
+        None
+        Clock
+        LifeUp
     }
 
     GameLoop *-- IGameState : owns current/previous state
@@ -52,6 +60,7 @@ classDiagram
     PlayingState --> Ball : observes (raw ptr)
     PlayingState --> Harpoon : observes (raw ptr)
     PlayingState --> Obstacle : observes (raw ptr)
+    PlayingState --> ICollectible : observes (raw ptr)
     PlayingState ..> Physics : uses
     PlayingState ..> GameLevels : uses
 
@@ -62,8 +71,11 @@ classDiagram
     IEntity <|-- Ball
     IEntity <|-- Harpoon
     IEntity <|-- Obstacle
+    IEntity <|-- ICollectible
+    ICollectible <|-- Collectible
 
     IEntity --> ShapeType : exposes
+    Collectible --> CollectibleType : exposes
     Physics ..> IEntity : updates / checks collisions
     Physics --> ShapeType : uses
 ```
